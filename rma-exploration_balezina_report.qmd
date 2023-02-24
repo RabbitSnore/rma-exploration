@@ -2,7 +2,6 @@
 title: "Balezina (2023) - Network Re-analysis"
 format: gfm
 editor: source
-output-file: "./reports/rma-exploration_balezina_report.md"
 ---
 
 ```{r}
