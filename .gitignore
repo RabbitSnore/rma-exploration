@@ -46,3 +46,7 @@ vignettes/*.pdf
 # Notes
 
 /notes/*
+
+# Report files
+
+*_files

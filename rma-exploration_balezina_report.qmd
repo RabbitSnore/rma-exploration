@@ -21,7 +21,8 @@ network_reduced_fit_ind_1 %>%
 ```
 
 ```{r}
-network_reduced_pars_1
+network_reduced_pars_1 %>% 
+  knitr::kable()
 ```
 
 ```{r}
@@ -36,7 +37,8 @@ network_reduced_fit_ind_1_test %>%
 ```
 
 ```{r}
-network_reduced_pars_1_test
+network_reduced_pars_1_test %>% 
+  knitr::kable()
 ```
 
 ```{r}
@@ -51,7 +53,8 @@ network_fit_ind_2 %>%
 ```
 
 ```{r}
-network_pars_2
+network_pars_2%>% 
+  knitr::kable()
 ```
 
 ```{r}
