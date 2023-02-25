@@ -330,3 +330,21 @@ network_graph_2 <-
          vTrans = 200,
          negDashed = FALSE)
 
+# Export figures ---------------------------------------------------------------
+
+png("./figures/balezina_irma-reduced-network_train.png", 
+    height = 5.5, width = 9.6, units = "in", res = 1500)
+plot(network_graph_reduced_1)
+dev.off()
+
+png("./figures/balezina_irma-reduced-network_test.png", 
+    height = 5.5, width = 9.6, units = "in", res = 1500)
+
+plot(network_graph_reduced_1_test)
+dev.off()
+
+png("./figures/balezina_irma-reduced-network_study-2.png", 
+    height = 5.5, width = 9.6, units = "in", res = 1500)
+
+plot(network_graph_2)
+dev.off()
