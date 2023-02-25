@@ -149,7 +149,7 @@ network_graph_1 <-
          edge.labels = TRUE,
          edge.label.cex = .40,
          edge.label.bg = "white",
-         edge.label.position = .50,
+         edge.label.position = .60,
          edge.color = "#151414",
          vTrans = 200,
          negDashed = FALSE)
@@ -180,7 +180,7 @@ network_graph_1_test <-
          edge.labels = TRUE,
          edge.label.cex = .40,
          edge.label.bg = "white",
-         edge.label.position = .50,
+         edge.label.position = .60,
          edge.color = "#151414",
          vTrans = 200,
          negDashed = FALSE)
@@ -253,7 +253,7 @@ network_graph_reduced_1 <-
          edge.labels = TRUE,
          edge.label.cex = .40,
          edge.label.bg = "white",
-         edge.label.position = .50,
+         edge.label.position = .60,
          edge.color = "#151414",
          vTrans = 200,
          negDashed = FALSE)
@@ -284,7 +284,7 @@ network_graph_reduced_1_test <-
          edge.labels = TRUE,
          edge.label.cex = .40,
          edge.label.bg = "white",
-         edge.label.position = .50,
+         edge.label.position = .60,
          edge.color = "#151414",
          vTrans = 200,
          negDashed = FALSE)
@@ -325,7 +325,7 @@ network_graph_2 <-
          edge.labels = TRUE,
          edge.label.cex = .40,
          edge.label.bg = "white",
-         edge.label.position = .50,
+         edge.label.position = .60,
          edge.color = "#151414",
          vTrans = 200,
          negDashed = FALSE)
