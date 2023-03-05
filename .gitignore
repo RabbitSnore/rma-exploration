@@ -41,7 +41,9 @@ vignettes/*.pdf
 # Data
 
 *.csv
+*.xls
 *.xlsx
+*.sav
 
 # Notes
 
