@@ -11,7 +11,11 @@ packages <- c(
   "qgraph",
   "psychonetrics",
   "lavaan",
-  "semPlot")
+  "semPlot",
+  "lme4",
+  "lmerTest",
+  "performance",
+  "cowplot")
 
 lapply(packages, library, character.only = TRUE)
 
@@ -287,6 +291,91 @@ five_factor_fit_3 <- cfa(model = five_factor,
 five_factor_ind_3 <- fitmeasures(five_factor_fit_3)
 five_factor_par_3 <- standardizedsolution(five_factor_fit_3)
 
+# Change over time --------------------------------------------
+
+lys_2_long <- lys_2_model_df %>% 
+  mutate(
+    id = 1:nrow(.)
+  ) %>% 
+  pivot_longer(
+    cols = c(starts_with("rma"), starts_with("pre_rma")),
+    names_to = c("time", "item"),
+    names_pattern = "(p?r?e?_?rma)(\\d?\\d)",
+    values_to = "rma"
+  )
+
+lys_2_sum <- lys_2_model_df
+
+lys_2_sum$pre_rma_sum <- rowSums(select(lys_2_model_df, starts_with("pre_rma")))
+lys_2_sum$rma_sum     <- rowSums(select(lys_2_model_df, starts_with("rma")))
+
+lys_2_sum_long <- lys_2_sum %>% 
+  mutate(
+    id = 1:nrow(.)
+  ) %>%
+  pivot_longer(
+    cols = c("pre_rma_sum", "rma_sum"),
+    names_to = "time",
+    values_to = "sum"
+  )
+
+# Item model
+
+## Unconditional model
+
+lys_2_uncon <- lmer(rma ~ 1 + (1|id) + (1|item), data = lys_2_long)
+
+lys_2_icc   <- icc(lys_2_uncon, by_group = TRUE)
+
+## Conditional model
+
+lys_2_lmm <- lmer(rma ~ 1 + time + (1 + time|id) + (1 + time|item), data = lys_2_long)
+
+# Sum score model
+
+## Unconditional model
+
+lys_2_sum_uncon <- lmer(sum ~ 1 + (1|id), data = lys_2_sum_long)
+
+lys_2_sum_icc   <- icc(lys_2_sum_uncon, by_group = TRUE) 
+
+## Conditional model
+
+lys_2_sum_uncon <- lmer(sum ~ 1 + time + (1|id), data = lys_2_sum_long)
+
+# Visualization of change
+
+lys_2_item_change <- 
+ggplot(lys_2_long,
+       aes(
+         x = item,
+         y = rma,
+         color = time,
+         group = item
+       )) +
+  facet_wrap(~ id) +
+  geom_hline(
+    yintercept = 3,
+    linetype   = "dashed"
+  ) +
+  geom_line(
+    color = "darkgrey"
+  ) +
+  geom_point() +
+  scale_color_manual(
+    values = c("#52D1DC", "#2A4494"),
+    labels = c("Baseline", "2 weeks")
+  ) +
+  labs(
+    color = "Measurement",
+    y     = "Agreement",
+    x     = ""
+  ) +
+  theme_classic() +
+  theme(
+    axis.text.x  = element_blank(),
+    axis.ticks.x = element_blank()
+  )
 
 # Export figures ---------------------------------------------------------------
 
@@ -306,3 +395,6 @@ png("./figures/lys_irma-network_study-3.png",
 
 plot(network_graph_3)
 dev.off()
+
+save_plot("./figures/lys_item-change_study-2.png", lys_2_item_change,
+          base_height = 16, base_width = 16)
