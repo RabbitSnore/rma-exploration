@@ -374,7 +374,8 @@ ggplot(lys_2_long,
   theme_classic() +
   theme(
     axis.text.x  = element_blank(),
-    axis.ticks.x = element_blank()
+    axis.ticks.x = element_blank(),
+    legend.position = "bottom"
   )
 
 # Export figures ---------------------------------------------------------------
