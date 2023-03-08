@@ -291,7 +291,7 @@ five_factor_fit_3 <- cfa(model = five_factor,
 five_factor_ind_3 <- fitmeasures(five_factor_fit_3)
 five_factor_par_3 <- standardizedsolution(five_factor_fit_3)
 
-# Change over time --------------------------------------------
+# Change over time -------------------------------------------------------------
 
 lys_2_long <- lys_2_model_df %>% 
   mutate(
@@ -378,6 +378,63 @@ ggplot(lys_2_long,
     legend.position = "bottom"
   )
 
+# Total absolute item-level change
+
+lys_2_change <- lys_2_long %>% 
+  pivot_wider(
+    id_cols     = c("id", "item"),
+    names_from  = "time",
+    values_from = "rma"
+  ) %>% 
+  mutate(
+    change = abs(rma - pre_rma)
+  ) %>% 
+  group_by(id) %>% 
+  summarise(
+    total_change = sum(change)
+  )
+
+lys_2_sum_long <- lys_2_sum_long %>% 
+  left_join(lys_2_change, by = "id")
+
+lys_2_sum_change_cor <- cor.test(lys_2_sum_long$sum, lys_2_sum_long$total_change)
+
+lys_2_sum_by_change <- 
+ggplot(lys_2_sum_long,
+       aes(
+         x = sum,
+         y = total_change,
+         color = time
+       )) +
+  geom_smooth(
+    method = "lm",
+    formula = "y ~ x"
+  ) +
+  geom_line(
+    aes(
+      group = id
+    ),
+    color = "darkgrey",
+    alpha = .5
+  ) +
+  geom_point() +
+  scale_y_continuous(
+    breaks = seq(0, 30, 5)
+  ) +
+  scale_x_continuous(
+    breaks = seq(20, 80, 5)
+  ) +
+  scale_color_manual(
+    values = c("#52D1DC", "#2A4494"),
+    labels = c("Baseline", "2 weeks")
+  ) +
+  labs(
+    color = "Measurement",
+    y     = "Total Absolute Item-Level Change",
+    x     = "IRMA Sum Score"
+  ) +
+  theme_classic()
+
 # Export figures ---------------------------------------------------------------
 
 png("./figures/lys_irma-network_study-1.png", 
@@ -399,3 +456,6 @@ dev.off()
 
 save_plot("./figures/lys_item-change_study-2.png", lys_2_item_change,
           base_height = 16, base_width = 16)
+
+save_plot("./figures/lys_sum-change_study-2.png", lys_2_sum_by_change,
+          base_height = 6, base_width = 6.5)

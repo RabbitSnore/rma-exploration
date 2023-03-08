@@ -11,7 +11,8 @@ packages <- c(
   "qgraph",
   "psychonetrics",
   "lavaan",
-  "semPlot")
+  "semPlot",
+  "psych")
 
 lapply(packages, library, character.only = TRUE)
 
@@ -221,6 +222,50 @@ network_graph_1_test <-
          edge.color = "#151414",
          vTrans = 200,
          negDashed = FALSE)
+
+# Factor modelling -------------------------------------------------------------
+
+# Exploratory factor analysis
+
+# Because Dawtry et al did not use subscales, used all the items from the
+# McMahon and Farmer scale (despite them having dropped items from their final
+# scale), and took no explicit position on the factor structure of the IRMA, I
+# took an EFA approach with the training data to find an empirically-based
+# factor structure.
+
+parallel_train <- fa.parallel(dawtry_train)
+
+efa_train      <- fa(dawtry_train,
+                     nfactors = 5,
+                     rotate = "oblimin")
+
+# Confirmatory factor analysis
+
+# using highest loading of each item to guide factor structure. each loading was
+# greater than .30. item 17 crossloaded on the "resistance" factor, but this
+# crossloading was ignored.
+
+five_factor <- 
+'
+
+asked        =~ RMAS_1 + RMAS_2 + RMAS_3 + RMAS_4 + RMAS_6
+
+mean_to      =~ RMAS_7 + RMAS_8 + RMAS_9 + RMAS_10
+
+resist_drunk =~ RMAS_5 + RMAS_11 + RMAS_12 + RMAS_15 + RMAS_16
+
+lied_nr      =~ RMAS_17 + RMAS_18 + RMAS_19 + RMAS_20 + RMAS_21 + RMAS_22
+
+resist       =~ RMAS_13 + RMAS_14
+
+
+'
+
+five_factor_fit <- cfa(model = five_factor,
+                       data = dawtry_test)
+
+five_factor_ind <- fitmeasures(five_factor_fit)
+five_factor_par <- standardizedsolution(five_factor_fit)
 
 # Export figures ---------------------------------------------------------------
 
