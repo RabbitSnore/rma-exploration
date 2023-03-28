@@ -259,6 +259,9 @@ network_graph_3 <-
 
 # Factor modeling --------------------------------------------------------------
 
+# This model represents the best fitting model found in the original article in
+# Study 1.
+
 five_factor <- 
 '
 
@@ -319,6 +322,8 @@ lys_2_sum_long <- lys_2_sum %>%
     values_to = "sum"
   )
 
+lys_2_sum$id <- 1:nrow(lys_2_sum)
+
 # Item model
 
 ## Unconditional model
@@ -345,8 +350,32 @@ lys_2_sum_uncon <- lmer(sum ~ 1 + time + (1|id), data = lys_2_sum_long)
 
 # Visualization of change
 
+lys_2_long_plot <- lys_2_long %>% 
+  left_join(
+    lys_2_long %>% 
+      group_by(id, time) %>% 
+      summarise(
+        sum = sum(rma)
+      ),
+    by = c("id", "time")
+  )
+
+change_labels <- paste(
+  str_pad(1:length(unique(lys_2_long_plot$id)), 3, "left", "0"),
+  " (",
+  arrange(lys_2_sum, desc(pre_rma_sum))$pre_rma_sum,
+  "/",
+  arrange(lys_2_sum, desc(rma_sum))$rma_sum,
+  ")",
+  sep = ""
+)
+
+lys_2_long_plot$id <- factor(lys_2_long_plot$id,
+                             levels = unique(arrange(filter(lys_2_long_plot, time == "pre_rma"), desc(sum))$id),
+                             labels = change_labels)
+
 lys_2_item_change <- 
-ggplot(lys_2_long,
+ggplot(lys_2_long_plot,
        aes(
          x = item,
          y = rma,
@@ -387,7 +416,7 @@ lys_2_change <- lys_2_long %>%
     values_from = "rma"
   ) %>% 
   mutate(
-    change = abs(rma - pre_rma)
+    change     = abs(rma - pre_rma)
   ) %>% 
   group_by(id) %>% 
   summarise(
@@ -435,6 +464,90 @@ ggplot(lys_2_sum_long,
   ) +
   theme_classic()
 
+lys_2_sum_change <- lys_2_sum_long %>% 
+  pivot_wider(
+    id_cols     = c("id"),
+    names_from  = "time",
+    values_from = "sum"
+  ) %>% 
+  mutate(
+    score_change       = rma_sum - pre_rma_sum
+  ) %>% 
+  pivot_longer(
+    cols      = c("rma_sum", "pre_rma_sum"),
+    names_to  = "time",
+    values_to = "sum"
+  )
+
+lys_2_score_change_cor <- cor.test(lys_2_sum_change$sum, lys_2_sum_change$score_change)
+
+lys_2_sum_by_score_change <- 
+  ggplot(lys_2_sum_change,
+         aes(
+           x = sum,
+           y = score_change,
+           color = time
+         )) +
+  geom_smooth(
+    inherit.aes = FALSE,
+    aes(
+      x = sum,
+      y = score_change
+    ),
+    method = "lm",
+    formula = "y ~ x"
+  ) +
+  geom_line(
+    aes(
+      group = id
+    ),
+    color = "darkgrey",
+    alpha = .5
+  ) +
+  geom_point() +
+  scale_y_continuous(
+    breaks = seq(-20, 20, 5)
+  ) +
+  scale_x_continuous(
+    breaks = seq(20, 80, 5)
+  ) +
+  scale_color_manual(
+    values = c("#52D1DC", "#2A4494"),
+    labels = c("Baseline", "2 weeks")
+  ) +
+  labs(
+    color = "Measurement",
+    y     = "Sum Score Change",
+    x     = "IRMA Sum Score"
+  ) +
+  theme_classic()
+
+lys_2_sum_pre_post <- 
+  ggplot(lys_2_sum,
+       aes(
+         x = pre_rma_sum,
+         y = rma_sum
+       )) +
+  geom_smooth(
+    method = "lm",
+    formula = "y ~ x"
+  ) +
+  geom_point() +
+  scale_y_continuous(
+    breaks = seq(20, 80, 5)
+  ) +
+  scale_x_continuous(
+    breaks = seq(20, 80, 5)
+  ) +
+  labs(
+    y     = "IRMA Sum Score, 2 weeks",
+    x     = "IRMA Sum Score, Baseline"
+  ) +
+  theme_classic()
+
+lys_2_time_change <- plot_grid(lys_2_sum_pre_post, lys_2_sum_by_score_change, lys_2_sum_by_change,
+                               nrow = 1, rel_widths = c(1, 1.3, 1.3))
+
 # Export figures ---------------------------------------------------------------
 
 png("./figures/lys_irma-network_study-1.png", 
@@ -459,3 +572,6 @@ save_plot("./figures/lys_item-change_study-2.png", lys_2_item_change,
 
 save_plot("./figures/lys_sum-change_study-2.png", lys_2_sum_by_change,
           base_height = 6, base_width = 6.5)
+
+save_plot("./figures/lys_time-change_study-2.png", lys_2_time_change,
+          base_height = 4, base_width = 14)
