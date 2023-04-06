@@ -312,8 +312,13 @@ network_reduced_pars_1 %>%
 knitr::include_graphics("./figures/balezina_irma-reduced-network_train.png")
 ```
 
-<img src="./figures/balezina_irma-reduced-network_train.png"
-width="14400" />
+![](./figures/balezina_irma-reduced-network_train.png)
+
+``` r
+knitr::include_graphics("./figures/balezina_irma-reduced-network_train_walktrap.png")
+```
+
+![](./figures/balezina_irma-reduced-network_train_walktrap.png)
 
 ## Test Network
 
@@ -624,8 +629,13 @@ network_reduced_pars_1_test %>%
 knitr::include_graphics("./figures/balezina_irma-reduced-network_test.png")
 ```
 
-<img src="./figures/balezina_irma-reduced-network_test.png"
-width="14400" />
+![](./figures/balezina_irma-reduced-network_test.png)
+
+``` r
+knitr::include_graphics("./figures/balezina_irma-reduced-network_test_walktrap.png")
+```
+
+![](./figures/balezina_irma-reduced-network_test_walktrap.png)
 
 # Confirming the Model in the Data from Study 2
 
@@ -936,5 +946,10 @@ network_pars_2%>%
 knitr::include_graphics("./figures/balezina_irma-reduced-network_study-2.png")
 ```
 
-<img src="./figures/balezina_irma-reduced-network_study-2.png"
-width="14400" />
+![](./figures/balezina_irma-reduced-network_study-2.png)
+
+``` r
+knitr::include_graphics("./figures/balezina_irma-reduced-network_study-2_walktrap.png")
+```
+
+![](./figures/balezina_irma-reduced-network_study-2_walktrap.png)

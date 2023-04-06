@@ -434,8 +434,12 @@ strength_measure <- centrality_plot_full$data %>%
   filter(measure == "Strength") %>% 
   arrange(desc(value))
 
+balezina_1_mean_strength <- mean(strength_measure$value)
+
 closeness_measure <- centrality_plot_full$data %>% 
   filter(measure == "Closeness")
+
+balezina_1_mean_closeness <- mean(closeness_measure$value)
 
 # Simulation of persuasion
 
@@ -543,18 +547,12 @@ balezina_1_pers_prop <- mean(balezina_1_sim_pers[, strongest_node])
 # based on the scores weighted by the closeness of each node.
 
 balezina_1_unweighted_d <- 
-  (mean(balezina_1_sim_base$total) 
-   - mean(balezina_1_sim_pers$total)) 
-  / sqrt((sd(balezina_1_sim_base$total)^2 
-          + sd(balezina_1_sim_pers$total)^2) 
-         / 2)
+  (mean(balezina_1_sim_base$total) - mean(balezina_1_sim_pers$total)) / 
+  sqrt((sd(balezina_1_sim_base$total)^2 + sd(balezina_1_sim_pers$total)^2) / 2)
 
 balezina_1_weighted_d <- 
-  (mean(balezina_1_sim_base_weighted$total) 
-   - mean(balezina_1_sim_pers_weighted$total)) 
-  / sqrt((sd(balezina_1_sim_base_weighted$total)^2 
-        + sd(balezina_1_sim_pers_weighted$total)^2) 
-       / 2)
+  (mean(balezina_1_sim_base_weighted$total) - mean(balezina_1_sim_pers_weighted$total)) / 
+  sqrt((sd(balezina_1_sim_base_weighted$total)^2 + sd(balezina_1_sim_pers_weighted$total)^2) / 2)
 
 # Export figures ---------------------------------------------------------------
 

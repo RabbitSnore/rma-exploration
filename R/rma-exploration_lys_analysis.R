@@ -705,8 +705,12 @@ strength_measure <- centrality_plot_full$data %>%
   filter(measure == "Strength") %>% 
   arrange(desc(value))
 
+lys_1_mean_strength <- mean(strength_measure$value)
+
 closeness_measure <- centrality_plot_full$data %>% 
   filter(measure == "Closeness")
+
+lys_1_mean_closeness <- mean(closeness_measure$value)
 
 # Simulation of persuasion
 

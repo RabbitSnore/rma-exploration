@@ -12,7 +12,9 @@ packages <- c(
   "psychonetrics",
   "lavaan",
   "semPlot",
-  "psych")
+  "psych",
+  "igraph",
+  "IsingSampler")
 
 lapply(packages, library, character.only = TRUE)
 
@@ -300,6 +302,181 @@ five_factor_fit <- cfa(model = five_factor,
 
 five_factor_ind <- fitmeasures(five_factor_fit)
 five_factor_par <- standardizedsolution(five_factor_fit)
+
+# Revisiting combined data, for further analysis -------------------------------
+
+# Fit model to full data set
+
+network_model_full <- varcov(data = dawtry %>%
+                               select(-id),
+                             type = "ggm", 
+                             omega = skeleton_1)
+
+network_full_fit <- network_model_full %>% 
+  runmodel()
+
+network_pars_full     <- parameters(network_full_fit)
+
+network_fit_ind_full  <- fit(network_full_fit)
+
+network_graph_full <- 
+  qgraph(getmatrix(network_full_fit, "omega"),
+         labels = 1:22,
+         layout = network_graph_1_train$layout,
+         vsize = 4,
+         edge.labels = TRUE,
+         edge.label.cex = .40,
+         edge.label.bg = "white",
+         edge.label.position = .28,
+         edge.color = "#151414",
+         vTrans = 200,
+         negDashed = TRUE,
+         curveAll = TRUE)
+
+walktrap_full <- 
+  walktrap.community(as.igraph(network_graph_full),
+                     weights = abs(E(as.igraph(network_graph_full))$weight))
+
+network_graph_full_walk <- 
+  qgraph(getmatrix(network_full_fit, "omega"),
+         labels = 1:22,
+         layout = network_graph_1_train$layout,
+         vsize = 4,
+         edge.color = "#151414",
+         vTrans = 200,
+         negDashed = TRUE,
+         curveAll = TRUE,
+         groups = as.factor(walktrap_full$membership),
+         palette = "colorblind")
+
+centrality_plot_full <- 
+  centralityPlot(network_graph_full_walk,
+                 include = c("Strength", "Closeness", "Betweenness"))
+
+strength_measure <- centrality_plot_full$data %>% 
+  filter(measure == "Strength") %>% 
+  arrange(desc(value))
+
+dawtry_mean_strength <- mean(strength_measure$value)
+
+closeness_measure <- centrality_plot_full$data %>% 
+  filter(measure == "Closeness")
+
+dawtry_mean_closeness <- mean(closeness_measure$value)
+
+# Simulation of persuasion
+
+set.seed(1989)
+
+dawtry_model_long <- dawtry %>%
+  select(-id) %>% 
+  pivot_longer(
+    cols      = colnames(.),
+    values_to = "rma",
+    names_to  = "item"
+  )
+
+dawtry_summary <- dawtry_model_long %>% 
+  group_by(item) %>% 
+  summarise(
+    mean      = mean(rma, na.rm = TRUE),
+    threshold = (mean(rma, na.rm = TRUE) - 3)
+  )
+
+dawtry_sim_base <- 
+  IsingSampler(n          = 100000,
+               graph      = getmatrix(network_full_fit, "omega"), 
+               thresholds = dawtry_summary$threshold, 
+               responses  = c(0, 1))
+
+dawtry_sim_base <- as.data.frame(dawtry_sim_base)
+
+dawtry_sim_base$total <- rowSums(dawtry_sim_base)
+
+dawtry_sim_base$id    <- 1:nrow(dawtry_sim_base) 
+
+dawtry_sim_base_weighted <- dawtry_sim_base %>% 
+  pivot_longer(
+    cols          = starts_with("V"),
+    values_to     = "rma",
+    names_to      = "node",
+    names_pattern = "V(.*)"
+  ) %>% 
+  left_join(closeness_measure, by = "node") %>% 
+  mutate(
+    weighted = rma * value
+  ) %>% 
+  pivot_wider(
+    id_cols = "id",
+    names_from = "node",
+    names_prefix = "V",
+    values_from = "weighted"
+  ) %>% 
+  select(-id)
+
+dawtry_sim_base_weighted$total <- rowSums(dawtry_sim_base_weighted)
+
+## Simulated persuasion on the strongest item
+
+strongest_node <- strength_measure$node[[1]]
+
+sim_thresholds <- dawtry_summary$threshold
+sim_thresholds[strongest_node] <- -2
+
+dawtry_sim_pers <- 
+  IsingSampler(n          = 100000,
+               graph      = getmatrix(network_full_fit, "omega"), 
+               thresholds = sim_thresholds, 
+               responses  = c(0, 1))
+
+dawtry_sim_pers <- as.data.frame(dawtry_sim_pers)
+
+dawtry_sim_pers$total <- rowSums(dawtry_sim_pers)
+
+dawtry_sim_pers$id    <- 1:nrow(dawtry_sim_pers) 
+
+dawtry_sim_pers_weighted <- dawtry_sim_pers %>% 
+  pivot_longer(
+    cols          = starts_with("V"),
+    values_to     = "rma",
+    names_to      = "node",
+    names_pattern = "V(.*)"
+  ) %>% 
+  left_join(closeness_measure, by = "node") %>% 
+  mutate(
+    weighted = rma * value
+  ) %>% 
+  pivot_wider(
+    id_cols = "id",
+    names_from = "node",
+    names_prefix = "V",
+    values_from = "weighted"
+  ) %>% 
+  select(-id)
+
+dawtry_sim_pers_weighted$total <- rowSums(dawtry_sim_pers_weighted)
+
+### Effect sizes
+
+# These values provide the proportions of cases where the strongest node has
+# taken a value of 1. In this scenario, a value of 1 indicates endorsement of
+# the item.
+
+dawtry_base_prop <- mean(dawtry_sim_base[, strongest_node])
+dawtry_pers_prop <- mean(dawtry_sim_pers[, strongest_node])
+
+# These effect standardized mean differences estimate the effect of strong
+# persuasion on the strongest node in the network on the overall state of the
+# network. Two variations are calculated, based on the unweighted sum score and
+# based on the scores weighted by the closeness of each node.
+
+dawtry_unweighted_d <- 
+  (mean(dawtry_sim_base$total)  - mean(dawtry_sim_pers$total)) / 
+  sqrt((sd(dawtry_sim_base$total)^2 + sd(dawtry_sim_pers$total)^2) / 2)
+
+dawtry_weighted_d <- 
+  (mean(dawtry_sim_base_weighted$total) - mean(dawtry_sim_pers_weighted$total)) / 
+  sqrt((sd(dawtry_sim_base_weighted$total)^2 + sd(dawtry_sim_pers_weighted$total)^2) / 2)
 
 # Export figures ---------------------------------------------------------------
 
