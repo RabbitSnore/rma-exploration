@@ -191,7 +191,24 @@ network_graph_1_train <-
          edge.label.position = .28,
          edge.color = "#151414",
          vTrans = 200,
-         negDashed = FALSE)
+         negDashed = TRUE,
+         curveAll = TRUE)
+
+walktrap_1 <- 
+  walktrap.community(as.igraph(network_graph_1_train),
+                     weights = abs(E(as.igraph(network_graph_1_train))$weight))
+
+network_graph_1_train_walk <- 
+  qgraph(getmatrix(network_model_final_1, "omega"),
+         labels = 1:22,
+         layout = network_graph_1_train$layout,
+         vsize = 4,
+         edge.color = "#151414",
+         vTrans = 200,
+         negDashed = TRUE,
+         curveAll = TRUE,
+         groups = as.factor(walktrap_1$membership),
+         palette = "colorblind")
 
 ## Extract model skeleton
 
@@ -221,7 +238,24 @@ network_graph_1_test <-
          edge.label.position = .28,
          edge.color = "#151414",
          vTrans = 200,
-         negDashed = FALSE)
+         negDashed = TRUE,
+         curveAll = TRUE)
+
+walktrap_2 <- 
+  walktrap.community(as.igraph(network_graph_1_test),
+                     weights = abs(E(as.igraph(network_graph_1_test))$weight))
+
+network_graph_1_test_walk <- 
+  qgraph(getmatrix(network_fit_1_test, "omega"),
+         labels = 1:22,
+         layout = network_graph_1_train$layout,
+         vsize = 4,
+         edge.color = "#151414",
+         vTrans = 200,
+         negDashed = TRUE,
+         curveAll = TRUE,
+         groups = as.factor(walktrap_2$membership),
+         palette = "colorblind")
 
 # Factor modelling -------------------------------------------------------------
 
@@ -279,3 +313,12 @@ png("./figures/dawtry_irma-network_test.png",
 plot(network_graph_1_test)
 dev.off()
 
+png("./figures/dawtry_irma-network_train_walktrap.png", 
+    height = 5.5, width = 9.6, units = "in", res = 1500)
+plot(network_graph_1_train_walk)
+dev.off()
+
+png("./figures/dawtry_irma-network_test_walktrap.png", 
+    height = 5.5, width = 9.6, units = "in", res = 1500)
+plot(network_graph_1_test_walk)
+dev.off()

@@ -11,7 +11,9 @@ packages <- c(
   "qgraph",
   "psychonetrics",
   "lavaan",
-  "semPlot")
+  "semPlot",
+  "igraph",
+  "IsingSampler")
 
 lapply(packages, library, character.only = TRUE)
 
@@ -256,7 +258,23 @@ network_graph_reduced_1 <-
          edge.label.position = .28,
          edge.color = "#151414",
          vTrans = 200,
-         negDashed = FALSE)
+         negDashed = TRUE,
+         curveAll = TRUE)
+
+walktrap_1 <- walktrap.community(as.igraph(network_graph_reduced_1),
+                                 weights = abs(E(as.igraph(network_graph_reduced_1))$weight))
+
+network_graph_reduced_1_walk <- 
+  qgraph(getmatrix(network_model_reduced_final_1, "omega"),
+         labels = 1:21,
+         layout = network_graph_reduced_1$layout,
+         vsize = 4,
+         edge.color = "#151414",
+         vTrans = 200,
+         negDashed = TRUE,
+         curveAll = TRUE,
+         groups = as.factor(walktrap_1$membership),
+         palette = "colorblind")
 
 ### Extract model skeleton
 
@@ -287,7 +305,23 @@ network_graph_reduced_1_test <-
          edge.label.position = .28,
          edge.color = "#151414",
          vTrans = 200,
-         negDashed = FALSE)
+         negDashed = TRUE,
+         curveAll = TRUE)
+
+walktrap_1_test <- walktrap.community(as.igraph(network_graph_reduced_1_test),
+                                      weights = abs(E(as.igraph(network_graph_reduced_1_test))$weight))
+
+network_graph_reduced_1_test_walk <- 
+  qgraph(getmatrix(network_reduced_1_test, "omega"),
+         labels = 1:21,
+         layout = network_graph_reduced_1$layout,
+         vsize = 4,
+         edge.color = "#151414",
+         vTrans = 200,
+         negDashed = TRUE,
+         curveAll = TRUE,
+         groups = as.factor(walktrap_1_test$membership),
+         palette = "colorblind")
 
 # Testing network model in Study 2
 
@@ -328,7 +362,199 @@ network_graph_2 <-
          edge.label.position = .28,
          edge.color = "#151414",
          vTrans = 200,
-         negDashed = FALSE)
+         negDashed = TRUE,
+         curveAll = TRUE)
+
+walktrap_2 <- walktrap.community(as.igraph(network_graph_2),
+                                 weights = abs(E(as.igraph(network_graph_2))$weight))
+
+network_graph_2_walk <- 
+  qgraph(getmatrix(network_2_fit, "omega"),
+         labels = 1:21,
+         layout = network_graph_reduced_1$layout,
+         vsize = 4,
+         edge.color = "#151414",
+         vTrans = 200,
+         negDashed = TRUE,
+         curveAll = TRUE,
+         groups = as.factor(walktrap_2$membership),
+         palette = "colorblind")
+
+# Revisiting Study 1, for further analysis -------------------------------------
+
+# Fit model to full data set
+
+network_model_full <- varcov(data = balezina_1_reduced_df %>%
+                               select(-respondent_id),
+                             type = "ggm", 
+                             omega = skeleton_reduced_1)
+
+network_full_fit <- network_model_full %>% 
+  runmodel()
+
+network_pars_full     <- parameters(network_full_fit)
+
+network_fit_ind_full  <- fit(network_full_fit)
+
+network_graph_full <- 
+  qgraph(getmatrix(network_full_fit, "omega"),
+         labels = 1:21,
+         layout = network_graph_reduced_1$layout,
+         vsize = 4,
+         edge.labels = TRUE,
+         edge.label.cex = .40,
+         edge.label.bg = "white",
+         edge.label.position = .28,
+         edge.color = "#151414",
+         vTrans = 200,
+         negDashed = TRUE,
+         curveAll = TRUE)
+
+walktrap_full <- 
+  walktrap.community(as.igraph(network_graph_full),
+                     weights = abs(E(as.igraph(network_graph_full))$weight))
+
+network_graph_full_walk <- 
+  qgraph(getmatrix(network_full_fit, "omega"),
+         labels = 1:21,
+         layout = network_graph_reduced_1$layout,
+         vsize = 4,
+         edge.color = "#151414",
+         vTrans = 200,
+         negDashed = TRUE,
+         curveAll = TRUE,
+         groups = as.factor(walktrap_full$membership),
+         palette = "colorblind")
+
+centrality_plot_full <- 
+centralityPlot(network_graph_full_walk,
+               include = c("Strength", "Closeness", "Betweenness"))
+
+strength_measure <- centrality_plot_full$data %>% 
+  filter(measure == "Strength") %>% 
+  arrange(desc(value))
+
+closeness_measure <- centrality_plot_full$data %>% 
+  filter(measure == "Closeness")
+
+# Simulation of persuasion
+
+set.seed(1212)
+
+balezina_1_reduced_long <- balezina_1_reduced_df %>%
+  pivot_longer(
+    cols      = colnames(select(., -respondent_id)),
+    values_to = "rma",
+    names_to  = "item"
+  )
+
+balezina_1_summary <- balezina_1_reduced_long %>% 
+  group_by(item) %>% 
+  summarise(
+    mean      = mean(rma),
+    threshold = (mean(rma) - 4)
+  )
+
+balezina_1_sim_base <- 
+  IsingSampler(n          = 100000,
+               graph      = getmatrix(network_full_fit, "omega"), 
+               thresholds = balezina_1_summary$threshold, 
+               responses  = c(0, 1))
+
+balezina_1_sim_base <- as.data.frame(balezina_1_sim_base)
+
+balezina_1_sim_base$total <- rowSums(balezina_1_sim_base)
+
+balezina_1_sim_base$id    <- 1:nrow(balezina_1_sim_base) 
+
+balezina_1_sim_base_weighted <- balezina_1_sim_base %>% 
+  pivot_longer(
+    cols          = starts_with("V"),
+    values_to     = "rma",
+    names_to      = "node",
+    names_pattern = "V(.*)"
+  ) %>% 
+  left_join(closeness_measure, by = "node") %>% 
+  mutate(
+    weighted = rma * value
+  ) %>% 
+  pivot_wider(
+    id_cols = "id",
+    names_from = "node",
+    names_prefix = "V",
+    values_from = "weighted"
+  ) %>% 
+  select(-id)
+
+balezina_1_sim_base_weighted$total <- rowSums(balezina_1_sim_base_weighted)
+
+## Simulated persuasion on the strongest item
+
+strongest_node <- strength_measure$node[[1]]
+
+sim_thresholds <- balezina_1_summary$threshold
+sim_thresholds[strongest_node] <- -3
+
+balezina_1_sim_pers <- 
+  IsingSampler(n          = 100000,
+               graph      = getmatrix(network_full_fit, "omega"), 
+               thresholds = sim_thresholds, 
+               responses  = c(0, 1))
+
+balezina_1_sim_pers <- as.data.frame(balezina_1_sim_pers)
+
+balezina_1_sim_pers$total <- rowSums(balezina_1_sim_pers)
+
+balezina_1_sim_pers$id    <- 1:nrow(balezina_1_sim_pers) 
+
+balezina_1_sim_pers_weighted <- balezina_1_sim_pers %>% 
+  pivot_longer(
+    cols          = starts_with("V"),
+    values_to     = "rma",
+    names_to      = "node",
+    names_pattern = "V(.*)"
+  ) %>% 
+  left_join(closeness_measure, by = "node") %>% 
+  mutate(
+    weighted = rma * value
+  ) %>% 
+  pivot_wider(
+    id_cols = "id",
+    names_from = "node",
+    names_prefix = "V",
+    values_from = "weighted"
+  ) %>% 
+  select(-id)
+
+balezina_1_sim_pers_weighted$total <- rowSums(balezina_1_sim_pers_weighted)
+
+### Effect sizes
+
+# These values provide the proportions of cases where the strongest node has
+# taken a value of 1. In this scenario, a value of 1 indicates endorsement of
+# the item.
+
+balezina_1_base_prop <- mean(balezina_1_sim_base[, strongest_node])
+balezina_1_pers_prop <- mean(balezina_1_sim_pers[, strongest_node])
+
+# These effect standardized mean differences estimate the effect of strong
+# persuasion on the strongest node in the network on the overall state of the
+# network. Two variations are calculated, based on the unweighted sum score and
+# based on the scores weighted by the closeness of each node.
+
+balezina_1_unweighted_d <- 
+  (mean(balezina_1_sim_base$total) 
+   - mean(balezina_1_sim_pers$total)) 
+  / sqrt((sd(balezina_1_sim_base$total)^2 
+          + sd(balezina_1_sim_pers$total)^2) 
+         / 2)
+
+balezina_1_weighted_d <- 
+  (mean(balezina_1_sim_base_weighted$total) 
+   - mean(balezina_1_sim_pers_weighted$total)) 
+  / sqrt((sd(balezina_1_sim_base_weighted$total)^2 
+        + sd(balezina_1_sim_pers_weighted$total)^2) 
+       / 2)
 
 # Export figures ---------------------------------------------------------------
 
@@ -339,12 +565,25 @@ dev.off()
 
 png("./figures/balezina_irma-reduced-network_test.png", 
     height = 5.5, width = 9.6, units = "in", res = 1500)
-
 plot(network_graph_reduced_1_test)
 dev.off()
 
 png("./figures/balezina_irma-reduced-network_study-2.png", 
     height = 5.5, width = 9.6, units = "in", res = 1500)
-
 plot(network_graph_2)
+dev.off()
+
+png("./figures/balezina_irma-reduced-network_train_walktrap.png", 
+    height = 5.5, width = 9.6, units = "in", res = 1500)
+plot(network_graph_reduced_1_walk)
+dev.off()
+
+png("./figures/balezina_irma-reduced-network_test_walktrap.png", 
+    height = 5.5, width = 9.6, units = "in", res = 1500)
+plot(network_graph_reduced_1_test_walk)
+dev.off()
+
+png("./figures/balezina_irma-reduced-network_study-2_walktrap.png", 
+    height = 5.5, width = 9.6, units = "in", res = 1500)
+plot(network_graph_2_walk)
 dev.off()

@@ -148,7 +148,23 @@ network_graph_full_1 <-
          edge.label.position = .28,
          edge.color = "#151414",
          vTrans = 200,
-         negDashed = FALSE)
+         negDashed = TRUE,
+         curveAll = TRUE)
+
+walktrap_1 <- walktrap.community(as.igraph(network_graph_full_1),
+                                 weights = abs(E(as.igraph(network_graph_full_1))$weight))
+
+network_graph_full_1_walk <- 
+  qgraph(getmatrix(network_fit_full_1, "omega"),
+         labels = 1:19,
+         layout = network_graph_full_1$layout,
+         vsize = 4,
+         edge.color = "#151414",
+         vTrans = 200,
+         negDashed = TRUE,
+         curveAll = TRUE,
+         groups = as.factor(walktrap_1$membership),
+         palette = "colorblind")
 
 ## Extract model skeleton
 
@@ -219,7 +235,23 @@ network_graph_2_post <-
          edge.label.position = .28,
          edge.color = "#151414",
          vTrans = 200,
-         negDashed = FALSE)
+         negDashed = TRUE,
+         curveAll = TRUE)
+
+walktrap_2 <- walktrap.community(as.igraph(network_graph_2_post),
+                                 weights = abs(E(as.igraph(network_graph_2_post))$weight))
+
+network_graph_2_post_walk <- 
+  qgraph(getmatrix(network_fit_2_post, "omega"),
+         labels = 1:19,
+         layout = network_graph_full_1$layout,
+         vsize = 4,
+         edge.color = "#151414",
+         vTrans = 200,
+         negDashed = TRUE,
+         curveAll = TRUE,
+         groups = as.factor(walktrap_2$membership),
+         palette = "colorblind")
 
 # Study 3 ----------------------------------------------------------------------
 
@@ -255,7 +287,23 @@ network_graph_3 <-
          edge.label.position = .28,
          edge.color = "#151414",
          vTrans = 200,
-         negDashed = FALSE)
+         negDashed = TRUE,
+         curveAll = TRUE)
+
+walktrap_3 <- walktrap.community(as.igraph(network_graph_3),
+                                 weights = abs(E(as.igraph(network_graph_3))$weight))
+
+network_graph_3_walk <- 
+  qgraph(getmatrix(network_fit_3, "omega"),
+         labels = 1:19,
+         layout = network_graph_full_1$layout,
+         vsize = 4,
+         edge.color = "#151414",
+         vTrans = 200,
+         negDashed = TRUE,
+         curveAll = TRUE,
+         groups = as.factor(walktrap_3$membership),
+         palette = "colorblind")
 
 # Factor modeling --------------------------------------------------------------
 
@@ -365,7 +413,7 @@ change_labels <- paste(
   " (",
   arrange(lys_2_sum, desc(pre_rma_sum))$pre_rma_sum,
   "/",
-  arrange(lys_2_sum, desc(rma_sum))$rma_sum,
+  lys_2_sum[arrange(lys_2_sum, desc(pre_rma_sum))$id, ]$rma_sum,
   ")",
   sep = ""
 )
@@ -545,8 +593,233 @@ lys_2_sum_pre_post <-
   ) +
   theme_classic()
 
-lys_2_time_change <- plot_grid(lys_2_sum_pre_post, lys_2_sum_by_score_change, lys_2_sum_by_change,
-                               nrow = 1, rel_widths = c(1, 1.3, 1.3))
+# Change by item 
+
+## Absolute change, by item
+
+lys_2_item <- lys_2_long %>% 
+  pivot_wider(
+    id_cols     = c("id", "item"),
+    names_from  = "time",
+    values_from = "rma"
+  ) %>% 
+  mutate(
+    change     = abs(rma - pre_rma)
+  ) %>% 
+  group_by(item) %>% 
+  summarise(
+    mean_change  = mean(change),
+    sd_change    = sd(change),
+    freq_change  = sum(change > 0),
+    mean_pre     = mean(pre_rma),
+    sd_pre       = sd(pre_rma),
+    mean_rma     = mean(rma),
+    sd_rma       = sd(rma)
+  ) %>% 
+  arrange(desc(mean_change))
+
+lys_2_item_mean <- 
+ggplot(lys_2_item,
+       aes(
+         x = mean_pre,
+         y = mean_rma
+       )) +
+  geom_smooth(
+    method = "lm",
+    formula = "y ~ x"
+  ) +
+  geom_point() +
+  scale_y_continuous(
+    breaks = seq(1, 5, .25)
+  ) +
+  scale_x_continuous(
+    breaks = seq(1, 5, .25)
+  ) +
+  labs(
+    y     = "Mean Item Agreement, 2 weeks",
+    x     = "Mean Item Agreement, Baseline"
+  ) +
+  theme_classic()
+
+lys_2_item_long <- lys_2_item %>% 
+  pivot_longer(
+    cols = c("mean_rma", "mean_pre"),
+    names_to = "time",
+    values_to = "rma"
+  )
+
+lys_2_change_by_item_cor <- cor.test(lys_2_item_long$mean_change, lys_2_item_long$rma)
+
+lys_2_change_by_item <- 
+ggplot(lys_2_item_long,
+       aes(
+         x = rma,
+         y = mean_change,
+         color = time
+       )) +
+  geom_smooth(
+    method = "lm",
+    formula = "y ~ x"
+  ) +
+  geom_line(
+    aes(
+      group = item
+    ),
+    color = "darkgrey",
+    alpha = .5
+  ) +
+  geom_point() +
+  scale_y_continuous(
+    breaks = seq(0, 1, .2)
+  ) +
+  scale_x_continuous(
+    breaks = seq(1, 5, .25)
+  ) +
+  scale_color_manual(
+    values = c("#52D1DC", "#2A4494"),
+    labels = c("Baseline", "2 weeks")
+  ) +
+  labs(
+    color = "Measurement",
+    y     = "Mean Absolute Change in Item Agreement",
+    x     = "Mean Item Agreement"
+  ) +
+  theme_classic()
+
+# Create an array of plots
+
+lys_2_time_change <- 
+  plot_grid(lys_2_sum_pre_post, lys_2_sum_by_score_change, lys_2_sum_by_change,
+                               lys_2_item_mean, lys_2_change_by_item,
+                               nrow = 2, rel_widths = c(1, 1.3, 1.3, 1, 1.3))
+
+# Revisiting Study 1, for further analysis -------------------------------------
+
+# Centrality measures for Study 1
+
+centrality_plot_full <- 
+  centralityPlot(network_graph_full_1_walk,
+                 include = c("Strength", "Closeness", "Betweenness"))
+
+strength_measure <- centrality_plot_full$data %>% 
+  filter(measure == "Strength") %>% 
+  arrange(desc(value))
+
+closeness_measure <- centrality_plot_full$data %>% 
+  filter(measure == "Closeness")
+
+# Simulation of persuasion
+
+set.seed(1891)
+
+lys_1_model_long <- lys_1_model_df %>%
+  pivot_longer(
+    cols      = colnames(.),
+    values_to = "rma",
+    names_to  = "item"
+  )
+
+lys_1_summary <- lys_1_model_long %>% 
+  group_by(item) %>% 
+  summarise(
+    mean      = mean(rma),
+    threshold = (mean(rma) - 3)
+  )
+
+lys_1_sim_base <- 
+  IsingSampler(n          = 100000,
+               graph      = getmatrix(network_fit_full_1, "omega"), 
+               thresholds = lys_1_summary$threshold, 
+               responses  = c(0, 1))
+
+lys_1_sim_base <- as.data.frame(lys_1_sim_base)
+
+lys_1_sim_base$total <- rowSums(lys_1_sim_base)
+
+lys_1_sim_base$id    <- 1:nrow(lys_1_sim_base) 
+
+lys_1_sim_base_weighted <- lys_1_sim_base %>% 
+  pivot_longer(
+    cols          = starts_with("V"),
+    values_to     = "rma",
+    names_to      = "node",
+    names_pattern = "V(.*)"
+  ) %>% 
+  left_join(closeness_measure, by = "node") %>% 
+  mutate(
+    weighted = rma * value
+  ) %>% 
+  pivot_wider(
+    id_cols = "id",
+    names_from = "node",
+    names_prefix = "V",
+    values_from = "weighted"
+  ) %>% 
+  select(-id)
+
+lys_1_sim_base_weighted$total <- rowSums(lys_1_sim_base_weighted)
+
+## Simulated persuasion on the strongest item
+
+strongest_node <- strength_measure$node[[1]]
+
+sim_thresholds <- lys_1_summary$threshold
+sim_thresholds[strongest_node] <- -2
+
+lys_1_sim_pers <- 
+  IsingSampler(n          = 100000,
+               graph      = getmatrix(network_fit_full_1, "omega"), 
+               thresholds = sim_thresholds, 
+               responses  = c(0, 1))
+
+lys_1_sim_pers <- as.data.frame(lys_1_sim_pers)
+
+lys_1_sim_pers$total <- rowSums(lys_1_sim_pers)
+
+lys_1_sim_pers$id    <- 1:nrow(lys_1_sim_pers) 
+
+lys_1_sim_pers_weighted <- lys_1_sim_pers %>% 
+  pivot_longer(
+    cols          = starts_with("V"),
+    values_to     = "rma",
+    names_to      = "node",
+    names_pattern = "V(.*)"
+  ) %>% 
+  left_join(closeness_measure, by = "node") %>% 
+  mutate(
+    weighted = rma * value
+  ) %>% 
+  pivot_wider(
+    id_cols = "id",
+    names_from = "node",
+    names_prefix = "V",
+    values_from = "weighted"
+  ) %>% 
+  select(-id)
+
+lys_1_sim_pers_weighted$total <- rowSums(lys_1_sim_pers_weighted)
+
+### Effect sizes
+
+# These values provide the proportions of cases where the strongest node has
+# taken a value of 1. In this scenario, a value of 1 indicates endorsement of
+# the item.
+
+lys_1_base_prop <- mean(lys_1_sim_base[, strongest_node])
+lys_1_pers_prop <- mean(lys_1_sim_pers[, strongest_node])
+
+# These effect standardized mean differences estimate the effect of strong
+# persuasion on the strongest node in the network on the overall state of the
+# network. Two variations are calculated, based on the unweighted sum score and
+# based on the scores weighted by the closeness of each node.
+
+lys_1_unweighted_d <- 
+  (mean(lys_1_sim_base$total)  - mean(lys_1_sim_pers$total)) / 
+  sqrt((sd(lys_1_sim_base$total)^2 + sd(lys_1_sim_pers$total)^2) / 2)
+
+lys_1_weighted_d <- 
+  (mean(lys_1_sim_base_weighted$total) - mean(lys_1_sim_pers_weighted$total)) / 
+  sqrt((sd(lys_1_sim_base_weighted$total)^2 + sd(lys_1_sim_pers_weighted$total)^2) / 2)
 
 # Export figures ---------------------------------------------------------------
 
@@ -557,14 +830,27 @@ dev.off()
 
 png("./figures/lys_irma-network_study-2-post.png", 
     height = 5.5, width = 9.6, units = "in", res = 1500)
-
 plot(network_graph_2_post)
 dev.off()
 
 png("./figures/lys_irma-network_study-3.png", 
     height = 5.5, width = 9.6, units = "in", res = 1500)
-
 plot(network_graph_3)
+dev.off()
+
+png("./figures/lys_irma-network_study-1_walktrap.png", 
+    height = 5.5, width = 9.6, units = "in", res = 1500)
+plot(network_graph_full_1_walk)
+dev.off()
+
+png("./figures/lys_irma-network_study-2-post_walktrap.png", 
+    height = 5.5, width = 9.6, units = "in", res = 1500)
+plot(network_graph_2_post_walk)
+dev.off()
+
+png("./figures/lys_irma-network_study-3_walktrap.png", 
+    height = 5.5, width = 9.6, units = "in", res = 1500)
+plot(network_graph_3_walk)
 dev.off()
 
 save_plot("./figures/lys_item-change_study-2.png", lys_2_item_change,
@@ -574,4 +860,4 @@ save_plot("./figures/lys_sum-change_study-2.png", lys_2_sum_by_change,
           base_height = 6, base_width = 6.5)
 
 save_plot("./figures/lys_time-change_study-2.png", lys_2_time_change,
-          base_height = 4, base_width = 14)
+          base_height = 8, base_width = 14)
