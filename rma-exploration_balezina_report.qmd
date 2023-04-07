@@ -86,6 +86,52 @@ knitr::include_graphics("./figures/balezina_irma-reduced-network_study-2.png")
 knitr::include_graphics("./figures/balezina_irma-reduced-network_study-2_walktrap.png")
 ```
 
+# Factor Models
+
+## Study 1
+
+### Training
+
+#### Fit Indices
+
+```{r}
+balezina_1_train_seven_factor_ind
+```
+
+#### Parameter Estimates
+
+```{r}
+balezina_1_train_seven_factor_par
+```
+
+### Test
+
+#### Fit Indices
+
+```{r}
+balezina_1_test_seven_factor_ind
+```
+
+#### Parameter Estimates
+
+```{r}
+balezina_1_test_seven_factor_par
+```
+
+## Study 2
+
+### Fit Indices
+
+```{r}
+balezina_2_seven_factor_ind
+```
+
+### Parameter Estimates
+
+```{r}
+balezina_2_seven_factor_par
+```
+
 # Simulated Persuasion
 
 ## Fitting Model to Full Data from Study 1

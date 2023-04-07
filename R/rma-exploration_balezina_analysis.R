@@ -381,6 +381,52 @@ network_graph_2_walk <-
          groups = as.factor(walktrap_2$membership),
          palette = "colorblind")
 
+# Reproducing factor models from original paper --------------------------------
+
+seven_factor <- 
+'
+
+f1 =~ li_2 + li_3 + li_4
+f2 =~ fi_3 + fi_4 + fi_5
+f3 =~ de_1 + de_2 + de_5
+f4 =~ mt_2 + mt_3 + mt_4
+f5 =~ nr_3 + nr_4 + te_4
+f6 =~ sa_1 + sa_4 + sa_7
+f7 =~ wi_1 + wi_4 + wi_5
+
+'
+
+seven_factor_2 <- 
+  '
+
+f1 =~ li2 + li3 + li4
+f2 =~ fi3 + fi4 + fi5
+f3 =~ de1 + de2 + de5
+f4 =~ mt2 + mt3 + mt4
+f5 =~ nr3 + nr4 + te4
+f6 =~ sa1 + sa4 + sa7
+f7 =~ wi1 + wi4 + wi5
+
+'
+
+balezina_1_train_seven_factor_fit <- cfa(seven_factor,
+                                         data = balezina_1_reduced_df_train)
+
+balezina_1_test_seven_factor_fit <- cfa(seven_factor,
+                                        data = balezina_1_reduced_df_test)
+
+balezina_2_seven_factor_fit <- cfa(seven_factor_2,
+                                   data = balezina_2_network_df)
+
+balezina_1_train_seven_factor_ind <- fitmeasures(balezina_1_train_seven_factor_fit)
+balezina_1_train_seven_factor_par <- standardizedsolution(balezina_1_train_seven_factor_fit)
+
+balezina_1_test_seven_factor_ind <- fitmeasures(balezina_1_test_seven_factor_fit)
+balezina_1_test_seven_factor_par <- standardizedsolution(balezina_1_test_seven_factor_fit)
+
+balezina_2_seven_factor_ind <- fitmeasures(balezina_2_seven_factor_fit)
+balezina_2_seven_factor_par <- standardizedsolution(balezina_2_seven_factor_fit)
+
 # Revisiting Study 1, for further analysis -------------------------------------
 
 # Fit model to full data set
