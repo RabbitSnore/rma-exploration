@@ -15,15 +15,23 @@ source("./R/rma-exploration_balezina_analysis.R")
 
 ## Training Network
 
+::: {.panel-tabset}
+
+## Fit Indices
+
 ```{r}
 network_reduced_fit_ind_1 %>% 
   knitr::kable()
 ```
 
+## Parameter Estimates
+
 ```{r}
 network_reduced_pars_1 %>% 
   knitr::kable()
 ```
+
+:::
 
 ```{r}
 knitr::include_graphics("./figures/balezina_irma-reduced-network_train.png")

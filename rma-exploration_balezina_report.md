@@ -5,6 +5,10 @@ Balezina (2023) - Network Re-analysis
 
 ## Training Network
 
+<div class="panel-tabset">
+
+## Fit Indices
+
 ``` r
 network_reduced_fit_ind_1 %>% 
   knitr::kable()
@@ -47,6 +51,8 @@ network_reduced_fit_ind_1 %>%
 | ebic.5            | ebic.5            |  3.687129e+04 |
 | ebic.75           | ebic.75           |  3.708319e+04 |
 | ebic1             | ebic1             |  3.740103e+04 |
+
+## Parameter Estimates
 
 ``` r
 network_reduced_pars_1 %>% 
@@ -307,6 +313,8 @@ network_reduced_pars_1 %>%
 | wi_1 |      19 | <sub>/</sub> | wi_1 |      19 |  1.2519922 | NA  | 0.0404153 | 0.0000000 | NA      | NA     | delta  |  19 |  19 |  85 | fullsample |        1 | FALSE |  0.0000000 | 0.9999998 |  0.0000000 | NA      | NA       | NA       | NA       | NA        | NA        |       0 |     Inf | FALSE      |
 | wi_4 |      20 | <sub>/</sub> | wi_4 |      20 |  1.1323230 | NA  | 0.0358927 | 0.0000000 | NA      | NA     | delta  |  20 |  20 |  86 | fullsample |        1 | FALSE |  0.0000000 | 0.9999997 |  0.0000000 | NA      | NA       | NA       | NA       | NA        | NA        |       0 |     Inf | FALSE      |
 | wi_5 |      21 | <sub>/</sub> | wi_5 |      21 |  1.2196383 | NA  | 0.0395738 | 0.0000000 | NA      | NA     | delta  |  21 |  21 |  87 | fullsample |        1 | FALSE |  0.0000000 | 0.9999988 |  0.0000000 | NA      | NA       | NA       | NA       | NA        | NA        |       0 |     Inf | FALSE      |
+
+</div>
 
 ``` r
 knitr::include_graphics("./figures/balezina_irma-reduced-network_train.png")
