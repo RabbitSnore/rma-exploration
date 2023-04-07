@@ -2,11 +2,12 @@
 title: "Balezina (2023) - Network Re-analysis"
 format: gfm
 editor: source
+df-print: paged
 ---
 
 ```{r}
 #| include: false
-
+options(scipen = 999, digits = 5)
 source("./R/rma-exploration_balezina_analysis.R")
 
 ```
@@ -15,23 +16,19 @@ source("./R/rma-exploration_balezina_analysis.R")
 
 ## Training Network
 
-::: {.panel-tabset}
-
-## Fit Indices
+### Fit Indices
 
 ```{r}
-network_reduced_fit_ind_1 %>% 
-  knitr::kable()
+network_reduced_fit_ind_1
 ```
 
-## Parameter Estimates
+### Parameter Estimates
 
 ```{r}
-network_reduced_pars_1 %>% 
-  knitr::kable()
+network_reduced_pars_1
 ```
 
-:::
+### Network Figures
 
 ```{r}
 knitr::include_graphics("./figures/balezina_irma-reduced-network_train.png")
@@ -43,15 +40,19 @@ knitr::include_graphics("./figures/balezina_irma-reduced-network_train_walktrap.
 
 ## Test Network
 
-```{r}
-network_reduced_fit_ind_1_test %>% 
-  knitr::kable()
-```
+### Fit Indices
 
 ```{r}
-network_reduced_pars_1_test %>% 
-  knitr::kable()
+network_reduced_fit_ind_1_test
 ```
+
+### Parameter Estimates
+
+```{r}
+network_reduced_pars_1_test
+```
+
+### Network Figures
 
 ```{r}
 knitr::include_graphics("./figures/balezina_irma-reduced-network_test.png")
@@ -63,15 +64,19 @@ knitr::include_graphics("./figures/balezina_irma-reduced-network_test_walktrap.p
 
 # Confirming the Model in the Data from Study 2
 
-```{r}
-network_fit_ind_2 %>% 
-  knitr::kable()
-```
+## Fit Indices
 
 ```{r}
-network_pars_2%>% 
-  knitr::kable()
+network_fit_ind_2
 ```
+
+## Parameter Estimates
+
+```{r}
+network_pars_2
+```
+
+## Network Figures
 
 ```{r}
 knitr::include_graphics("./figures/balezina_irma-reduced-network_study-2.png")
