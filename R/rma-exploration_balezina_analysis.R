@@ -12,6 +12,7 @@ packages <- c(
   "psychonetrics",
   "lavaan",
   "semPlot",
+  "cowplot",
   "igraph",
   "IsingSampler")
 
@@ -492,6 +493,36 @@ balezina_1_sim_base_weighted <- balezina_1_sim_base %>%
 
 balezina_1_sim_base_weighted$total <- rowSums(balezina_1_sim_base_weighted)
 
+### Histograms of total scores
+
+balezina_ising_base_unweighted_hist <- 
+ggplot(balezina_1_sim_base,
+       aes(
+         x = total
+       )) +
+  geom_histogram(
+    binwidth = 1,
+    color = "black",
+    fill  = "grey"
+  ) +
+  scale_x_continuous(
+    breaks = 0:21
+  ) +
+  theme_classic()
+
+balezina_ising_base_weighted_hist <- 
+  ggplot(balezina_1_sim_base_weighted,
+         aes(
+           x = total
+         )) +
+  geom_histogram(
+    bins = 22,
+    color = "black",
+    fill  = "grey"
+  ) +
+  scale_x_continuous() +
+  theme_classic()
+
 ## Simulated persuasion on the strongest item
 
 strongest_node <- strength_measure$node[[1]]
@@ -531,6 +562,37 @@ balezina_1_sim_pers_weighted <- balezina_1_sim_pers %>%
   select(-id)
 
 balezina_1_sim_pers_weighted$total <- rowSums(balezina_1_sim_pers_weighted)
+
+
+### Histograms of total scores
+
+balezina_ising_pers_unweighted_hist <- 
+  ggplot(balezina_1_sim_pers,
+         aes(
+           x = total
+         )) +
+  geom_histogram(
+    binwidth = 1,
+    color = "black",
+    fill  = "grey"
+  ) +
+  scale_x_continuous(
+    breaks = 0:21
+  ) +
+  theme_classic()
+
+balezina_ising_pers_weighted_hist <- 
+  ggplot(balezina_1_sim_pers_weighted,
+         aes(
+           x = total
+         )) +
+  geom_histogram(
+    bins = 22,
+    color = "black",
+    fill  = "grey"
+  ) +
+  scale_x_continuous() +
+  theme_classic()
 
 ### Effect sizes
 
@@ -585,3 +647,29 @@ png("./figures/balezina_irma-reduced-network_study-2_walktrap.png",
     height = 5.5, width = 9.6, units = "in", res = 1500)
 plot(network_graph_2_walk)
 dev.off()
+
+png("./figures/balezina_irma-reduced-network_fulldata.png", 
+    height = 5.5, width = 9.6, units = "in", res = 1500)
+plot(network_graph_full)
+dev.off()
+
+png("./figures/balezina_irma-reduced-network_fulldata_walktrap.png", 
+    height = 5.5, width = 9.6, units = "in", res = 1500)
+plot(network_graph_full_walk)
+dev.off()
+
+save_plot("./figures/balezina_ising_base_unweighted_hist.png",
+          balezina_ising_base_unweighted_hist,
+          base_height = 3.5, base_width = 5)
+
+save_plot("./figures/balezina_ising_base_weighted_hist.png",
+          balezina_ising_base_weighted_hist,
+          base_height = 3.5, base_width = 5)
+
+save_plot("./figures/balezina_ising_pers_unweighted_hist.png",
+          balezina_ising_pers_unweighted_hist,
+          base_height = 3.5, base_width = 5)
+
+save_plot("./figures/balezina_ising_pers_weighted_hist.png",
+          balezina_ising_pers_weighted_hist,
+          base_height = 3.5, base_width = 5)

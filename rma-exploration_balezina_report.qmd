@@ -2,7 +2,7 @@
 title: "Balezina (2023) - Network Re-analysis"
 format: gfm
 editor: source
-df-print: paged
+toc: true
 ---
 
 ```{r}
@@ -84,4 +84,96 @@ knitr::include_graphics("./figures/balezina_irma-reduced-network_study-2.png")
 
 ```{r}
 knitr::include_graphics("./figures/balezina_irma-reduced-network_study-2_walktrap.png")
+```
+
+# Simulated Persuasion
+
+## Fitting Model to Full Data from Study 1
+
+### Fit Indices
+
+```{r}
+network_fit_ind_full
+```
+
+### Parameter Estimates
+
+```{r}
+network_pars_full
+```
+
+### Centrality Estimates
+
+```{r}
+plot(centrality_plot_full)
+```
+
+```{r}
+balezina_1_mean_strength
+```
+
+```{r}
+balezina_1_mean_closeness
+```
+
+### Network Figures
+
+```{r}
+knitr::include_graphics("./figures/balezina_irma-reduced-network_fulldata.png")
+```
+
+```{r}
+knitr::include_graphics("./figures/balezina_irma-reduced-network_fulldata_walktrap.png")
+```
+
+## Creating Simulated Data from Ising Models Based on the Estimated Network
+
+### Histograms of Total Scores
+
+```{r}
+as.numeric(strongest_node)
+```
+
+#### No Persuasion, Unweighted Sum
+
+```{r}
+knitr::include_graphics("./figures/balezina_ising_base_unweighted_hist.png")
+```
+
+#### No Persuasion, Weighted by Closeness
+
+```{r}
+knitr::include_graphics("./figures/balezina_ising_base_weighted_hist.png")
+```
+
+#### Persuasion, Unweighted Sum
+
+```{r}
+knitr::include_graphics("./figures/balezina_ising_pers_unweighted_hist.png")
+```
+
+#### Persuasion, Weighted by Closeness
+
+```{r}
+knitr::include_graphics("./figures/balezina_ising_pers_weighted_hist.png")
+```
+
+### Proportions of Agreement with Strongest Node
+
+```{r}
+balezina_1_base_prop
+```
+
+```{r}
+balezina_1_pers_prop
+```
+
+### Standardized Mean Difference in Total Scores Between Baseline and Persuasion Models
+
+```{r}
+balezina_1_unweighted_d
+```
+
+```{r}
+balezina_1_weighted_d
 ```
