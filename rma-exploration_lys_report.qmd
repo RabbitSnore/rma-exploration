@@ -124,6 +124,12 @@ five_factor_par_3
 
 # Change Over Time
 
+## Sum Score Across Time
+
+```{r}
+lys_2_sum_icc
+```
+
 ## Item-Level Change for Each Participant
 
 ```{r}

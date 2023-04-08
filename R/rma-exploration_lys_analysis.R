@@ -373,6 +373,30 @@ lys_2_sum_long <- lys_2_sum %>%
 
 lys_2_sum$id <- 1:nrow(lys_2_sum)
 
+lys_2_response_change <- lys_2_long %>% 
+  pivot_wider(
+    id_cols = c("id", "item"),
+    names_from = "time",
+    values_from = "rma"
+  ) %>% 
+  mutate(
+    change_abs = abs(pre_rma - rma)
+  ) %>% 
+  pivot_longer(
+    cols = c("rma", "pre_rma"),
+    names_to = "time",
+    values_to = "rma"
+  )
+
+lys_2_response_change$response_id    <- 
+  paste(lys_2_response_change$id, lys_2_response_change$item, sep = "_")
+
+lys_2_response_change$jitter_rma     <- 
+  lys_2_response_change$rma + runif(nrow(lys_2_response_change), -.35, .35)
+
+lys_2_response_change$jitter_change  <- 
+  lys_2_response_change$change_abs + runif(nrow(lys_2_response_change), -.35, .35)
+
 # Item model
 
 ## Unconditional model
@@ -396,6 +420,10 @@ lys_2_sum_icc   <- icc(lys_2_sum_uncon, by_group = TRUE)
 ## Conditional model
 
 lys_2_sum_uncon <- lmer(sum ~ 1 + time + (1|id), data = lys_2_sum_long)
+
+# Response level model
+
+lys_2_response_change_lmm <- lmer(change_abs ~ rma + time + (1 + rma|id), data = lys_2_response_change)
 
 # Visualization of change
 
@@ -735,12 +763,56 @@ ggplot(lys_2_item_long,
   ) +
   theme_classic()
 
+# Item rating change, response level
+
+lys_2_response_change <- 
+ggplot(lys_2_response_change,
+       aes(
+         x = jitter_rma,
+         y = jitter_change,
+         color = time
+       )) +
+  geom_smooth(
+    aes(
+      x = rma,
+      y = change_abs
+    ),
+    method = "lm",
+    formula = "y ~ x"
+  ) +
+  geom_line(
+    aes(
+      group = response_id
+    ),
+    color = "darkgrey",
+    alpha = .1
+  ) +
+  geom_point(
+    alpha = .50
+  ) +
+  scale_y_continuous(
+    breaks = seq(0, 4, 1)
+  ) +
+  scale_x_continuous(
+    breaks = seq(1, 5, 1)
+  ) +
+  scale_color_manual(
+    values = c("#52D1DC", "#2A4494"),
+    labels = c("Baseline", "2 weeks")
+  ) +
+  labs(
+    color = "Measurement",
+    y     = "Absolute Change in Item Agreement",
+    x     = "Item Agreement"
+  ) +
+  theme_classic()
+
 # Create an array of plots
 
 lys_2_time_change <- 
   plot_grid(lys_2_sum_pre_post, lys_2_sum_by_score_change_abs, lys_2_sum_by_change,
-                               lys_2_item_mean, lys_2_change_by_item,
-                               nrow = 2, rel_widths = c(1, 1.3, 1.3, 1, 1.3))
+            lys_2_item_mean, lys_2_change_by_item, lys_2_response_change,
+            nrow = 2, rel_widths = c(1, 1.3, 1.3, 1, 1.3, 1.3))
 
 # Revisiting Study 1, for further analysis -------------------------------------
 

@@ -33,6 +33,8 @@
       id="toc-parameter-estimates-4">Parameter Estimates</a>
 - <a href="#change-over-time" id="toc-change-over-time">Change Over
   Time</a>
+  - <a href="#sum-score-across-time" id="toc-sum-score-across-time">Sum
+    Score Across Time</a>
   - <a href="#item-level-change-for-each-participant"
     id="toc-item-level-change-for-each-participant">Item-Level Change for
     Each Participant</a>
@@ -2352,6 +2354,18 @@ five_factor_par_3
     53    sa ~~    jd   0.711 0.063 11.236  0.000    0.587    0.835
 
 # Change Over Time
+
+## Sum Score Across Time
+
+``` r
+lys_2_sum_icc
+```
+
+    # ICC by Group
+
+    Group |   ICC
+    -------------
+    id    | 0.901
 
 ## Item-Level Change for Each Participant
 
