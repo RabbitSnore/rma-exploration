@@ -1,0 +1,184 @@
+---
+title: "Dawtry et al (2019) - Network Re-analysis"
+format: gfm
+editor: source
+toc: true
+---
+
+```{r}
+#| include: false
+options(scipen = 999, digits = 5)
+source("./R/rma-exploration_dawtry_analysis.R")
+
+```
+
+# Network Analysis of Combined Data of Studies 1, 3, and 5
+
+## Training Network
+
+### Fit Indices
+
+```{r}
+network_fit_ind_1
+```
+
+### Parameter Estimates
+
+```{r}
+network_pars_1
+```
+
+### Network Figures
+
+```{r}
+knitr::include_graphics("./figures/dawtry_irma-network_train.png")
+```
+
+```{r}
+knitr::include_graphics("./figures/dawtry_irma-network_train_walktrap.png")
+```
+
+## Test Network
+
+### Fit Indices
+
+```{r}
+network_fit_ind_1_test
+```
+
+### Parameter Estimates
+
+```{r}
+network_pars_1_test
+```
+
+### Network Figures
+
+```{r}
+knitr::include_graphics("./figures/dawtry_irma-network_test.png")
+```
+
+```{r}
+knitr::include_graphics("./figures/dawtry_irma-network_test_walktrap.png")
+```
+
+# Factor Model
+
+## Exploratory Factor Analysis with Training Data
+
+### Parallel Analysis
+
+```{r}
+parallel_train
+```
+### Exploratory Factor Analysis
+
+```{r}
+efa_train
+```
+
+## Confirmatory Factor Analysis with Test Data
+
+### Fit Indices
+
+```{r}
+five_factor_ind
+```
+
+### Parameter Estimates
+
+```{r}
+five_factor_par
+```
+
+# Simulated Persuasion
+
+## Fitting Model to Full Data
+
+### Fit Indices
+
+```{r}
+network_fit_ind_full
+```
+
+### Parameter Estimates
+
+```{r}
+network_pars_full
+```
+
+### Centrality Estimates
+
+```{r}
+knitr::include_graphics("./figures/dawtry_centrality_plot.png")
+```
+
+```{r}
+dawtry_mean_strength
+```
+
+```{r}
+dawtry_mean_closeness
+```
+
+### Network Figures
+
+```{r}
+knitr::include_graphics("./figures/dawtry_irma-network_fulldata.png")
+```
+
+```{r}
+knitr::include_graphics("./figures/dawtry_irma-network_fulldata_walktrap.png")
+```
+
+## Creating Simulated Data from Ising Models Based on the Estimated Network
+
+### Histograms of Total Scores
+
+```{r}
+as.numeric(strongest_node)
+```
+
+#### No Persuasion, Unweighted Sum
+
+```{r}
+knitr::include_graphics("./figures/dawtry_ising_base_unweighted_hist.png")
+```
+
+#### No Persuasion, Weighted by Closeness
+
+```{r}
+knitr::include_graphics("./figures/dawtry_ising_base_weighted_hist.png")
+```
+
+#### Persuasion, Unweighted Sum
+
+```{r}
+knitr::include_graphics("./figures/dawtry_ising_pers_unweighted_hist.png")
+```
+
+#### Persuasion, Weighted by Closeness
+
+```{r}
+knitr::include_graphics("./figures/dawtry_ising_pers_weighted_hist.png")
+```
+
+### Proportions of Agreement with Strongest Node
+
+```{r}
+dawtry_base_prop
+```
+
+```{r}
+dawtry_pers_prop
+```
+
+### Standardized Mean Difference in Total Scores Between Baseline and Persuasion Models
+
+```{r}
+dawtry_unweighted_d
+```
+
+```{r}
+dawtry_weighted_d
+```

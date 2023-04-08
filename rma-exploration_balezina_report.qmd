@@ -151,7 +151,7 @@ network_pars_full
 ### Centrality Estimates
 
 ```{r}
-plot(centrality_plot_full)
+knitr::include_graphics("./figures/balezina_centrality_plot.png")
 ```
 
 ```{r}

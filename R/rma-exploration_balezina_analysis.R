@@ -488,6 +488,70 @@ closeness_measure <- centrality_plot_full$data %>%
 
 balezina_1_mean_closeness <- mean(closeness_measure$value)
 
+strength_plot <- 
+ggplot(filter(centrality_plot_full$data, measure == "Strength"),
+       aes(
+         x = value,
+         y = node,
+         group = 1
+       )) +
+  facet_wrap(~ measure) +
+  geom_point() +
+  geom_path() +
+  scale_x_continuous(
+    limits = c(0, 1.75),
+    breaks = seq(0, 1.75, .25)
+  ) +
+  labs(
+    x = "",
+    y = "Item Identifier"
+  ) +
+  theme_classic()
+
+closeness_plot <- 
+  ggplot(filter(centrality_plot_full$data, measure == "Closeness"),
+         aes(
+           x = value,
+           y = node,
+           group = 1
+         )) +
+  facet_wrap(~ measure) +
+  geom_point() +
+  geom_path() +
+  scale_x_continuous(
+    limits = c(0, .007),
+    breaks = seq(0, .007, .001)
+  ) +
+  labs(
+    x = "",
+    y = ""
+  ) +
+  theme_classic()
+
+betweenness_plot <- 
+  ggplot(filter(centrality_plot_full$data, measure == "Betweenness"),
+         aes(
+           x = value,
+           y = node,
+           group = 1
+         )) +
+  facet_wrap(~ measure) +
+  geom_point() +
+  geom_path() +
+  scale_x_continuous(
+    limits = c(0, 80),
+    breaks = seq(0, 80, 10)
+  ) +
+  labs(
+    x = "",
+    y = ""
+  ) +
+  theme_classic()
+
+balezina_centrality_plot <- plot_grid(
+  strength_plot, closeness_plot, betweenness_plot,
+  nrow = 1, rel_widths = 1, rel_heights = 1)
+
 # Simulation of persuasion
 
 set.seed(1212)
@@ -609,7 +673,6 @@ balezina_1_sim_pers_weighted <- balezina_1_sim_pers %>%
 
 balezina_1_sim_pers_weighted$total <- rowSums(balezina_1_sim_pers_weighted)
 
-
 ### Histograms of total scores
 
 balezina_ising_pers_unweighted_hist <- 
@@ -703,6 +766,10 @@ png("./figures/balezina_irma-reduced-network_fulldata_walktrap.png",
     height = 5.5, width = 9.6, units = "in", res = 1500)
 plot(network_graph_full_walk)
 dev.off()
+
+save_plot("./figures/balezina_centrality_plot.png",
+          balezina_centrality_plot,
+          base_height = 4.5, base_width = 10)
 
 save_plot("./figures/balezina_ising_base_unweighted_hist.png",
           balezina_ising_base_unweighted_hist,

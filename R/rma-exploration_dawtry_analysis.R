@@ -12,6 +12,7 @@ packages <- c(
   "psychonetrics",
   "lavaan",
   "semPlot",
+  "cowplot",
   "psych",
   "igraph",
   "IsingSampler")
@@ -364,6 +365,71 @@ closeness_measure <- centrality_plot_full$data %>%
 
 dawtry_mean_closeness <- mean(closeness_measure$value)
 
+
+strength_plot <- 
+  ggplot(filter(centrality_plot_full$data, measure == "Strength"),
+         aes(
+           x = value,
+           y = node,
+           group = 1
+         )) +
+  facet_wrap(~ measure) +
+  geom_point() +
+  geom_path() +
+  scale_x_continuous(
+    limits = c(0, 1.75),
+    breaks = seq(0, 1.75, .25)
+  ) +
+  labs(
+    x = "",
+    y = "Item Identifier"
+  ) +
+  theme_classic()
+
+closeness_plot <- 
+  ggplot(filter(centrality_plot_full$data, measure == "Closeness"),
+         aes(
+           x = value,
+           y = node,
+           group = 1
+         )) +
+  facet_wrap(~ measure) +
+  geom_point() +
+  geom_path() +
+  scale_x_continuous(
+    limits = c(0, .007),
+    breaks = seq(0, .007, .001)
+  ) +
+  labs(
+    x = "",
+    y = ""
+  ) +
+  theme_classic()
+
+betweenness_plot <- 
+  ggplot(filter(centrality_plot_full$data, measure == "Betweenness"),
+         aes(
+           x = value,
+           y = node,
+           group = 1
+         )) +
+  facet_wrap(~ measure) +
+  geom_point() +
+  geom_path() +
+  scale_x_continuous(
+    limits = c(0, 80),
+    breaks = seq(0, 80, 10)
+  ) +
+  labs(
+    x = "",
+    y = ""
+  ) +
+  theme_classic()
+
+dawtry_centrality_plot <- plot_grid(
+  strength_plot, closeness_plot, betweenness_plot,
+  nrow = 1, rel_widths = 1, rel_heights = 1)
+
 # Simulation of persuasion
 
 set.seed(1989)
@@ -416,6 +482,36 @@ dawtry_sim_base_weighted <- dawtry_sim_base %>%
 
 dawtry_sim_base_weighted$total <- rowSums(dawtry_sim_base_weighted)
 
+### Histograms of total scores
+
+dawtry_ising_base_unweighted_hist <- 
+  ggplot(dawtry_sim_base,
+         aes(
+           x = total
+         )) +
+  geom_histogram(
+    binwidth = 1,
+    color = "black",
+    fill  = "grey"
+  ) +
+  scale_x_continuous(
+    breaks = 0:21
+  ) +
+  theme_classic()
+
+dawtry_ising_base_weighted_hist <- 
+  ggplot(dawtry_sim_base_weighted,
+         aes(
+           x = total
+         )) +
+  geom_histogram(
+    bins = 22,
+    color = "black",
+    fill  = "grey"
+  ) +
+  scale_x_continuous() +
+  theme_classic()
+
 ## Simulated persuasion on the strongest item
 
 strongest_node <- strength_measure$node[[1]]
@@ -455,6 +551,36 @@ dawtry_sim_pers_weighted <- dawtry_sim_pers %>%
   select(-id)
 
 dawtry_sim_pers_weighted$total <- rowSums(dawtry_sim_pers_weighted)
+
+### Histograms of total scores
+
+dawtry_ising_pers_unweighted_hist <- 
+  ggplot(dawtry_sim_pers,
+         aes(
+           x = total
+         )) +
+  geom_histogram(
+    binwidth = 1,
+    color = "black",
+    fill  = "grey"
+  ) +
+  scale_x_continuous(
+    breaks = 0:21
+  ) +
+  theme_classic()
+
+dawtry_ising_pers_weighted_hist <- 
+  ggplot(dawtry_sim_pers_weighted,
+         aes(
+           x = total
+         )) +
+  geom_histogram(
+    bins = 22,
+    color = "black",
+    fill  = "grey"
+  ) +
+  scale_x_continuous() +
+  theme_classic()
 
 ### Effect sizes
 
@@ -499,3 +625,33 @@ png("./figures/dawtry_irma-network_test_walktrap.png",
     height = 5.5, width = 9.6, units = "in", res = 1500)
 plot(network_graph_1_test_walk)
 dev.off()
+
+png("./figures/dawtry_irma-network_fulldata.png", 
+    height = 5.5, width = 9.6, units = "in", res = 1500)
+plot(network_graph_full)
+dev.off()
+
+png("./figures/dawtry_irma-network_fulldata_walktrap.png", 
+    height = 5.5, width = 9.6, units = "in", res = 1500)
+plot(network_graph_full_walk)
+dev.off()
+
+save_plot("./figures/dawtry_centrality_plot.png",
+          dawtry_centrality_plot,
+          base_height = 4.5, base_width = 10)
+
+save_plot("./figures/dawtry_ising_base_unweighted_hist.png",
+          dawtry_ising_base_unweighted_hist,
+          base_height = 3.5, base_width = 5)
+
+save_plot("./figures/dawtry_ising_base_weighted_hist.png",
+          dawtry_ising_base_weighted_hist,
+          base_height = 3.5, base_width = 5)
+
+save_plot("./figures/dawtry_ising_pers_unweighted_hist.png",
+          dawtry_ising_pers_unweighted_hist,
+          base_height = 3.5, base_width = 5)
+
+save_plot("./figures/dawtry_ising_pers_weighted_hist.png",
+          dawtry_ising_pers_weighted_hist,
+          base_height = 3.5, base_width = 5)

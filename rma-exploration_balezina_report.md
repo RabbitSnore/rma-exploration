@@ -5742,10 +5742,10 @@ network_pars_full
 ### Centrality Estimates
 
 ``` r
-plot(centrality_plot_full)
+knitr::include_graphics("./figures/balezina_centrality_plot.png")
 ```
 
-![](rma-exploration_balezina_report_files/figure-commonmark/unnamed-chunk-22-1.png)
+![](./figures/balezina_centrality_plot.png)
 
 ``` r
 balezina_1_mean_strength
