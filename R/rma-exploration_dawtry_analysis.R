@@ -449,11 +449,23 @@ dawtry_summary <- dawtry_model_long %>%
     threshold = (mean(rma, na.rm = TRUE) - 3)
   )
 
-dawtry_sim_base <- 
-  IsingSampler(n          = 100000,
-               graph      = getmatrix(network_full_fit, "omega"), 
-               thresholds = dawtry_summary$threshold, 
-               responses  = c(0, 1))
+
+if (!file.exists("./output/dawtry_sim_base.rds")) {
+  
+  dawtry_sim_base <- 
+    IsingSampler(n          = 100000,
+                 graph      = getmatrix(network_full_fit, "omega"), 
+                 thresholds = dawtry_summary$threshold, 
+                 responses  = c(0, 1))
+  
+  saveRDS(dawtry_sim_base,
+          "./output/dawtry_sim_base.rds")
+  
+} else {
+  
+  balezina_1_sim_pers <- readRDS("./output/dawtry_sim_base.rds")
+  
+}
 
 dawtry_sim_base <- as.data.frame(dawtry_sim_base)
 
@@ -519,11 +531,22 @@ strongest_node <- strength_measure$node[[1]]
 sim_thresholds <- dawtry_summary$threshold
 sim_thresholds[strongest_node] <- -2
 
-dawtry_sim_pers <- 
-  IsingSampler(n          = 100000,
-               graph      = getmatrix(network_full_fit, "omega"), 
-               thresholds = sim_thresholds, 
-               responses  = c(0, 1))
+if (!file.exists("./output/dawtry_sim_pers.rds")) {
+  
+  dawtry_sim_pers <- 
+    IsingSampler(n          = 100000,
+                 graph      = getmatrix(network_full_fit, "omega"), 
+                 thresholds = sim_thresholds, 
+                 responses  = c(0, 1))
+  
+  saveRDS(dawtry_sim_pers,
+          "./output/dawtry_sim_pers.rds")
+  
+} else {
+  
+  balezina_1_sim_pers <- readRDS("./output/dawtry_sim_pers.rds")
+  
+}
 
 dawtry_sim_pers <- as.data.frame(dawtry_sim_pers)
 

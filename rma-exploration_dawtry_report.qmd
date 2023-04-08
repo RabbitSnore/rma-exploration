@@ -19,13 +19,15 @@ source("./R/rma-exploration_dawtry_analysis.R")
 ### Fit Indices
 
 ```{r}
-network_fit_ind_1
+network_fit_ind_1 %>% 
+  mutate(across(where(is.numeric), round, 6))
 ```
 
 ### Parameter Estimates
 
 ```{r}
-network_pars_1
+network_pars_1 %>% 
+  mutate(across(where(is.numeric), round, 3))
 ```
 
 ### Network Figures
@@ -43,13 +45,15 @@ knitr::include_graphics("./figures/dawtry_irma-network_train_walktrap.png")
 ### Fit Indices
 
 ```{r}
-network_fit_ind_1_test
+network_fit_ind_1_test %>% 
+  mutate(across(where(is.numeric), round, 6))
 ```
 
 ### Parameter Estimates
 
 ```{r}
-network_pars_1_test
+network_pars_1_test %>% 
+  mutate(across(where(is.numeric), round, 3))
 ```
 
 ### Network Figures
@@ -98,13 +102,15 @@ five_factor_par
 ### Fit Indices
 
 ```{r}
-network_fit_ind_full
+network_fit_ind_full %>% 
+  mutate(across(where(is.numeric), round, 6))
 ```
 
 ### Parameter Estimates
 
 ```{r}
-network_pars_full
+network_pars_full %>% 
+  mutate(across(where(is.numeric), round, 3))
 ```
 
 ### Centrality Estimates
