@@ -9,7 +9,7 @@ Data from the following papers have been used:
 
 Balezina, M. (2023). Measuring Attitudes Towards Rape in Russia: Translation and
 Validation of the Illinois Rape Myths Acceptance Scale. Retrieved from
-osf.io/9uws8
+https://osf.io/9uws8/
 
 Dawtry, R. J., Cozzolino, P. J., & Callan, M. J. (2019). I Blame Therefore It
 Was: Rape Myth Acceptance, Victim Blaming, and Memory Reconstruction.
@@ -21,7 +21,7 @@ Casual Sex Predict Rape Myth Acceptance. PsyArXiv.
 https://doi.org/10.31234/osf.io/94smh
 
 Łyś, A. E., Bargiel-Matusiewicz, K., Krasuski, T., & Studzińska, A. (2023).
-Psychometric properties of the polish updated Illinois rape myth acceptance
+Psychometric properties of the Polish updated Illinois rape myth acceptance
 scale. Current Psychology, 42(1), 445–459.
 https://doi.org/10.1007/s12144-020-01249-3
 
