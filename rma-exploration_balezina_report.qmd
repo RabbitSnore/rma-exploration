@@ -19,13 +19,15 @@ source("./R/rma-exploration_balezina_analysis.R")
 ### Fit Indices
 
 ```{r}
-network_reduced_fit_ind_1
+network_reduced_fit_ind_1 %>% 
+  mutate(across(where(is.numeric), round, 6))
 ```
 
 ### Parameter Estimates
 
 ```{r}
-network_reduced_pars_1
+network_reduced_pars_1 %>% 
+  mutate(across(where(is.numeric), round, 3))
 ```
 
 ### Network Figures
@@ -43,13 +45,15 @@ knitr::include_graphics("./figures/balezina_irma-reduced-network_train_walktrap.
 ### Fit Indices
 
 ```{r}
-network_reduced_fit_ind_1_test
+network_reduced_fit_ind_1_test %>% 
+  mutate(across(where(is.numeric), round, 6))
 ```
 
 ### Parameter Estimates
 
 ```{r}
-network_reduced_pars_1_test
+network_reduced_pars_1_test %>% 
+  mutate(across(where(is.numeric), round, 3))
 ```
 
 ### Network Figures
@@ -67,13 +71,15 @@ knitr::include_graphics("./figures/balezina_irma-reduced-network_test_walktrap.p
 ## Fit Indices
 
 ```{r}
-network_fit_ind_2
+network_fit_ind_2 %>% 
+  mutate(across(where(is.numeric), round, 6))
 ```
 
 ## Parameter Estimates
 
 ```{r}
-network_pars_2
+network_pars_2 %>% 
+  mutate(across(where(is.numeric), round, 3))
 ```
 
 ## Network Figures
@@ -139,13 +145,15 @@ balezina_2_seven_factor_par
 ### Fit Indices
 
 ```{r}
-network_fit_ind_full
+network_fit_ind_full %>% 
+  mutate(across(where(is.numeric), round, 6))
 ```
 
 ### Parameter Estimates
 
 ```{r}
-network_pars_full
+network_pars_full %>% 
+  mutate(across(where(is.numeric), round, 3))
 ```
 
 ### Centrality Estimates

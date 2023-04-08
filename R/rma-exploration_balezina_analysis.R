@@ -570,11 +570,22 @@ balezina_1_summary <- balezina_1_reduced_long %>%
     threshold = (mean(rma) - 4)
   )
 
-balezina_1_sim_base <- 
-  IsingSampler(n          = 100000,
-               graph      = getmatrix(network_full_fit, "omega"), 
-               thresholds = balezina_1_summary$threshold, 
-               responses  = c(0, 1))
+if (!file.exists("./output/balezina_1_sim_base.rds")) {
+  
+  balezina_1_sim_base <- 
+    IsingSampler(n          = 100000,
+                 graph      = getmatrix(network_full_fit, "omega"), 
+                 thresholds = balezina_1_summary$threshold, 
+                 responses  = c(0, 1))
+  
+  saveRDS(balezina_1_sim_base,
+          "./output/balezina_1_sim_base.rds")
+  
+} else {
+  
+  balezina_1_sim_base <- readRDS("./output/balezina_1_sim_base.rds")
+  
+}
 
 balezina_1_sim_base <- as.data.frame(balezina_1_sim_base)
 
@@ -640,11 +651,22 @@ strongest_node <- strength_measure$node[[1]]
 sim_thresholds <- balezina_1_summary$threshold
 sim_thresholds[strongest_node] <- -3
 
-balezina_1_sim_pers <- 
-  IsingSampler(n          = 100000,
-               graph      = getmatrix(network_full_fit, "omega"), 
-               thresholds = sim_thresholds, 
-               responses  = c(0, 1))
+if (!file.exists("./output/balezina_1_sim_pers.rds")) {
+  
+  balezina_1_sim_pers <- 
+    IsingSampler(n          = 100000,
+                 graph      = getmatrix(network_full_fit, "omega"), 
+                 thresholds = sim_thresholds, 
+                 responses  = c(0, 1))
+  
+  saveRDS(balezina_1_sim_pers,
+          "./output/balezina_1_sim_pers.rds")
+  
+} else {
+  
+  balezina_1_sim_pers <- readRDS("./output/balezina_1_sim_pers.rds")
+  
+}
 
 balezina_1_sim_pers <- as.data.frame(balezina_1_sim_pers)
 
