@@ -365,7 +365,6 @@ closeness_measure <- centrality_plot_full$data %>%
 
 dawtry_mean_closeness <- mean(closeness_measure$value)
 
-
 strength_plot <- 
   ggplot(filter(centrality_plot_full$data, measure == "Strength"),
          aes(
@@ -463,7 +462,7 @@ if (!file.exists("./output/dawtry_sim_base.rds")) {
   
 } else {
   
-  balezina_1_sim_pers <- readRDS("./output/dawtry_sim_base.rds")
+  dawtry_sim_base <- readRDS("./output/dawtry_sim_base.rds")
   
 }
 
@@ -544,7 +543,7 @@ if (!file.exists("./output/dawtry_sim_pers.rds")) {
   
 } else {
   
-  balezina_1_sim_pers <- readRDS("./output/dawtry_sim_pers.rds")
+  dawtry_sim_pers <- readRDS("./output/dawtry_sim_pers.rds")
   
 }
 

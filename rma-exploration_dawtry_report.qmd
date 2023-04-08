@@ -75,6 +75,7 @@ knitr::include_graphics("./figures/dawtry_irma-network_test_walktrap.png")
 ```{r}
 parallel_train
 ```
+
 ### Exploratory Factor Analysis
 
 ```{r}

@@ -12,6 +12,7 @@ packages <- c(
   "psychonetrics",
   "lavaan",
   "semPlot",
+  "cowplot",
   "igraph")
 
 lapply(packages, library, character.only = TRUE)

@@ -1,0 +1,233 @@
+---
+title: "Łyś et al (2023) - Network Re-analysis"
+format: gfm
+editor: source
+toc: true
+---
+
+```{r}
+#| include: false
+options(scipen = 999, digits = 5)
+source("./R/rma-exploration_lys_analysis.R")
+
+```
+
+# Network Analysis
+
+## Study 1
+
+### Fit Indices
+
+```{r}
+network_fit_ind_full_1 %>% 
+  mutate(across(where(is.numeric), round, 6))
+```
+
+### Parameter Estimates
+
+```{r}
+network_pars_full_1 %>% 
+  mutate(across(where(is.numeric), round, 3))
+```
+
+### Network Figures
+
+```{r}
+knitr::include_graphics("./figures/lys_irma-network_study-1.png")
+```
+
+```{r}
+knitr::include_graphics("./figures/lys_irma-network_study-1_walktrap.png")
+```
+
+## Study 2 - Post-Data
+
+### Fit Indices
+
+```{r}
+network_fit_ind_2_post %>% 
+  mutate(across(where(is.numeric), round, 6))
+```
+
+### Parameter Estimates
+
+```{r}
+network_pars_2_post %>% 
+  mutate(across(where(is.numeric), round, 3))
+```
+
+### Network Figures
+
+```{r}
+knitr::include_graphics("./figures/lys_irma-network_study-2-post.png")
+```
+
+```{r}
+knitr::include_graphics("./figures/lys_irma-network_study-2-post_walktrap.png")
+```
+
+## Study 3
+
+### Fit Indices
+
+```{r}
+network_fit_ind_3 %>% 
+  mutate(across(where(is.numeric), round, 6))
+```
+
+### Parameter Estimates
+
+```{r}
+network_pars_3 %>% 
+  mutate(across(where(is.numeric), round, 3))
+```
+
+### Network Figures
+
+```{r}
+knitr::include_graphics("./figures/lys_irma-network_study-3.png")
+```
+
+```{r}
+knitr::include_graphics("./figures/lys_irma-network_study-3_walktrap.png")
+```
+
+# Confirmatory Factor Analysis
+
+## Study 2
+
+### Fit Indices
+
+```{r}
+five_factor_ind_2
+```
+
+### Parameter Estimates
+
+```{r}
+five_factor_par_2
+```
+
+## Study 3
+
+### Fit Indices
+
+```{r}
+five_factor_ind_3
+```
+
+### Parameter Estimates
+
+```{r}
+five_factor_par_3
+```
+
+# Change Over Time
+
+## Item-Level Change for Each Participant
+
+```{r}
+knitr::include_graphics("./figures/lys_item-change_study-2.png")
+```
+
+## Relationship Between Scores and Change Over Time
+
+### Sum Score and Total Absolute Item-Level Change
+
+```{r}
+lys_2_sum_change_cor
+```
+
+### Sum Score and Sum Score Change
+
+```{r}
+lys_2_score_change_abs_cor
+```
+
+```{r}
+lys_score_change_abs_pre
+```
+
+```{r}
+lys_score_change_abs_post
+```
+
+### Item-Level Mean by Mean Absolute Change in Item Agreement
+
+```{r}
+lys_2_change_by_item_cor
+```
+
+### Visualization
+
+```{r}
+knitr::include_graphics("./figures/lys_time-change_study-2.png")
+```
+
+# Simulated Persuasion with Study 1 Network
+
+## Centrality Estimates
+
+```{r}
+knitr::include_graphics("./figures/lys_centrality_plot.png")
+```
+
+```{r}
+lys_1_mean_strength
+```
+
+```{r}
+lys_1_mean_closeness
+```
+
+## Creating Simulated Data from Ising Models Based on the Estimated Network
+
+### Histograms of Total Scores
+
+```{r}
+as.numeric(strongest_node)
+```
+
+#### No Persuasion, Unweighted Sum
+
+```{r}
+knitr::include_graphics("./figures/lys_ising_base_unweighted_hist.png")
+```
+
+#### No Persuasion, Weighted by Closeness
+
+```{r}
+knitr::include_graphics("./figures/lys_ising_base_weighted_hist.png")
+```
+
+#### Persuasion, Unweighted Sum
+
+```{r}
+knitr::include_graphics("./figures/lys_ising_pers_unweighted_hist.png")
+```
+
+#### Persuasion, Weighted by Closeness
+
+```{r}
+knitr::include_graphics("./figures/lys_ising_pers_weighted_hist.png")
+```
+
+### Proportions of Agreement with Strongest Node
+
+```{r}
+lys_1_base_prop
+```
+
+```{r}
+lys_1_pers_prop
+```
+
+### Standardized Mean Difference in Total Scores Between Baseline and Persuasion Models
+
+```{r}
+lys_1_unweighted_d
+```
+
+```{r}
+lys_1_weighted_d
+```

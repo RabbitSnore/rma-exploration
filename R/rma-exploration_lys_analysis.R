@@ -15,7 +15,8 @@ packages <- c(
   "lme4",
   "lmerTest",
   "performance",
-  "cowplot")
+  "cowplot",
+  "igraph")
 
 lapply(packages, library, character.only = TRUE)
 
@@ -519,7 +520,8 @@ lys_2_sum_change <- lys_2_sum_long %>%
     values_from = "sum"
   ) %>% 
   mutate(
-    score_change       = rma_sum - pre_rma_sum
+    score_change       = rma_sum - pre_rma_sum,
+    score_change_abs   = abs(rma_sum - pre_rma_sum)
   ) %>% 
   pivot_longer(
     cols      = c("rma_sum", "pre_rma_sum"),
@@ -528,6 +530,17 @@ lys_2_sum_change <- lys_2_sum_long %>%
   )
 
 lys_2_score_change_cor <- cor.test(lys_2_sum_change$sum, lys_2_sum_change$score_change)
+lys_2_score_change_abs_cor <- cor.test(lys_2_sum_change$sum, lys_2_sum_change$score_change_abs)
+
+lys_score_change_abs_pre <- cor.test(filter(lys_2_sum_change, 
+                                            time == "pre_rma_sum")$sum, 
+                                     filter(lys_2_sum_change, 
+                                            time == "pre_rma_sum")$score_change_abs)
+
+lys_score_change_abs_post <- cor.test(filter(lys_2_sum_change, 
+                                             time == "rma_sum")$sum, 
+                                      filter(lys_2_sum_change, 
+                                             time == "rma_sum")$score_change_abs)
 
 lys_2_sum_by_score_change <- 
   ggplot(lys_2_sum_change,
@@ -566,6 +579,42 @@ lys_2_sum_by_score_change <-
   labs(
     color = "Measurement",
     y     = "Sum Score Change",
+    x     = "IRMA Sum Score"
+  ) +
+  theme_classic()
+
+lys_2_sum_by_score_change_abs <- 
+  ggplot(lys_2_sum_change,
+         aes(
+           x = sum,
+           y = score_change_abs,
+           color = time
+         )) +
+  geom_smooth(
+    method = "lm",
+    formula = "y ~ x"
+  ) +
+  geom_line(
+    aes(
+      group = id
+    ),
+    color = "darkgrey",
+    alpha = .5
+  ) +
+  geom_point() +
+  scale_y_continuous(
+    breaks = seq(-20, 20, 5)
+  ) +
+  scale_x_continuous(
+    breaks = seq(20, 80, 5)
+  ) +
+  scale_color_manual(
+    values = c("#52D1DC", "#2A4494"),
+    labels = c("Baseline", "2 weeks")
+  ) +
+  labs(
+    color = "Measurement",
+    y     = "Absolute Sum Score Change",
     x     = "IRMA Sum Score"
   ) +
   theme_classic()
@@ -689,7 +738,7 @@ ggplot(lys_2_item_long,
 # Create an array of plots
 
 lys_2_time_change <- 
-  plot_grid(lys_2_sum_pre_post, lys_2_sum_by_score_change, lys_2_sum_by_change,
+  plot_grid(lys_2_sum_pre_post, lys_2_sum_by_score_change_abs, lys_2_sum_by_change,
                                lys_2_item_mean, lys_2_change_by_item,
                                nrow = 2, rel_widths = c(1, 1.3, 1.3, 1, 1.3))
 
@@ -712,6 +761,70 @@ closeness_measure <- centrality_plot_full$data %>%
 
 lys_1_mean_closeness <- mean(closeness_measure$value)
 
+strength_plot <- 
+  ggplot(filter(centrality_plot_full$data, measure == "Strength"),
+         aes(
+           x = value,
+           y = node,
+           group = 1
+         )) +
+  facet_wrap(~ measure) +
+  geom_point() +
+  geom_path() +
+  scale_x_continuous(
+    limits = c(0, 1.75),
+    breaks = seq(0, 1.75, .25)
+  ) +
+  labs(
+    x = "",
+    y = "Item Identifier"
+  ) +
+  theme_classic()
+
+closeness_plot <- 
+  ggplot(filter(centrality_plot_full$data, measure == "Closeness"),
+         aes(
+           x = value,
+           y = node,
+           group = 1
+         )) +
+  facet_wrap(~ measure) +
+  geom_point() +
+  geom_path() +
+  scale_x_continuous(
+    limits = c(0, .007),
+    breaks = seq(0, .007, .001)
+  ) +
+  labs(
+    x = "",
+    y = ""
+  ) +
+  theme_classic()
+
+betweenness_plot <- 
+  ggplot(filter(centrality_plot_full$data, measure == "Betweenness"),
+         aes(
+           x = value,
+           y = node,
+           group = 1
+         )) +
+  facet_wrap(~ measure) +
+  geom_point() +
+  geom_path() +
+  scale_x_continuous(
+    limits = c(0, 80),
+    breaks = seq(0, 80, 10)
+  ) +
+  labs(
+    x = "",
+    y = ""
+  ) +
+  theme_classic()
+
+lys_centrality_plot <- plot_grid(
+  strength_plot, closeness_plot, betweenness_plot,
+  nrow = 1, rel_widths = 1, rel_heights = 1)
+
 # Simulation of persuasion
 
 set.seed(1891)
@@ -730,11 +843,23 @@ lys_1_summary <- lys_1_model_long %>%
     threshold = (mean(rma) - 3)
   )
 
-lys_1_sim_base <- 
-  IsingSampler(n          = 100000,
-               graph      = getmatrix(network_fit_full_1, "omega"), 
-               thresholds = lys_1_summary$threshold, 
-               responses  = c(0, 1))
+
+if (!file.exists("./output/lys_1_sim_base.rds")) {
+  
+  lys_1_sim_base <- 
+    IsingSampler(n          = 100000,
+                 graph      = getmatrix(network_fit_full_1, "omega"), 
+                 thresholds = lys_1_summary$threshold, 
+                 responses  = c(0, 1))
+  
+  saveRDS(lys_1_sim_base,
+          "./output/lys_1_sim_base.rds")
+  
+} else {
+  
+  lys_1_sim_base <- readRDS("./output/lys_1_sim_base.rds")
+  
+}
 
 lys_1_sim_base <- as.data.frame(lys_1_sim_base)
 
@@ -763,6 +888,36 @@ lys_1_sim_base_weighted <- lys_1_sim_base %>%
 
 lys_1_sim_base_weighted$total <- rowSums(lys_1_sim_base_weighted)
 
+### Histograms of total scores
+
+lys_ising_base_unweighted_hist <- 
+  ggplot(lys_1_sim_base,
+         aes(
+           x = total
+         )) +
+  geom_histogram(
+    binwidth = 1,
+    color = "black",
+    fill  = "grey"
+  ) +
+  scale_x_continuous(
+    breaks = 0:21
+  ) +
+  theme_classic()
+
+lys_ising_base_weighted_hist <- 
+  ggplot(lys_1_sim_base_weighted,
+         aes(
+           x = total
+         )) +
+  geom_histogram(
+    bins = 22,
+    color = "black",
+    fill  = "grey"
+  ) +
+  scale_x_continuous() +
+  theme_classic()
+
 ## Simulated persuasion on the strongest item
 
 strongest_node <- strength_measure$node[[1]]
@@ -770,11 +925,23 @@ strongest_node <- strength_measure$node[[1]]
 sim_thresholds <- lys_1_summary$threshold
 sim_thresholds[strongest_node] <- -2
 
-lys_1_sim_pers <- 
-  IsingSampler(n          = 100000,
-               graph      = getmatrix(network_fit_full_1, "omega"), 
-               thresholds = sim_thresholds, 
-               responses  = c(0, 1))
+
+if (!file.exists("./output/lys_1_sim_pers.rds")) {
+  
+  lys_1_sim_pers <- 
+    IsingSampler(n          = 100000,
+                 graph      = getmatrix(network_fit_full_1, "omega"), 
+                 thresholds = sim_thresholds, 
+                 responses  = c(0, 1))
+  
+  saveRDS(lys_1_sim_pers,
+          "./output/lys_1_sim_pers.rds")
+  
+} else {
+  
+  lys_1_sim_pers <- readRDS("./output/lys_1_sim_pers.rds")
+  
+}
 
 lys_1_sim_pers <- as.data.frame(lys_1_sim_pers)
 
@@ -802,6 +969,36 @@ lys_1_sim_pers_weighted <- lys_1_sim_pers %>%
   select(-id)
 
 lys_1_sim_pers_weighted$total <- rowSums(lys_1_sim_pers_weighted)
+
+### Histograms of total scores
+
+lys_ising_pers_unweighted_hist <- 
+  ggplot(lys_1_sim_pers,
+         aes(
+           x = total
+         )) +
+  geom_histogram(
+    binwidth = 1,
+    color = "black",
+    fill  = "grey"
+  ) +
+  scale_x_continuous(
+    breaks = 0:21
+  ) +
+  theme_classic()
+
+lys_ising_pers_weighted_hist <- 
+  ggplot(lys_1_sim_pers_weighted,
+         aes(
+           x = total
+         )) +
+  geom_histogram(
+    bins = 22,
+    color = "black",
+    fill  = "grey"
+  ) +
+  scale_x_continuous() +
+  theme_classic()
 
 ### Effect sizes
 
@@ -865,3 +1062,23 @@ save_plot("./figures/lys_sum-change_study-2.png", lys_2_sum_by_change,
 
 save_plot("./figures/lys_time-change_study-2.png", lys_2_time_change,
           base_height = 8, base_width = 14)
+
+save_plot("./figures/lys_centrality_plot.png",
+          lys_centrality_plot,
+          base_height = 4.5, base_width = 10)
+
+save_plot("./figures/lys_ising_base_unweighted_hist.png",
+          lys_ising_base_unweighted_hist,
+          base_height = 3.5, base_width = 5)
+
+save_plot("./figures/lys_ising_base_weighted_hist.png",
+          lys_ising_base_weighted_hist,
+          base_height = 3.5, base_width = 5)
+
+save_plot("./figures/lys_ising_pers_unweighted_hist.png",
+          lys_ising_pers_unweighted_hist,
+          base_height = 3.5, base_width = 5)
+
+save_plot("./figures/lys_ising_pers_weighted_hist.png",
+          lys_ising_pers_weighted_hist,
+          base_height = 3.5, base_width = 5)
