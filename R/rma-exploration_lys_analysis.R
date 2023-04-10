@@ -425,6 +425,8 @@ lys_2_sum_uncon <- lmer(sum ~ 1 + time + (1|id), data = lys_2_sum_long)
 
 lys_2_response_change_lmm <- lmer(change_abs ~ rma + time + (1 + rma|id), data = lys_2_response_change)
 
+lys_2_response_change_cor <- cor.test(lys_2_response_change$change_abs, lys_2_response_change$rma)
+
 # Visualization of change
 
 lys_2_long_plot <- lys_2_long %>% 
@@ -727,6 +729,9 @@ lys_2_item_long <- lys_2_item %>%
 
 lys_2_change_by_item_cor <- cor.test(lys_2_item_long$mean_change, lys_2_item_long$rma)
 
+lys_2_item_lmm <- lmer(rma ~ 1 + (1|item), data = lys_2_item_long)
+lys_2_item_icc <- icc(lys_2_item_lmm, by_group = TRUE)
+
 lys_2_change_by_item <- 
 ggplot(lys_2_item_long,
        aes(
@@ -765,7 +770,7 @@ ggplot(lys_2_item_long,
 
 # Item rating change, response level
 
-lys_2_response_change <- 
+lys_2_response_change_plot <- 
 ggplot(lys_2_response_change,
        aes(
          x = jitter_rma,
@@ -811,7 +816,7 @@ ggplot(lys_2_response_change,
 
 lys_2_time_change <- 
   plot_grid(lys_2_sum_pre_post, lys_2_sum_by_score_change_abs, lys_2_sum_by_change,
-            lys_2_item_mean, lys_2_change_by_item, lys_2_response_change,
+            lys_2_item_mean, lys_2_change_by_item, lys_2_response_change_plot,
             nrow = 2, rel_widths = c(1, 1.3, 1.3, 1, 1.3, 1.3))
 
 # Revisiting Study 1, for further analysis -------------------------------------

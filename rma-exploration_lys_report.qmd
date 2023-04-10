@@ -130,6 +130,12 @@ five_factor_par_3
 lys_2_sum_icc
 ```
 
+## Item Means Across Time
+
+```{r}
+lys_2_item_icc
+```
+
 ## Item-Level Change for Each Participant
 
 ```{r}
