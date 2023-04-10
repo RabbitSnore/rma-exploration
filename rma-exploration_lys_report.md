@@ -35,6 +35,8 @@
   Time</a>
   - <a href="#sum-score-across-time" id="toc-sum-score-across-time">Sum
     Score Across Time</a>
+  - <a href="#item-means-across-time" id="toc-item-means-across-time">Item
+    Means Across Time</a>
   - <a href="#item-level-change-for-each-participant"
     id="toc-item-level-change-for-each-participant">Item-Level Change for
     Each Participant</a>
@@ -2366,6 +2368,18 @@ lys_2_sum_icc
     Group |   ICC
     -------------
     id    | 0.901
+
+## Item Means Across Time
+
+``` r
+lys_2_item_icc
+```
+
+    # ICC by Group
+
+    Group |   ICC
+    -------------
+    item  | 0.982
 
 ## Item-Level Change for Each Participant
 
