@@ -747,6 +747,261 @@ balezina_1_weighted_d <-
   (mean(balezina_1_sim_base_weighted$total) - mean(balezina_1_sim_pers_weighted$total)) / 
   sqrt((sd(balezina_1_sim_base_weighted$total)^2 + sd(balezina_1_sim_pers_weighted$total)^2) / 2)
 
+# Connectivity hypothesis ------------------------------------------------------
+
+# Calculate total score for Ambivalent Sexism Scale
+
+balezina_2$asi_sum <- balezina_2 %>% 
+  select(
+    starts_with("bs"),
+    starts_with("hs")
+  ) %>% 
+  rowSums()
+
+balezina_2$asi_level <- cut_number(balezina_2$asi_sum, n = 3)
+
+# Network models for levels of sexism
+
+## Low sexism
+
+if (!file.exists("./output/balezina_network_model_low.rds")) {
+  
+  network_model_low <- varcov(data = balezina_2 %>% 
+                                filter(asi_level == levels(balezina_2$asi_level)[1]) %>% 
+                                select(
+                                  li2, li3, li4,
+                                  fi3, fi4, fi5,
+                                  de1, de2, de5,
+                                  mt2, mt3, mt4,
+                                  nr3, nr4, te4,
+                                  sa1, sa4, sa7,
+                                  wi1, wi4, wi5
+                                ),
+                                    type = "ggm",
+                                    omega = "Full")
+  
+  network_model_low_pruned <- network_model_low %>%
+    setoptimizer(optimizer = "ucminf") %>%
+    prune(alpha = 0.001, recursive = TRUE, adjust = "fdr")
+  
+  network_model_final_low <- network_model_low_pruned %>% 
+    modelsearch( # This process is computationally intensive
+      criterion  = "bic",
+      prunealpha = .001,
+      addalpha   = .001
+    )
+  
+  saveRDS(network_model_final_low,
+          "./output/balezina_network_model_low.rds")
+  
+} else {
+  
+  network_model_final_low <- readRDS("./output/balezina_network_model_low.rds")
+  
+}
+
+network_fit_low <- network_model_final_low %>% 
+  runmodel()
+
+network_low_pars     <- parameters(network_fit_low)
+
+network_low_fit_ind  <- fit(network_fit_low)
+
+network_graph_low <- 
+  qgraph(getmatrix(network_fit_low, "omega"),
+         labels = 1:21,
+         layout = "spring",
+         vsize = 4,
+         edge.labels = TRUE,
+         edge.label.cex = .40,
+         edge.label.bg = "white",
+         edge.label.position = .28,
+         edge.color = "#151414",
+         vTrans = 200,
+         negDashed = TRUE,
+         curveAll = TRUE)
+
+paths_low <- centrality(network_graph_low)$ShortestPathLengths[centrality(network_graph_low)$ShortestPathLengths %>% upper.tri()]
+paths_low[paths_low == Inf] <- max(paths_low[paths_low != Inf])
+aspl_low <- mean(paths_low)
+
+low_summary <- balezina_2 %>% 
+  filter(asi_level == levels(balezina_2$asi_level)[1]) %>% 
+  select(
+    li2, li3, li4,
+    fi3, fi4, fi5,
+    de1, de2, de5,
+    mt2, mt3, mt4,
+    nr3, nr4, te4,
+    sa1, sa4, sa7,
+    wi1, wi4, wi5
+  ) %>% 
+  summarise(
+    mean = mean(rowSums(.)),
+    sd   = sd(rowSums(.)),
+    n    = n()
+  )
+
+## Moderate sexism
+
+if (!file.exists("./output/balezina_network_model_mod.rds")) {
+  
+  network_model_mod <- varcov(data = balezina_2 %>% 
+                                filter(asi_level == levels(balezina_2$asi_level)[2]) %>% 
+                                select(
+                                  li2, li3, li4,
+                                  fi3, fi4, fi5,
+                                  de1, de2, de5,
+                                  mt2, mt3, mt4,
+                                  nr3, nr4, te4,
+                                  sa1, sa4, sa7,
+                                  wi1, wi4, wi5
+                                ),
+                              type = "ggm",
+                              omega = "Full")
+  
+  network_model_mod_pruned <- network_model_mod %>%
+    setoptimizer(optimizer = "ucminf") %>%
+    prune(alpha = 0.001, recursive = TRUE, adjust = "fdr")
+  
+  network_model_final_mod <- network_model_mod_pruned %>% 
+    modelsearch( # This process is computationally intensive
+      criterion  = "bic",
+      prunealpha = .001,
+      addalpha   = .001
+    )
+  
+  saveRDS(network_model_final_mod,
+          "./output/balezina_network_model_mod.rds")
+  
+} else {
+  
+  network_model_final_mod <- readRDS("./output/balezina_network_model_mod.rds")
+  
+}
+
+network_fit_mod <- network_model_final_mod %>% 
+  runmodel()
+
+network_mod_pars     <- parameters(network_fit_mod)
+
+network_mod_fit_ind  <- fit(network_fit_mod)
+
+network_graph_mod <- 
+  qgraph(getmatrix(network_fit_mod, "omega"),
+         labels = 1:21,
+         layout = "spring",
+         vsize = 4,
+         edge.labels = TRUE,
+         edge.label.cex = .40,
+         edge.label.bg = "white",
+         edge.label.position = .28,
+         edge.color = "#151414",
+         vTrans = 200,
+         negDashed = TRUE,
+         curveAll = TRUE)
+
+paths_mod <- centrality(network_graph_mod)$ShortestPathLengths[centrality(network_graph_mod)$ShortestPathLengths %>% upper.tri()]
+paths_mod[paths_mod == Inf] <- max(paths_mod[paths_mod != Inf])
+aspl_mod <- mean(paths_mod)
+
+mod_summary <- balezina_2 %>% 
+  filter(asi_level == levels(balezina_2$asi_level)[2]) %>% 
+  select(
+    li2, li3, li4,
+    fi3, fi4, fi5,
+    de1, de2, de5,
+    mt2, mt3, mt4,
+    nr3, nr4, te4,
+    sa1, sa4, sa7,
+    wi1, wi4, wi5
+  ) %>% 
+  summarise(
+    mean = mean(rowSums(.)),
+    sd   = sd(rowSums(.)),
+    n    = n()
+  )
+
+## High sexism
+
+if (!file.exists("./output/balezina_network_model_high.rds")) {
+  
+  network_model_high <- varcov(data = balezina_2 %>% 
+                                filter(asi_level == levels(balezina_2$asi_level)[3]) %>% 
+                                select(
+                                  li2, li3, li4,
+                                  fi3, fi4, fi5,
+                                  de1, de2, de5,
+                                  mt2, mt3, mt4,
+                                  nr3, nr4, te4,
+                                  sa1, sa4, sa7,
+                                  wi1, wi4, wi5
+                                ),
+                              type = "ggm",
+                              omega = "Full")
+  
+  network_model_high_pruned <- network_model_high %>%
+    setoptimizer(optimizer = "ucminf") %>%
+    prune(alpha = 0.001, recursive = TRUE, adjust = "fdr")
+  
+  network_model_final_high <- network_model_high_pruned %>% 
+    modelsearch( # This process is computationally intensive
+      criterion  = "bic",
+      prunealpha = .001,
+      addalpha   = .001
+    )
+  
+  saveRDS(network_model_final_high,
+          "./output/balezina_network_model_high.rds")
+  
+} else {
+  
+  network_model_final_high <- readRDS("./output/balezina_network_model_high.rds")
+  
+}
+
+network_fit_high <- network_model_final_high %>% 
+  runmodel()
+
+network_high_pars     <- parameters(network_fit_high)
+
+network_high_fit_ind  <- fit(network_fit_high)
+
+network_graph_high <- 
+  qgraph(getmatrix(network_fit_high, "omega"),
+         labels = 1:21,
+         layout = "spring",
+         vsize = 4,
+         edge.labels = TRUE,
+         edge.label.cex = .40,
+         edge.label.bg = "white",
+         edge.label.position = .28,
+         edge.color = "#151414",
+         vTrans = 200,
+         negDashed = TRUE,
+         curveAll = TRUE)
+
+paths_high <- centrality(network_graph_high)$ShortestPathLengths[centrality(network_graph_high)$ShortestPathLengths %>% upper.tri()]
+paths_high[paths_high == Inf] <- max(paths_high[paths_high != Inf])
+aspl_high <- mean(paths_high)
+
+high_summary <- balezina_2 %>% 
+  filter(asi_level == levels(balezina_2$asi_level)[3]) %>% 
+  select(
+    li2, li3, li4,
+    fi3, fi4, fi5,
+    de1, de2, de5,
+    mt2, mt3, mt4,
+    nr3, nr4, te4,
+    sa1, sa4, sa7,
+    wi1, wi4, wi5
+  ) %>% 
+  summarise(
+    mean = mean(rowSums(.)),
+    sd   = sd(rowSums(.)),
+    n    = n()
+  )
+
 # Export figures ---------------------------------------------------------------
 
 png("./figures/balezina_irma-reduced-network_train.png", 

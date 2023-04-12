@@ -138,6 +138,38 @@ balezina_2_seven_factor_ind
 balezina_2_seven_factor_par
 ```
 
+# Connectivity Hypothesis
+
+## Low ASI Scores
+
+```{r}
+low_summary
+```
+
+```{r}
+aspl_low
+```
+
+## Moderate ASI Scores
+
+```{r}
+mod_summary
+```
+
+```{r}
+aspl_mod
+```
+
+## High ASI Scores
+
+```{r}
+high_summary
+```
+
+```{r}
+aspl_high
+```
+
 # Simulated Persuasion
 
 ## Fitting Model to Full Data from Study 1

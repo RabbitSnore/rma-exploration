@@ -1,0 +1,45 @@
+---
+title: "Fernsund & Luke (2023) - Network Analysis"
+format: gfm
+editor: source
+toc: true
+---
+
+```{r}
+#| include: false
+options(scipen = 999, digits = 5)
+source("./R/rma-exploration_fernsund_analysis.R")
+
+```
+
+# Connectivity Hypothesis
+
+## Low ASI Scores
+
+```{r}
+low_summary
+```
+
+```{r}
+aspl_low
+```
+
+## Moderate ASI Scores
+
+```{r}
+mod_summary
+```
+
+```{r}
+aspl_mod
+```
+
+## High ASI Scores
+
+```{r}
+high_summary
+```
+
+```{r}
+aspl_high
+```
