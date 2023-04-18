@@ -93,6 +93,10 @@ lys_3 <- lys_3 %>%
   zap_label() %>% 
   zap_labels()
 
+## IRMA text
+
+lys_text <- read_csv("./data/lys/lys_irma-text.csv")
+
 # Study 1 ----------------------------------------------------------------------
 
 lys_1_model_df <- lys_1 %>% 
@@ -150,7 +154,10 @@ network_graph_full_1 <-
          edge.color = "#151414",
          vTrans = 200,
          negDashed = TRUE,
-         curveAll = TRUE)
+         curveAll = TRUE,
+         nodeNames = lys_text$text,
+         legend.cex = 0.30,
+         GLratio = 1.25)
 
 walktrap_1 <- walktrap.community(as.igraph(network_graph_full_1),
                                  weights = abs(E(as.igraph(network_graph_full_1))$weight))
@@ -165,7 +172,12 @@ network_graph_full_1_walk <-
          negDashed = TRUE,
          curveAll = TRUE,
          groups = as.factor(walktrap_1$membership),
-         palette = "colorblind")
+         palette = "colorblind",
+         nodeNames = lys_text$text,
+         legend.cex = 0.30,
+         legend.mode = "style2",
+         GLratio = 1.25,
+         title = "Łyś et al (2023, Study 1) - Training")
 
 ## Extract model skeleton
 
@@ -237,7 +249,10 @@ network_graph_2_post <-
          edge.color = "#151414",
          vTrans = 200,
          negDashed = TRUE,
-         curveAll = TRUE)
+         curveAll = TRUE,
+         nodeNames = lys_text$text,
+         legend.cex = 0.30,
+         GLratio = 1.25)
 
 walktrap_2 <- walktrap.community(as.igraph(network_graph_2_post),
                                  weights = abs(E(as.igraph(network_graph_2_post))$weight))
@@ -252,7 +267,12 @@ network_graph_2_post_walk <-
          negDashed = TRUE,
          curveAll = TRUE,
          groups = as.factor(walktrap_2$membership),
-         palette = "colorblind")
+         palette = "colorblind",
+         nodeNames = lys_text$text,
+         legend.cex = 0.30,
+         legend.mode = "style2",
+         GLratio = 1.25,
+         title = "Łyś et al (2023, Study 2, Two Weeks) - Test")
 
 # Study 3 ----------------------------------------------------------------------
 
@@ -289,7 +309,10 @@ network_graph_3 <-
          edge.color = "#151414",
          vTrans = 200,
          negDashed = TRUE,
-         curveAll = TRUE)
+         curveAll = TRUE,
+         nodeNames = lys_text$text,
+         legend.cex = 0.30,
+         GLratio = 1.25)
 
 walktrap_3 <- walktrap.community(as.igraph(network_graph_3),
                                  weights = abs(E(as.igraph(network_graph_3))$weight))
@@ -304,7 +327,12 @@ network_graph_3_walk <-
          negDashed = TRUE,
          curveAll = TRUE,
          groups = as.factor(walktrap_3$membership),
-         palette = "colorblind")
+         palette = "colorblind",
+         nodeNames = lys_text$text,
+         legend.cex = 0.30,
+         legend.mode = "style2",
+         GLratio = 1.25,
+         title = "Łyś et al (2023, Study 3) - Test")
 
 # Factor modeling --------------------------------------------------------------
 
@@ -1102,32 +1130,32 @@ lys_1_weighted_d <-
 # Export figures ---------------------------------------------------------------
 
 png("./figures/lys_irma-network_study-1.png", 
-    height = 5.5, width = 9.6, units = "in", res = 1500)
+    height = 6, width = 12, units = "in", res = 1500)
 plot(network_graph_full_1)
 dev.off()
 
 png("./figures/lys_irma-network_study-2-post.png", 
-    height = 5.5, width = 9.6, units = "in", res = 1500)
+    height = 6, width = 12, units = "in", res = 1500)
 plot(network_graph_2_post)
 dev.off()
 
 png("./figures/lys_irma-network_study-3.png", 
-    height = 5.5, width = 9.6, units = "in", res = 1500)
+    height = 6, width = 12, units = "in", res = 1500)
 plot(network_graph_3)
 dev.off()
 
 png("./figures/lys_irma-network_study-1_walktrap.png", 
-    height = 5.5, width = 9.6, units = "in", res = 1500)
+    height = 6, width = 12, units = "in", res = 1500)
 plot(network_graph_full_1_walk)
 dev.off()
 
 png("./figures/lys_irma-network_study-2-post_walktrap.png", 
-    height = 5.5, width = 9.6, units = "in", res = 1500)
+    height = 6, width = 12, units = "in", res = 1500)
 plot(network_graph_2_post_walk)
 dev.off()
 
 png("./figures/lys_irma-network_study-3_walktrap.png", 
-    height = 5.5, width = 9.6, units = "in", res = 1500)
+    height = 6, width = 12, units = "in", res = 1500)
 plot(network_graph_3_walk)
 dev.off()
 

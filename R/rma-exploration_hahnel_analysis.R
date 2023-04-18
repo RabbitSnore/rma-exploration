@@ -63,6 +63,14 @@ hahnel <- hahnel_raw %>%
   ) %>% 
   filter(complete.cases(.))
 
+## IRMA text
+
+hahnel_text <- map_df(hahnel, function(x) {attributes(x)$label}) %>% 
+  t() %>% 
+  as.data.frame()
+
+colnames(hahnel_text) <- "text"
+
 # Network modeling -------------------------------------------------------------
 
 # Split into training and test sets
@@ -130,7 +138,10 @@ network_graph_1_train <-
          edge.color = "#151414",
          vTrans = 200,
          negDashed = TRUE,
-         curveAll = TRUE)
+         curveAll = TRUE,
+         nodeNames = hahnel_text$text,
+         legend.cex = 0.30,
+         GLratio = 1.25)
 
 walktrap_1 <- 
   walktrap.community(as.igraph(network_graph_1_train),
@@ -146,7 +157,12 @@ network_graph_1_train_walk <-
          negDashed = TRUE,
          curveAll = TRUE,
          groups = as.factor(walktrap_1$membership),
-         palette = "colorblind")
+         palette = "colorblind",
+         nodeNames = hahnel_text$text,
+         legend.cex = 0.30,
+         legend.mode = "style2",
+         GLratio = 1.25,
+         title = "Hahnel et al (2023) - Training")
 
 ## Extract model skeleton
 
@@ -177,7 +193,10 @@ network_graph_1_test <-
          edge.color = "#151414",
          vTrans = 200,
          negDashed = TRUE,
-         curveAll = TRUE)
+         curveAll = TRUE,
+         nodeNames = hahnel_text$text,
+         legend.cex = 0.30,
+         GLratio = 1.25)
 
 walktrap_2 <- 
   walktrap.community(as.igraph(network_graph_1_test),
@@ -193,7 +212,12 @@ network_graph_1_test_walk <-
          negDashed = TRUE,
          curveAll = TRUE,
          groups = as.factor(walktrap_2$membership),
-         palette = "colorblind")
+         palette = "colorblind",
+         nodeNames = hahnel_text$text,
+         legend.cex = 0.30,
+         legend.mode = "style2",
+         GLratio = 1.25,
+         title = "Hahnel et al (2023) - Test")
 
 # Factor modeling --------------------------------------------------------------
 
@@ -220,21 +244,21 @@ four_factor_par <- standardizedsolution(four_factor_fit)
 # Export figures ---------------------------------------------------------------
 
 png("./figures/hahnel_irma-network_train.png", 
-    height = 5.5, width = 9.6, units = "in", res = 1500)
+    height = 6, width = 12, units = "in", res = 1500)
 plot(network_graph_1_train)
 dev.off()
 
 png("./figures/hahnel_irma-network_test.png", 
-    height = 5.5, width = 9.6, units = "in", res = 1500)
+    height = 6, width = 12, units = "in", res = 1500)
 plot(network_graph_1_test)
 dev.off()
 
 png("./figures/hahnel_irma-network_train_walktrap.png", 
-    height = 5.5, width = 9.6, units = "in", res = 1500)
+    height = 6, width = 12, units = "in", res = 1500)
 plot(network_graph_1_train_walk)
 dev.off()
 
 png("./figures/hahnel_irma-network_test_walktrap.png", 
-    height = 5.5, width = 9.6, units = "in", res = 1500)
+    height = 6, width = 12, units = "in", res = 1500)
 plot(network_graph_1_test_walk)
 dev.off()

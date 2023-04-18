@@ -79,6 +79,10 @@ balezina_2 <- read_excel("./data/balezina/Data Study 2.xlsx")
 colnames(balezina_2) <- colnames(balezina_2) %>% 
   tolower()
 
+## IRMA text
+
+balezina_text <- read_csv("./data/balezina/balezina_irma-text.csv")
+
 # Study 1 ----------------------------------------------------------------------
 
 # Network using full item set, without filler items
@@ -260,7 +264,10 @@ network_graph_reduced_1 <-
          edge.color = "#151414",
          vTrans = 200,
          negDashed = TRUE,
-         curveAll = TRUE)
+         curveAll = TRUE,
+         nodeNames = balezina_text$text,
+         legend.cex = 0.30,
+         GLratio = 1.25)
 
 walktrap_1 <- walktrap.community(as.igraph(network_graph_reduced_1),
                                  weights = abs(E(as.igraph(network_graph_reduced_1))$weight))
@@ -275,7 +282,12 @@ network_graph_reduced_1_walk <-
          negDashed = TRUE,
          curveAll = TRUE,
          groups = as.factor(walktrap_1$membership),
-         palette = "colorblind")
+         palette = "colorblind",
+         nodeNames = balezina_text$text,
+         legend.cex = 0.30,
+         legend.mode = "style2",
+         GLratio = 1.25,
+         title = "Balezina (2023, Study 1) - Training")
 
 ### Extract model skeleton
 
@@ -307,7 +319,10 @@ network_graph_reduced_1_test <-
          edge.color = "#151414",
          vTrans = 200,
          negDashed = TRUE,
-         curveAll = TRUE)
+         curveAll = TRUE,
+         nodeNames = balezina_text$text,
+         legend.cex = 0.30,
+         GLratio = 1.25)
 
 walktrap_1_test <- walktrap.community(as.igraph(network_graph_reduced_1_test),
                                       weights = abs(E(as.igraph(network_graph_reduced_1_test))$weight))
@@ -322,7 +337,12 @@ network_graph_reduced_1_test_walk <-
          negDashed = TRUE,
          curveAll = TRUE,
          groups = as.factor(walktrap_1_test$membership),
-         palette = "colorblind")
+         palette = "colorblind",
+         nodeNames = balezina_text$text,
+         legend.cex = 0.30,
+         legend.mode = "style2",
+         GLratio = 1.25,
+         title = "Balezina (2023, Study 1) - Test")
 
 # Testing network model in Study 2
 
@@ -364,7 +384,10 @@ network_graph_2 <-
          edge.color = "#151414",
          vTrans = 200,
          negDashed = TRUE,
-         curveAll = TRUE)
+         curveAll = TRUE,
+         nodeNames = balezina_text$text,
+         legend.cex = 0.30,
+         GLratio = 1.25)
 
 walktrap_2 <- walktrap.community(as.igraph(network_graph_2),
                                  weights = abs(E(as.igraph(network_graph_2))$weight))
@@ -379,7 +402,12 @@ network_graph_2_walk <-
          negDashed = TRUE,
          curveAll = TRUE,
          groups = as.factor(walktrap_2$membership),
-         palette = "colorblind")
+         palette = "colorblind",
+         nodeNames = balezina_text$text,
+         legend.cex = 0.30,
+         legend.mode = "style2",
+         GLratio = 1.25,
+         title = "Balezina (2023, Study 2) - Test")
 
 # Reproducing factor models from original paper --------------------------------
 
@@ -455,7 +483,10 @@ network_graph_full <-
          edge.color = "#151414",
          vTrans = 200,
          negDashed = TRUE,
-         curveAll = TRUE)
+         curveAll = TRUE,
+         nodeNames = balezina_text$text,
+         legend.cex = 0.30,
+         GLratio = 1.25)
 
 walktrap_full <- 
   walktrap.community(as.igraph(network_graph_full),
@@ -471,7 +502,11 @@ network_graph_full_walk <-
          negDashed = TRUE,
          curveAll = TRUE,
          groups = as.factor(walktrap_full$membership),
-         palette = "colorblind")
+         palette = "colorblind",
+         nodeNames = balezina_text$text,
+         legend.cex = 0.30,
+         legend.mode = "style2",
+         GLratio = 1.25)
 
 centrality_plot_full <- 
 centralityPlot(network_graph_full_walk,
@@ -1005,42 +1040,42 @@ high_summary <- balezina_2 %>%
 # Export figures ---------------------------------------------------------------
 
 png("./figures/balezina_irma-reduced-network_train.png", 
-    height = 5.5, width = 9.6, units = "in", res = 1500)
+    height = 6, width = 12, units = "in", res = 1500)
 plot(network_graph_reduced_1)
 dev.off()
 
 png("./figures/balezina_irma-reduced-network_test.png", 
-    height = 5.5, width = 9.6, units = "in", res = 1500)
+    height = 6, width = 12, units = "in", res = 1500)
 plot(network_graph_reduced_1_test)
 dev.off()
 
 png("./figures/balezina_irma-reduced-network_study-2.png", 
-    height = 5.5, width = 9.6, units = "in", res = 1500)
+    height = 6, width = 12, units = "in", res = 1500)
 plot(network_graph_2)
 dev.off()
 
 png("./figures/balezina_irma-reduced-network_train_walktrap.png", 
-    height = 5.5, width = 9.6, units = "in", res = 1500)
+    height = 6, width = 12, units = "in", res = 1500)
 plot(network_graph_reduced_1_walk)
 dev.off()
 
 png("./figures/balezina_irma-reduced-network_test_walktrap.png", 
-    height = 5.5, width = 9.6, units = "in", res = 1500)
+    height = 6, width = 12, units = "in", res = 1500)
 plot(network_graph_reduced_1_test_walk)
 dev.off()
 
 png("./figures/balezina_irma-reduced-network_study-2_walktrap.png", 
-    height = 5.5, width = 9.6, units = "in", res = 1500)
+    height = 6, width = 12, units = "in", res = 1500)
 plot(network_graph_2_walk)
 dev.off()
 
 png("./figures/balezina_irma-reduced-network_fulldata.png", 
-    height = 5.5, width = 9.6, units = "in", res = 1500)
+    height = 6, width = 12, units = "in", res = 1500)
 plot(network_graph_full)
 dev.off()
 
 png("./figures/balezina_irma-reduced-network_fulldata_walktrap.png", 
-    height = 5.5, width = 9.6, units = "in", res = 1500)
+    height = 6, width = 12, units = "in", res = 1500)
 plot(network_graph_full_walk)
 dev.off()
 

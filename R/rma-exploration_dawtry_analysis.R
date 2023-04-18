@@ -128,6 +128,10 @@ colnames(dawtry_5_irma) <- str_replace(colnames(dawtry_5_irma), "I", "")
 
 dawtry <- bind_rows(dawtry_1_irma, dawtry_3_irma, dawtry_5_irma)
 
+## IRMA text
+
+dawtry_text <- read_csv("./data/dawtry/dawtry_irma-text.csv")
+
 # Network modeling -------------------------------------------------------------
 
 # Split into training and test sets
@@ -195,7 +199,10 @@ network_graph_1_train <-
          edge.color = "#151414",
          vTrans = 200,
          negDashed = TRUE,
-         curveAll = TRUE)
+         curveAll = TRUE,
+         nodeNames = dawtry_text$text,
+         legend.cex = 0.30,
+         GLratio = 1.25)
 
 walktrap_1 <- 
   walktrap.community(as.igraph(network_graph_1_train),
@@ -211,7 +218,12 @@ network_graph_1_train_walk <-
          negDashed = TRUE,
          curveAll = TRUE,
          groups = as.factor(walktrap_1$membership),
-         palette = "colorblind")
+         palette = "colorblind",
+         nodeNames = dawtry_text$text,
+         legend.cex = 0.30,
+         legend.mode = "style2",
+         GLratio = 1.25,
+         title = "Dawtry et al (2019, Study 1, 3, & 5) - Training")
 
 ## Extract model skeleton
 
@@ -242,7 +254,10 @@ network_graph_1_test <-
          edge.color = "#151414",
          vTrans = 200,
          negDashed = TRUE,
-         curveAll = TRUE)
+         curveAll = TRUE,
+         nodeNames = dawtry_text$text,
+         legend.cex = 0.30,
+         GLratio = 1.25)
 
 walktrap_2 <- 
   walktrap.community(as.igraph(network_graph_1_test),
@@ -258,7 +273,12 @@ network_graph_1_test_walk <-
          negDashed = TRUE,
          curveAll = TRUE,
          groups = as.factor(walktrap_2$membership),
-         palette = "colorblind")
+         palette = "colorblind",
+         nodeNames = dawtry_text$text,
+         legend.cex = 0.30,
+         legend.mode = "style2",
+         GLratio = 1.25,
+         title = "Dawtry et al (2019, Study 1, 3, & 5) - Test")
 
 # Factor modelling -------------------------------------------------------------
 
@@ -332,7 +352,10 @@ network_graph_full <-
          edge.color = "#151414",
          vTrans = 200,
          negDashed = TRUE,
-         curveAll = TRUE)
+         curveAll = TRUE,
+         nodeNames = dawtry_text$text,
+         legend.cex = 0.30,
+         GLratio = 1.25)
 
 walktrap_full <- 
   walktrap.community(as.igraph(network_graph_full),
@@ -348,7 +371,11 @@ network_graph_full_walk <-
          negDashed = TRUE,
          curveAll = TRUE,
          groups = as.factor(walktrap_full$membership),
-         palette = "colorblind")
+         palette = "colorblind",
+         nodeNames = dawtry_text$text,
+         legend.cex = 0.30,
+         legend.mode = "style2",
+         GLratio = 1.25)
 
 centrality_plot_full <- 
   centralityPlot(network_graph_full_walk,
@@ -629,32 +656,32 @@ dawtry_weighted_d <-
 # Export figures ---------------------------------------------------------------
 
 png("./figures/dawtry_irma-network_train.png", 
-    height = 5.5, width = 9.6, units = "in", res = 1500)
+    height = 6, width = 12, units = "in", res = 1500)
 plot(network_graph_1_train)
 dev.off()
 
 png("./figures/dawtry_irma-network_test.png", 
-    height = 5.5, width = 9.6, units = "in", res = 1500)
+    height = 6, width = 12, units = "in", res = 1500)
 plot(network_graph_1_test)
 dev.off()
 
 png("./figures/dawtry_irma-network_train_walktrap.png", 
-    height = 5.5, width = 9.6, units = "in", res = 1500)
+    height = 6, width = 12, units = "in", res = 1500)
 plot(network_graph_1_train_walk)
 dev.off()
 
 png("./figures/dawtry_irma-network_test_walktrap.png", 
-    height = 5.5, width = 9.6, units = "in", res = 1500)
+    height = 6, width = 12, units = "in", res = 1500)
 plot(network_graph_1_test_walk)
 dev.off()
 
 png("./figures/dawtry_irma-network_fulldata.png", 
-    height = 5.5, width = 9.6, units = "in", res = 1500)
+    height = 6, width = 12, units = "in", res = 1500)
 plot(network_graph_full)
 dev.off()
 
 png("./figures/dawtry_irma-network_fulldata_walktrap.png", 
-    height = 5.5, width = 9.6, units = "in", res = 1500)
+    height = 6, width = 12, units = "in", res = 1500)
 plot(network_graph_full_walk)
 dev.off()
 
