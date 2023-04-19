@@ -40,10 +40,14 @@ vignettes/*.pdf
 
 # Data
 
-*.csv
-*.xls
-*.xlsx
-*.sav
+data/*.csv
+data/*.xls
+data/*.xlsx
+data/*.sav
+/data/*.csv
+/data/*.xls
+/data/*.xlsx
+/data/*.sav
 
 # Notes
 

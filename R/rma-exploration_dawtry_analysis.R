@@ -130,7 +130,7 @@ dawtry <- bind_rows(dawtry_1_irma, dawtry_3_irma, dawtry_5_irma)
 
 ## IRMA text
 
-dawtry_text <- read_csv("./data/dawtry/dawtry_irma-text.csv")
+dawtry_text <- read_csv("./text/dawtry_irma-text.csv")
 
 # Network modeling -------------------------------------------------------------
 

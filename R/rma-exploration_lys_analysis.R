@@ -95,7 +95,7 @@ lys_3 <- lys_3 %>%
 
 ## IRMA text
 
-lys_text <- read_csv("./data/lys/lys_irma-text.csv")
+lys_text <- read_csv("./text/lys_irma-text.csv")
 
 # Study 1 ----------------------------------------------------------------------
 

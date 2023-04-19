@@ -81,7 +81,7 @@ colnames(balezina_2) <- colnames(balezina_2) %>%
 
 ## IRMA text
 
-balezina_text <- read_csv("./data/balezina/balezina_irma-text.csv")
+balezina_text <- read_csv("./text/balezina_irma-text.csv")
 
 # Study 1 ----------------------------------------------------------------------
 
