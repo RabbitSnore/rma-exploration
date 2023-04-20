@@ -3011,13 +3011,13 @@ knitr::include_graphics("./figures/dawtry_ising_pers_weighted_hist.png")
 dawtry_base_prop
 ```
 
-    [1] 0.47377
+    [1] 0.66229
 
 ``` r
 dawtry_pers_prop
 ```
 
-    [1] 0.1743
+    [1] 0.56585
 
 ### Standardized Mean Difference in Total Scores Between Baseline and Persuasion Models
 
@@ -3025,10 +3025,10 @@ dawtry_pers_prop
 dawtry_unweighted_d
 ```
 
-    [1] 0.17478
+    [1] 0.053741
 
 ``` r
 dawtry_weighted_d
 ```
 
-    [1] 0.18467
+    [1] 0.056754

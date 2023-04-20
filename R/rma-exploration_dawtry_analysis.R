@@ -468,20 +468,14 @@ dawtry_model_long <- dawtry %>%
     names_to  = "item"
   )
 
-dawtry_summary <- dawtry_model_long %>% 
-  group_by(item) %>% 
-  summarise(
-    mean      = mean(rma, na.rm = TRUE),
-    threshold = (mean(rma, na.rm = TRUE) - 3)
-  )
-
+thresholds_base <- rep(-.10, 22)
 
 if (!file.exists("./output/dawtry_sim_base.rds")) {
   
   dawtry_sim_base <- 
     IsingSampler(n          = 100000,
                  graph      = getmatrix(network_full_fit, "omega"), 
-                 thresholds = dawtry_summary$threshold, 
+                 thresholds = thresholds_base, 
                  responses  = c(0, 1))
   
   saveRDS(dawtry_sim_base,
@@ -554,15 +548,15 @@ dawtry_ising_base_weighted_hist <-
 
 strongest_node <- strength_measure$node[[1]]
 
-sim_thresholds <- dawtry_summary$threshold
-sim_thresholds[strongest_node] <- -2
+thresholds_pers <- thresholds_base
+thresholds_pers[strongest_node] <- -.50
 
 if (!file.exists("./output/dawtry_sim_pers.rds")) {
   
   dawtry_sim_pers <- 
     IsingSampler(n          = 100000,
                  graph      = getmatrix(network_full_fit, "omega"), 
-                 thresholds = sim_thresholds, 
+                 thresholds = thresholds_pers, 
                  responses  = c(0, 1))
   
   saveRDS(dawtry_sim_pers,

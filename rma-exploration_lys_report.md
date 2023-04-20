@@ -2555,13 +2555,13 @@ knitr::include_graphics("./figures/lys_ising_pers_weighted_hist.png")
 lys_1_base_prop
 ```
 
-    [1] 0.63505
+    [1] 0.66813
 
 ``` r
 lys_1_pers_prop
 ```
 
-    [1] 0.17874
+    [1] 0.57779
 
 ### Standardized Mean Difference in Total Scores Between Baseline and Persuasion Models
 
@@ -2569,10 +2569,10 @@ lys_1_pers_prop
 lys_1_unweighted_d
 ```
 
-    [1] 0.28039
+    [1] 0.058124
 
 ``` r
 lys_1_weighted_d
 ```
 
-    [1] 0.32362
+    [1] 0.065341

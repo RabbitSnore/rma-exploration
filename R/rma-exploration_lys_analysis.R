@@ -16,7 +16,8 @@ packages <- c(
   "lmerTest",
   "performance",
   "cowplot",
-  "igraph")
+  "igraph",
+  "IsingSampler")
 
 lapply(packages, library, character.only = TRUE)
 
@@ -941,20 +942,14 @@ lys_1_model_long <- lys_1_model_df %>%
     names_to  = "item"
   )
 
-lys_1_summary <- lys_1_model_long %>% 
-  group_by(item) %>% 
-  summarise(
-    mean      = mean(rma),
-    threshold = (mean(rma) - 3)
-  )
-
+thresholds_base <- rep(-.10, 19)
 
 if (!file.exists("./output/lys_1_sim_base.rds")) {
   
   lys_1_sim_base <- 
     IsingSampler(n          = 100000,
                  graph      = getmatrix(network_fit_full_1, "omega"), 
-                 thresholds = lys_1_summary$threshold, 
+                 thresholds = thresholds_base, 
                  responses  = c(0, 1))
   
   saveRDS(lys_1_sim_base,
@@ -1027,16 +1022,15 @@ lys_ising_base_weighted_hist <-
 
 strongest_node <- strength_measure$node[[1]]
 
-sim_thresholds <- lys_1_summary$threshold
-sim_thresholds[strongest_node] <- -2
-
+thresholds_pers <- thresholds_base
+thresholds_pers[strongest_node] <- -.50
 
 if (!file.exists("./output/lys_1_sim_pers.rds")) {
   
   lys_1_sim_pers <- 
     IsingSampler(n          = 100000,
                  graph      = getmatrix(network_fit_full_1, "omega"), 
-                 thresholds = sim_thresholds, 
+                 thresholds = thresholds_pers, 
                  responses  = c(0, 1))
   
   saveRDS(lys_1_sim_pers,

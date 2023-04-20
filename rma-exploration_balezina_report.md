@@ -75,18 +75,6 @@ network_reduced_fit_ind_1 %>%
   mutate(across(where(is.numeric), round, 6))
 ```
 
-    Warning: There was 1 warning in `mutate()`.
-    ℹ In argument: `across(where(is.numeric), round, 6)`.
-    Caused by warning:
-    ! The `...` argument of `across()` is deprecated as of dplyr 1.1.0.
-    Supply arguments directly to `.fns` through an anonymous function instead.
-
-      # Previously
-      across(a:b, mean, na.rm = TRUE)
-
-      # Now
-      across(a:b, \(x) mean(x, na.rm = TRUE))
-
                                 Measure         Value
     logl                           logl -17904.346296
     unrestricted.logl unrestricted.logl -17776.418990
@@ -2571,38 +2559,28 @@ knitr::include_graphics("./figures/balezina_irma-reduced-network_study-2_walktra
 balezina_1_train_seven_factor_ind
 ```
 
-                     npar                  fmin                 chisq 
-                   63.000                 0.383               349.641 
-                       df                pvalue        baseline.chisq 
-                  168.000                 0.000              3071.129 
-              baseline.df       baseline.pvalue                   cfi 
-                  210.000                 0.000                 0.937 
-                      tli                  nnfi                   rfi 
-                    0.921                 0.921                 0.858 
-                      nfi                  pnfi                   ifi 
-                    0.886                 0.709                 0.937 
-                      rni                  logl     unrestricted.logl 
-                    0.937            -17951.239            -17776.419 
-                      aic                   bic                ntotal 
-                36028.479             36288.334               457.000 
-                     bic2                 rmsea        rmsea.ci.lower 
-                36088.392                 0.049                 0.041 
-           rmsea.ci.upper        rmsea.ci.level          rmsea.pvalue 
-                    0.056                 0.900                 0.612 
-           rmsea.close.h0 rmsea.notclose.pvalue     rmsea.notclose.h0 
-                    0.050                 0.000                 0.080 
-                      rmr            rmr_nomean                  srmr 
-                    0.143                 0.143                 0.043 
-             srmr_bentler   srmr_bentler_nomean                  crmr 
-                    0.043                 0.043                 0.045 
-              crmr_nomean            srmr_mplus     srmr_mplus_nomean 
-                    0.045                 0.043                 0.043 
-                    cn_05                 cn_01                   gfi 
-                  261.423               280.133                 0.932 
-                     agfi                  pgfi                   mfi 
-                    0.906                 0.678                 0.820 
-                     ecvi 
-                    1.041 
+                   npar                fmin               chisq                  df 
+                 63.000               0.383             349.641             168.000 
+                 pvalue      baseline.chisq         baseline.df     baseline.pvalue 
+                  0.000            3071.129             210.000               0.000 
+                    cfi                 tli                nnfi                 rfi 
+                  0.937               0.921               0.921               0.858 
+                    nfi                pnfi                 ifi                 rni 
+                  0.886               0.709               0.937               0.937 
+                   logl   unrestricted.logl                 aic                 bic 
+             -17951.239          -17776.419           36028.479           36288.334 
+                 ntotal                bic2               rmsea      rmsea.ci.lower 
+                457.000           36088.392               0.049               0.041 
+         rmsea.ci.upper        rmsea.pvalue                 rmr          rmr_nomean 
+                  0.056               0.612               0.143               0.143 
+                   srmr        srmr_bentler srmr_bentler_nomean                crmr 
+                  0.043               0.043               0.043               0.045 
+            crmr_nomean          srmr_mplus   srmr_mplus_nomean               cn_05 
+                  0.045               0.043               0.043             261.423 
+                  cn_01                 gfi                agfi                pgfi 
+                280.133               0.932               0.906               0.678 
+                    mfi                ecvi 
+                  0.820               1.041 
 
 #### Parameter Estimates
 
@@ -2690,38 +2668,28 @@ balezina_1_train_seven_factor_par
 balezina_1_test_seven_factor_ind
 ```
 
-                     npar                  fmin                 chisq 
-                   63.000                 0.292               266.725 
-                       df                pvalue        baseline.chisq 
-                  168.000                 0.000              2639.213 
-              baseline.df       baseline.pvalue                   cfi 
-                  210.000                 0.000                 0.959 
-                      tli                  nnfi                   rfi 
-                    0.949                 0.949                 0.874 
-                      nfi                  pnfi                   ifi 
-                    0.899                 0.719                 0.960 
-                      rni                  logl     unrestricted.logl 
-                    0.959            -18039.369            -17906.006 
-                      aic                   bic                ntotal 
-                36204.737             36464.592               457.000 
-                     bic2                 rmsea        rmsea.ci.lower 
-                36264.650                 0.036                 0.028 
-           rmsea.ci.upper        rmsea.ci.level          rmsea.pvalue 
-                    0.044                 0.900                 0.999 
-           rmsea.close.h0 rmsea.notclose.pvalue     rmsea.notclose.h0 
-                    0.050                 0.000                 0.080 
-                      rmr            rmr_nomean                  srmr 
-                    0.123                 0.123                 0.038 
-             srmr_bentler   srmr_bentler_nomean                  crmr 
-                    0.038                 0.038                 0.039 
-              crmr_nomean            srmr_mplus     srmr_mplus_nomean 
-                    0.039                 0.038                 0.038 
-                    cn_05                 cn_01                   gfi 
-                  342.380               366.906                 0.948 
-                     agfi                  pgfi                   mfi 
-                    0.929                 0.690                 0.898 
-                     ecvi 
-                    0.859 
+                   npar                fmin               chisq                  df 
+                 63.000               0.292             266.725             168.000 
+                 pvalue      baseline.chisq         baseline.df     baseline.pvalue 
+                  0.000            2639.213             210.000               0.000 
+                    cfi                 tli                nnfi                 rfi 
+                  0.959               0.949               0.949               0.874 
+                    nfi                pnfi                 ifi                 rni 
+                  0.899               0.719               0.960               0.959 
+                   logl   unrestricted.logl                 aic                 bic 
+             -18039.369          -17906.006           36204.737           36464.592 
+                 ntotal                bic2               rmsea      rmsea.ci.lower 
+                457.000           36264.650               0.036               0.028 
+         rmsea.ci.upper        rmsea.pvalue                 rmr          rmr_nomean 
+                  0.044               0.999               0.123               0.123 
+                   srmr        srmr_bentler srmr_bentler_nomean                crmr 
+                  0.038               0.038               0.038               0.039 
+            crmr_nomean          srmr_mplus   srmr_mplus_nomean               cn_05 
+                  0.039               0.038               0.038             342.380 
+                  cn_01                 gfi                agfi                pgfi 
+                366.906               0.948               0.929               0.690 
+                    mfi                ecvi 
+                  0.898               0.859 
 
 #### Parameter Estimates
 
@@ -2809,38 +2777,28 @@ balezina_1_test_seven_factor_par
 balezina_2_seven_factor_ind
 ```
 
-                     npar                  fmin                 chisq 
-                   63.000                 0.474               535.885 
-                       df                pvalue        baseline.chisq 
-                  168.000                 0.000              4683.455 
-              baseline.df       baseline.pvalue                   cfi 
-                  210.000                 0.000                 0.918 
-                      tli                  nnfi                   rfi 
-                    0.897                 0.897                 0.857 
-                      nfi                  pnfi                   ifi 
-                    0.886                 0.708                 0.919 
-                      rni                  logl     unrestricted.logl 
-                    0.918            -20280.392            -20012.450 
-                      aic                   bic                ntotal 
-                40686.785             40960.005               565.000 
-                     bic2                 rmsea        rmsea.ci.lower 
-                40760.010                 0.062                 0.056 
-           rmsea.ci.upper        rmsea.ci.level          rmsea.pvalue 
-                    0.068                 0.900                 0.000 
-           rmsea.close.h0 rmsea.notclose.pvalue     rmsea.notclose.h0 
-                    0.050                 0.000                 0.080 
-                      rmr            rmr_nomean                  srmr 
-                    0.134                 0.134                 0.050 
-             srmr_bentler   srmr_bentler_nomean                  crmr 
-                    0.050                 0.050                 0.053 
-              crmr_nomean            srmr_mplus     srmr_mplus_nomean 
-                    0.053                 0.050                 0.050 
-                    cn_05                 cn_01                   gfi 
-                  211.069               226.161                 0.914 
-                     agfi                  pgfi                   mfi 
-                    0.882                 0.665                 0.722 
-                     ecvi 
-                    1.171 
+                   npar                fmin               chisq                  df 
+                 63.000               0.474             535.885             168.000 
+                 pvalue      baseline.chisq         baseline.df     baseline.pvalue 
+                  0.000            4683.455             210.000               0.000 
+                    cfi                 tli                nnfi                 rfi 
+                  0.918               0.897               0.897               0.857 
+                    nfi                pnfi                 ifi                 rni 
+                  0.886               0.708               0.919               0.918 
+                   logl   unrestricted.logl                 aic                 bic 
+             -20280.392          -20012.450           40686.785           40960.005 
+                 ntotal                bic2               rmsea      rmsea.ci.lower 
+                565.000           40760.010               0.062               0.056 
+         rmsea.ci.upper        rmsea.pvalue                 rmr          rmr_nomean 
+                  0.068               0.000               0.134               0.134 
+                   srmr        srmr_bentler srmr_bentler_nomean                crmr 
+                  0.050               0.050               0.050               0.053 
+            crmr_nomean          srmr_mplus   srmr_mplus_nomean               cn_05 
+                  0.053               0.050               0.050             211.069 
+                  cn_01                 gfi                agfi                pgfi 
+                226.161               0.914               0.882               0.665 
+                    mfi                ecvi 
+                  0.722               1.171 
 
 ### Parameter Estimates
 
@@ -3870,13 +3828,13 @@ knitr::include_graphics("./figures/balezina_ising_pers_weighted_hist.png")
 balezina_1_base_prop
 ```
 
-    [1] 0.21364
+    [1] 0.62685
 
 ``` r
 balezina_1_pers_prop
 ```
 
-    [1] 0.06477
+    [1] 0.52961
 
 ### Standardized Mean Difference in Total Scores Between Baseline and Persuasion Models
 
@@ -3884,10 +3842,10 @@ balezina_1_pers_prop
 balezina_1_unweighted_d
 ```
 
-    [1] 0.080747
+    [1] 0.053119
 
 ``` r
 balezina_1_weighted_d
 ```
 
-    [1] 0.10102
+    [1] 0.065675
