@@ -1,0 +1,134 @@
+---
+title: "Nyúl & Kende (2021) - Network Re-analysis"
+format: gfm
+editor: source
+toc: true
+---
+
+```{r}
+#| include: false
+options(scipen = 999, digits = 5)
+source("./R/rma-exploration_nyul_analysis.R")
+
+```
+
+# Network Analysis
+
+## Study 1
+
+### Fit Indices
+
+```{r}
+network_fit_ind_full_1 %>% 
+  mutate(across(where(is.numeric), round, 6))
+```
+
+### Parameter Estimates
+
+```{r}
+network_pars_full_1 %>% 
+  mutate(across(where(is.numeric), round, 3))
+```
+
+### Network Figures
+
+```{r}
+knitr::include_graphics("./figures/nyul_irma-network_study-1.png")
+```
+
+```{r}
+knitr::include_graphics("./figures/nyul_irma-network_study-1_walktrap.png")
+```
+
+## Study 2
+
+### Fit Indices
+
+```{r}
+network_fit_ind_2 %>% 
+  mutate(across(where(is.numeric), round, 6))
+```
+
+### Parameter Estimates
+
+```{r}
+network_pars_2 %>% 
+  mutate(across(where(is.numeric), round, 3))
+```
+
+### Network Figures
+
+```{r}
+knitr::include_graphics("./figures/nyul_irma-network_study-2.png")
+```
+
+```{r}
+knitr::include_graphics("./figures/nyul_irma-network_study-2_walktrap.png")
+```
+
+
+# Connectivity Hypothesis
+
+## Study 1
+
+### Low ASI Scores
+
+```{r}
+low_summary_1
+```
+
+```{r}
+aspl_low_1
+```
+
+### Moderate ASI Scores
+
+```{r}
+mod_summary_1
+```
+
+```{r}
+aspl_mod_1
+```
+
+### High ASI Scores
+
+```{r}
+high_summary_1
+```
+
+```{r}
+aspl_high_1
+```
+
+## Study 2
+
+### Low ASI Scores
+
+```{r}
+low_summary_2
+```
+
+```{r}
+aspl_low_2
+```
+
+### Moderate ASI Scores
+
+```{r}
+mod_summary_2
+```
+
+```{r}
+aspl_mod_2
+```
+
+### High ASI Scores
+
+```{r}
+high_summary_2
+```
+
+```{r}
+aspl_high_2
+```
