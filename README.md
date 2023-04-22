@@ -16,6 +16,10 @@ Was: Rape Myth Acceptance, Victim Blaming, and Memory Reconstruction.
 Personality and Social Psychology Bulletin, 45(8), 1269–1282.
 https://doi.org/10.1177/0146167218818475
 
+Fernsund, H. E., & Luke, T. J. (2023). Measuring Rape Myth Acceptance in Sweden:
+Psychometric Properties of a Swedish Translation of The Acceptance of Modern
+Myths About Sexual Aggression Scale. https://doi.org/10.31234/osf.io/h79t8
+
 Hahnel, R., Goetz, C., & Goetz, A. T. (2023). Men’s Attitudes Toward Third Party
 Casual Sex Predict Rape Myth Acceptance. PsyArXiv.
 https://doi.org/10.31234/osf.io/94smh
@@ -25,7 +29,13 @@ Psychometric properties of the Polish updated Illinois rape myth acceptance
 scale. Current Psychology, 42(1), 445–459.
 https://doi.org/10.1007/s12144-020-01249-3
 
-Data from each study are downloaded automatically from OSF by running the code.
+Nyúl, B., & Kende, A. (2023). Rape myth acceptance as a relevant psychological
+construct in a gender-unequal context: The Hungarian adaptation of the updated
+Illinois rape myths acceptance scale. Current Psychology, 42(4), 3098–3111.
+https://doi.org/10.1007/s12144-021-01631-9
+
+Data from each study are downloaded automatically from OSF by running the code,
+except for Nyúl & Kende (2023), which needs to be downloaded manually.
 
 ## Compendium Structure
 

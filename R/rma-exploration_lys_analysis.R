@@ -417,6 +417,8 @@ lys_2_response_change <- lys_2_long %>%
     values_to = "rma"
   )
 
+set.seed(678)
+
 lys_2_response_change$response_id    <- 
   paste(lys_2_response_change$id, lys_2_response_change$item, sep = "_")
 
