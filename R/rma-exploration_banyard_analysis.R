@@ -110,7 +110,7 @@ banyard_wide$irma_sum <- banyard_wide %>%
   select(starts_with("ir")) %>% 
   rowSums()
 
-banyard_sum_lmm <- lmer(irma_sum ~ 1 + (1|ID) + (1|time), data = banyard_wide)
+banyard_sum_lmm <- lmer(irma_sum ~ 1 + (1|ID), data = banyard_wide)
 banyard_sum_icc <- icc(banyard_sum_lmm, by_group = TRUE)
 
 banyard_wide_sum <- banyard_wide %>% 
@@ -189,7 +189,7 @@ banyard_item_long <- banyard_item %>%
     values_to = "rma"
   )
 
-banyard_item_lmm <- lmer(rma ~ 1 + (1|item) + (1|time), data = banyard_item_long)
+banyard_item_lmm <- lmer(rma ~ 1 + (1|item), data = banyard_item_long)
 banyard_item_icc <- icc(banyard_item_lmm, by_group = TRUE)
 
 ## Response level change

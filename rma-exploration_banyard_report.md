@@ -36,8 +36,7 @@ banyard_sum_icc
 
     Group |   ICC
     -------------
-    ID    | 0.665
-    time  | 0.042
+    ID    | 0.658
 
 ## Item Means Across Time
 
@@ -49,8 +48,7 @@ banyard_item_icc
 
     Group |   ICC
     -------------
-    item  | 0.876
-    time  | 0.068
+    item  | 0.873
 
 ## Item-Level Change for Each Participant
 
