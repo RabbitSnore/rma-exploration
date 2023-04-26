@@ -5,11 +5,16 @@ project re-examining data from rape myth acceptance scales.
 
 ## Data
 
-Data from the following papers have been used:
+Data from the following papers and data sets have been used:
 
 Balezina, M. (2023). Measuring Attitudes Towards Rape in Russia: Translation and
 Validation of the Illinois Rape Myths Acceptance Scale. Retrieved from
 https://osf.io/9uws8/
+
+Banyard, V. L., Plante, E. G., & Moynihan, M. M. (2008). Rape Prevention Through
+Bystander Education at a Northeastern State University, 2002-2004.
+Inter-university Consortium for Political and Social Research (distributor).
+https://doi.org/10.3886/ICPSR04367.v1
 
 Dawtry, R. J., Cozzolino, P. J., & Callan, M. J. (2019). I Blame Therefore It
 Was: Rape Myth Acceptance, Victim Blaming, and Memory Reconstruction.
@@ -35,7 +40,8 @@ Illinois rape myths acceptance scale. Current Psychology, 42(4), 3098–3111.
 https://doi.org/10.1007/s12144-021-01631-9
 
 Data from each study are downloaded automatically from OSF by running the code,
-except for Nyúl & Kende (2023), which needs to be downloaded manually.
+except for Nyúl & Kende (2023) and Banyard et al (2008), which need to be
+downloaded manually.
 
 ## Compendium Structure
 
@@ -45,3 +51,35 @@ except for Nyúl & Kende (2023), which needs to be downloaded manually.
 `/output/`.
 - qmd files to generate markdown reports are stored in the root directory.
 - Readable markdown reports are stored in the root directory.
+
+## How to Reproduce the Analyses
+
+### Light Reproducibility 
+
+To recreate the analyses and visualizations, the most efficient method is to
+knit the Quarto markdown documents for the studies you are interested in. Doing
+so will automatically execute the relevant scripts, which will download the
+necessary data, recreate the visualizations, and load the estimated models
+stored in the compendium. The advantage of this approach is that it is efficient
+and will recreate the data environment I used when originally working with the
+data. The notable disadvantage is that it does not actually reproduce the model
+estimation process; it simply loads the stored versions. For most purposes, such
+as exploration of the data or closer inspection of the models as I worked with
+them, this method of reproducibility is probably sufficient.
+
+### Full Reproducibility
+
+To fully reproduce the model estimation procedures the easiest method is to
+delete the contents of the output folder in your local copy of the repository
+and then knit the Quarto markdown documents for the studies you are interested
+in. Doing this will prevent loading of the estimated models and will prompt the
+script to run the estimation procedures. Note that this will run highly
+computationally intensive processes. If you want to fully reproduce all the
+analyses for all studies on a typical personal computer, you can probably expect
+the scripts to be running for several continuous days of computing time. Bear in
+mind that many of the model optimization processes not only place heavy burdens
+on processors but also on memory. I don't recommend running the full scripts
+with less than 16 GB of RAM. Because the processes are so time and resource
+intensive, I don't recommend fully reproducing all the analyses in this way
+unless you need to (e.g., you are examining the procedures for the purpose of
+error detection; you have a specific technical interest).

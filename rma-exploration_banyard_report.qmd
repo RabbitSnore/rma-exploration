@@ -1,0 +1,59 @@
+---
+title: "Banyard et al (2008) - Re-analysis"
+format: gfm
+editor: source
+toc: true
+---
+
+```{r}
+#| include: false
+options(scipen = 999, digits = 5)
+source("./R/rma-exploration_banyard_analysis.R")
+
+```
+
+# Change Over Time
+
+## Sum Score Across Time
+
+```{r}
+banyard_sum_icc
+```
+
+## Item Means Across Time
+
+```{r}
+banyard_item_icc
+```
+
+## Item-Level Change for Each Participant
+
+```{r}
+knitr::include_graphics("./figures/banyard_item-change.png")
+```
+
+## Relationship Between Scores and Change Over Time
+
+### Sum Score and Total Absolute Item-Level Change
+
+```{r}
+banyard_sum_change_cor
+```
+
+### Sum Score and Sum Score Change
+
+```{r}
+banyard_score_change_abs_cor
+```
+
+### Item-Level Mean by Mean Absolute Change in Item Agreement
+
+```{r}
+banyard_change_by_item_cor
+```
+
+### Visualization
+
+```{r}
+knitr::include_graphics("./figures/banyard_time-change.png")
+```
