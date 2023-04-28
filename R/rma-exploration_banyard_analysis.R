@@ -53,7 +53,11 @@ banyard_4 <- read_tsv("./data/banyard/04367-0004-Data.tsv")
 
 banyard_5 <- read_tsv("./data/banyard/04367-0005-Data.tsv")
 
-# Change over Time  ------------------------------------------------------------
+## IRMA text
+
+banyard_text <- read_csv("./text/banyard_irma-text.csv")
+
+# Network modeling -------------------------------------------------------------
 
 # Wrangling
 
@@ -88,6 +92,225 @@ banyard_irma <- banyard_irma %>%
     -ends_with("ir9"),
     -ends_with("ir15")
   )
+
+# Split into training and test sets
+
+set.seed(1277)
+
+banyard_net <- banyard_irma %>% 
+  select(ID, starts_with("preir")) %>% 
+  filter(complete.cases(.))
+
+banyard_train <- banyard_net %>% 
+  slice_sample(prop = .50, replace = FALSE)
+
+banyard_test <- banyard_net %>% 
+  filter(!(ID %in% banyard_train$ID))
+
+banyard_train <- banyard_train %>% 
+  select(-ID)
+
+banyard_test <- banyard_test %>% 
+  select(-ID)
+
+# Network model derived from training data
+
+if (!file.exists("./output/banyard_network_model_final_1.rds")) {
+  
+  network_model_1 <- varcov(data = banyard_train,
+                            type = "ggm",
+                            omega = "Full")
+  
+  network_model_pruned_1 <- network_model_1 %>%
+    setoptimizer(optimizer = "ucminf") %>%
+    prune(alpha = 0.001, recursive = TRUE, adjust = "fdr")
+  
+  network_model_final_1 <- network_model_pruned_1 %>% 
+    modelsearch( # This process is computationally intensive
+      criterion  = "bic",
+      prunealpha = .001,
+      addalpha   = .001
+    )
+  
+  saveRDS(network_model_final_1,
+          "./output/banyard_network_model_final_1.rds")
+  
+} else {
+  
+  network_model_final_1 <- readRDS("./output/banyard_network_model_final_1.rds")
+  
+}
+
+network_fit_1 <- network_model_final_1 %>% 
+  runmodel()
+
+network_pars_1     <- parameters(network_fit_1)
+
+network_fit_ind_1  <- fit(network_fit_1)
+
+network_graph_1_train <- 
+  qgraph(getmatrix(network_model_final_1, "omega"),
+         labels = 1:17,
+         layout = "spring",
+         vsize = 4,
+         edge.labels = TRUE,
+         edge.label.cex = .40,
+         edge.label.bg = "white",
+         edge.label.position = .28,
+         edge.color = "#151414",
+         vTrans = 200,
+         negDashed = TRUE,
+         curveAll = TRUE,
+         nodeNames = banyard_text$text,
+         legend.cex = 0.30,
+         GLratio = 1.25)
+
+walktrap_1 <- 
+  walktrap.community(as.igraph(network_graph_1_train),
+                     weights = abs(E(as.igraph(network_graph_1_train))$weight))
+
+network_graph_1_train_walk <- 
+  qgraph(getmatrix(network_model_final_1, "omega"),
+         labels = 1:17,
+         layout = network_graph_1_train$layout,
+         vsize = 4,
+         edge.color = "#151414",
+         vTrans = 200,
+         negDashed = TRUE,
+         curveAll = TRUE,
+         groups = as.factor(walktrap_1$membership),
+         palette = "colorblind",
+         nodeNames = banyard_text$text,
+         legend.cex = 0.30,
+         legend.mode = "style2",
+         GLratio = 1.25,
+         title = "Banyard et al (2008) - Training")
+
+## Extract model skeleton
+
+skeleton_1 <- 1 * (getmatrix(network_model_final_1, "omega" ) != 0)
+
+## Confirm in test data
+
+network_model_1_test <- varcov(data = banyard_test,
+                               type = "ggm", 
+                               omega = skeleton_1)
+
+network_fit_1_test <- network_model_1_test %>% 
+  runmodel()
+
+network_pars_1_test     <- parameters(network_fit_1_test)
+
+network_fit_ind_1_test  <- fit(network_fit_1_test)
+
+network_graph_1_test <- 
+  qgraph(getmatrix(network_fit_1_test, "omega"),
+         labels = 1:17,
+         layout = network_graph_1_train$layout,
+         vsize = 4,
+         edge.labels = TRUE,
+         edge.label.cex = .40,
+         edge.label.bg = "white",
+         edge.label.position = .28,
+         edge.color = "#151414",
+         vTrans = 200,
+         negDashed = TRUE,
+         curveAll = TRUE,
+         nodeNames = banyard_text$text,
+         legend.cex = 0.30,
+         GLratio = 1.25)
+
+walktrap_2 <- 
+  walktrap.community(as.igraph(network_graph_1_test),
+                     weights = abs(E(as.igraph(network_graph_1_test))$weight))
+
+network_graph_1_test_walk <- 
+  qgraph(getmatrix(network_fit_1_test, "omega"),
+         labels = 1:17,
+         layout = network_graph_1_train$layout,
+         vsize = 4,
+         edge.color = "#151414",
+         vTrans = 200,
+         negDashed = TRUE,
+         curveAll = TRUE,
+         groups = as.factor(walktrap_2$membership),
+         palette = "colorblind",
+         nodeNames = banyard_text$text,
+         legend.cex = 0.30,
+         legend.mode = "style2",
+         GLratio = 1.25,
+         title = "Banyard et al (2008) - Test")
+
+# Factor modeling --------------------------------------------------------------
+
+seven_factor <- 
+'
+
+sa =~ preir1 + preir16 + preir17 + preir19
+
+de =~ preir7 + preir10 + preir12
+
+wi =~ preir2 + preir4
+
+li =~ preir8 + preir14
+
+te =~ preir3 + preir13
+
+nr =~ preir6 + preir11
+
+mt =~ preir18 + preir20
+
+'
+
+# Results in covariance matrix that is not positive definite
+seven_factor_fit <- cfa(model = seven_factor,
+                       data = banyard_test)
+
+seven_factor_ind <- fitmeasures(seven_factor_fit)
+seven_factor_par <- standardizedsolution(seven_factor_fit)
+
+# Exploratory followed by confirmatory approach
+
+## EFA in training data
+
+banyard_train_parallel <- fa.parallel(banyard_train, fm = "ml")
+
+banyard_train_efa      <- fa(banyard_train, 
+                             nfactors = 6, 
+                             fm = "ml", 
+                             rotate = "promax") 
+
+## CFA in test data
+
+six_factor <- 
+'
+
+# Based on factor loads greater than .40
+
+fa1 =~ preir1 + preir8 + preir13 + preir14
+
+fa2 =~ preir3 + preir10 + preir16 + preir18 + preir20
+
+fa3 =~ preir2 + preir4
+
+fa4 =~ preir11 + preir16
+
+fa5 =~ preir11 + preir16
+
+fa6 =~ preir7 + preir12
+
+'
+six_factor_fit <- cfa(model = six_factor,
+                        data = banyard_test)
+
+six_factor_ind <- fitmeasures(six_factor_fit)
+# Because this model has negative variance estimates, standard errors cannot be
+# calculated, so the following code does not work.
+# six_factor_par <- standardizedsolution(six_factor_fit)
+
+# Change over Time  ------------------------------------------------------------
+
+# Wrangling
 
 banyard_long <- banyard_irma %>% 
   pivot_longer(
@@ -619,6 +842,26 @@ banyard_item_change <-
   )
 
 # Export figures ---------------------------------------------------------------
+
+png("./figures/banyard_irma-network_train.png", 
+    height = 6, width = 12, units = "in", res = 1500)
+plot(network_graph_1_train)
+dev.off()
+
+png("./figures/banyard_irma-network_test.png", 
+    height = 6, width = 12, units = "in", res = 1500)
+plot(network_graph_1_test)
+dev.off()
+
+png("./figures/banyard_irma-network_train_walktrap.png", 
+    height = 6, width = 12, units = "in", res = 1500)
+plot(network_graph_1_train_walk)
+dev.off()
+
+png("./figures/banyard_irma-network_test_walktrap.png", 
+    height = 6, width = 12, units = "in", res = 1500)
+plot(network_graph_1_test_walk)
+dev.off()
 
 save_plot("./figures/banyard_time-change.png", banyard_time_change,
           base_height = 8, base_width = 14)

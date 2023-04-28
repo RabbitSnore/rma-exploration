@@ -12,6 +12,100 @@ source("./R/rma-exploration_banyard_analysis.R")
 
 ```
 
+# Network Analysis
+
+## Training Network
+
+### Fit Indices
+
+```{r}
+network_fit_ind_1 %>% 
+  mutate(across(where(is.numeric), round, 6))
+```
+
+### Parameter Estimates
+
+```{r}
+network_pars_1 %>% 
+  mutate(across(where(is.numeric), round, 3))
+```
+
+### Network Figures
+
+```{r}
+knitr::include_graphics("./figures/banyard_irma-network_train.png")
+```
+
+```{r}
+knitr::include_graphics("./figures/banyard_irma-network_train_walktrap.png")
+```
+
+## Test Network
+
+### Fit Indices
+
+```{r}
+network_fit_ind_1_test %>% 
+  mutate(across(where(is.numeric), round, 6))
+```
+
+### Parameter Estimates
+
+```{r}
+network_pars_1_test %>% 
+  mutate(across(where(is.numeric), round, 3))
+```
+
+### Network Figures
+
+```{r}
+knitr::include_graphics("./figures/hahnel_irma-network_test.png")
+```
+
+```{r}
+knitr::include_graphics("./figures/hahnel_irma-network_test_walktrap.png")
+```
+
+# Factor Modeling
+
+## Confirmatory Factor Analysis with Test Data (Seven-Factor Model)
+
+Note that the seven-factor model produces a covariance matrix for the latent
+variables that is not positive definite. As such, I recommend not interpreting
+the fit indices and parameter estimates. They are presented here for
+completeness.
+
+### Fit Indices
+
+```{r}
+seven_factor_ind
+```
+
+### Parameter Estimates
+
+```{r}
+seven_factor_par
+```
+
+## Exploratory Factor Analysis with Training Data
+
+```{r}
+banyard_train_parallel
+```
+
+```{r}
+print.psych(banyard_train_efa, cut = .40)
+```
+
+## Confirmatory Factor Analysis with Test Data (Six-Factor Model)
+
+Note that this model produces negative variance estimates. Standard errors
+cannot be calculated, and I do not recommend interpreting the fit statistics.
+
+```{r}
+six_factor_ind
+```
+
 # Change Over Time
 
 ## Sum Score Across Time
