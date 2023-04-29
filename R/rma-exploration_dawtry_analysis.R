@@ -282,7 +282,69 @@ network_graph_1_test_walk <-
 
 # Factor modelling -------------------------------------------------------------
 
-# Exploratory factor analysis
+# Confirmatory factor analysis
+
+## Four factor
+
+four_factor <-
+'
+
+sa =~ RMAS_1 + RMAS_2 + RMAS_3 + RMAS_4 + RMAS_5 + RMAS_6
+
+mt =~ RMAS_7 + RMAS_8 + RMAS_9 + RMAS_10 + RMAS_11 + RMAS_12
+
+nr =~ RMAS_13 + RMAS_14 + RMAS_15 + RMAS_16 + RMAS_17
+
+li =~ RMAS_18 + RMAS_19 + RMAS_20 + RMAS_21 + RMAS_22
+
+'
+
+four_factor_fit_train <- cfa(model = four_factor,
+                             data = dawtry_train)
+
+four_factor_ind_train <- fitmeasures(four_factor_fit_train)
+four_factor_par_train <- standardizedsolution(four_factor_fit_train)
+
+four_factor_fit_test <- cfa(model = four_factor,
+                            data = dawtry_test)
+
+four_factor_ind_test <- fitmeasures(four_factor_fit_test)
+four_factor_par_test <- standardizedsolution(four_factor_fit_test)
+
+## Five-factor second-order
+
+second_order_factor <-
+'
+
+sa =~ RMAS_1 + RMAS_2 + RMAS_3 + RMAS_4 + RMAS_5 + RMAS_6
+
+mt =~ RMAS_7 + RMAS_8 + RMAS_9 + RMAS_10
+
+dr =~ RMAS_10 + RMAS_11 + RMAS_12
+
+nr =~ RMAS_13 + RMAS_14 + RMAS_15 + RMAS_16 + RMAS_17
+
+li =~ RMAS_18 + RMAS_19 + RMAS_20 + RMAS_21 + RMAS_22
+
+rma =~ sa + mt + dr + nr + li
+
+'
+
+second_order_factor_fit_train <- cfa(model = second_order_factor,
+                                     data = dawtry_train)
+
+second_order_factor_ind_train <- fitmeasures(second_order_factor_fit_train)
+second_order_factor_par_train <- standardizedsolution(second_order_factor_fit_train)
+
+second_order_factor_fit_test <- cfa(model = second_order_factor,
+                                    data = dawtry_test)
+
+second_order_factor_ind_test <- fitmeasures(second_order_factor_fit_test)
+second_order_factor_par_test <- standardizedsolution(second_order_factor_fit_test)
+
+## Five factor
+
+### Exploratory factor analysis
 
 # Because Dawtry et al did not use subscales, used all the items from the
 # McMahon and Farmer scale (despite them having dropped items from their final
@@ -296,11 +358,11 @@ efa_train      <- fa(dawtry_train,
                      nfactors = 5,
                      rotate = "oblimin")
 
-# Confirmatory factor analysis
+### Confirming
 
-# using highest loading of each item to guide factor structure. each loading was
-# greater than .30. item 17 crossloaded on the "resistance" factor, but this
-# crossloading was ignored.
+# Using highest loading of each item in the EFA to guide factor structure. each
+# loading was greater than .30. item 17 crossloaded on the "resistance" factor,
+# but this crossloading was ignored.
 
 five_factor <- 
 '

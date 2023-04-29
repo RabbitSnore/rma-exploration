@@ -66,15 +66,32 @@ knitr::include_graphics("./figures/hahnel_irma-network_test.png")
 knitr::include_graphics("./figures/hahnel_irma-network_test_walktrap.png")
 ```
 
-# Confirmatory Factor Analysis with Test Data
+# Confirmatory Factor Analysis
 
-## Fit Indices
+## Training Data
+
+### Fit Indices
+
+```{r}
+four_factor_ind_train
+```
+
+### Parameter Estimates
+
+```{r}
+four_factor_par_train
+```
+
+
+## Test Data
+
+### Fit Indices
 
 ```{r}
 four_factor_ind
 ```
 
-## Parameter Estimates
+### Parameter Estimates
 
 ```{r}
 four_factor_par

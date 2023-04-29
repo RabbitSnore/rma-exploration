@@ -66,7 +66,51 @@ knitr::include_graphics("./figures/dawtry_irma-network_test.png")
 knitr::include_graphics("./figures/dawtry_irma-network_test_walktrap.png")
 ```
 
-# Factor Model
+# Factor Models
+
+## Four-Factor McMahon & Farmer (2011) Subscale Model 
+
+### Fit Indices
+
+```{r}
+four_factor_ind_train
+```
+
+```{r}
+four_factor_ind_test
+```
+
+### Parameter Estimates
+
+```{r}
+four_factor_par_train
+```
+
+```{r}
+four_factor_par_test
+```
+
+## Five-Factor Second-Order McMahon & Farmer (2011) Model
+
+### Fit Indices
+
+```{r}
+second_order_factor_ind_train
+```
+
+```{r}
+second_order_factor_ind_test
+```
+
+### Parameter Estimates
+
+```{r}
+second_order_factor_par_train
+```
+
+```{r}
+second_order_factor_par_test
+```
 
 ## Exploratory Factor Analysis with Training Data
 

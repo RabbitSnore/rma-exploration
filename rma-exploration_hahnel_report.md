@@ -15,12 +15,16 @@ Hahnel et al (2023) - Network Re-analysis
       id="toc-parameter-estimates-1">Parameter Estimates</a>
     - <a href="#network-figures-1" id="toc-network-figures-1">Network
       Figures</a>
-- <a href="#confirmatory-factor-analysis-with-test-data"
-  id="toc-confirmatory-factor-analysis-with-test-data">Confirmatory Factor
-  Analysis with Test Data</a>
-  - <a href="#fit-indices-2" id="toc-fit-indices-2">Fit Indices</a>
-  - <a href="#parameter-estimates-2"
-    id="toc-parameter-estimates-2">Parameter Estimates</a>
+- <a href="#confirmatory-factor-analysis"
+  id="toc-confirmatory-factor-analysis">Confirmatory Factor Analysis</a>
+  - <a href="#training-data" id="toc-training-data">Training Data</a>
+    - <a href="#fit-indices-2" id="toc-fit-indices-2">Fit Indices</a>
+    - <a href="#parameter-estimates-2"
+      id="toc-parameter-estimates-2">Parameter Estimates</a>
+  - <a href="#test-data" id="toc-test-data">Test Data</a>
+    - <a href="#fit-indices-3" id="toc-fit-indices-3">Fit Indices</a>
+    - <a href="#parameter-estimates-3"
+      id="toc-parameter-estimates-3">Parameter Estimates</a>
 
 # Network Analysis
 
@@ -2184,9 +2188,155 @@ knitr::include_graphics("./figures/hahnel_irma-network_test_walktrap.png")
 
 ![](./figures/hahnel_irma-network_test_walktrap.png)
 
-# Confirmatory Factor Analysis with Test Data
+# Confirmatory Factor Analysis
 
-## Fit Indices
+## Training Data
+
+### Fit Indices
+
+``` r
+four_factor_ind_train
+```
+
+                   npar                fmin               chisq                  df 
+                 48.000               1.483             480.622             183.000 
+                 pvalue      baseline.chisq         baseline.df     baseline.pvalue 
+                  0.000            2087.306             210.000               0.000 
+                    cfi                 tli                nnfi                 rfi 
+                  0.841               0.818               0.818               0.736 
+                    nfi                pnfi                 ifi                 rni 
+                  0.770               0.671               0.844               0.841 
+                   logl   unrestricted.logl                 aic                 bic 
+              -4236.442                  NA            8568.883            8717.088 
+                 ntotal                bic2               rmsea      rmsea.ci.lower 
+                162.000            8565.130               0.100               0.089 
+         rmsea.ci.upper        rmsea.pvalue                 rmr          rmr_nomean 
+                  0.111               0.000               0.123               0.123 
+                   srmr        srmr_bentler srmr_bentler_nomean                crmr 
+                  0.100               0.100               0.100               0.105 
+            crmr_nomean          srmr_mplus   srmr_mplus_nomean               cn_05 
+                  0.105               0.100               0.100              73.658 
+                  cn_01                 gfi                agfi                pgfi 
+                 78.667               0.796               0.743               0.631 
+                    mfi                ecvi 
+                  0.399               3.559 
+
+### Parameter Estimates
+
+``` r
+four_factor_par_train
+```
+
+                        lhs op                  rhs est.std    se      z pvalue
+    1                    sa =~       Asked_for_it_1   0.758 0.039 19.675      0
+    2                    sa =~       Asked_for_it_2   0.800 0.034 23.713      0
+    3                    sa =~       Asked_for_it_3   0.671 0.048 14.046      0
+    4                    sa =~       Asked_for_it_4   0.762 0.038 20.063      0
+    5                    sa =~       Asked_for_it_5   0.570 0.057  9.924      0
+    6                    sa =~       Asked_for_it_6   0.667 0.048 13.850      0
+    7                    de =~     didn_t_mean_to_7   0.588 0.065  9.108      0
+    8                    de =~     didn_t_mean_to_8   0.758 0.053 14.381      0
+    9                    de =~     didn_t_mean_to_9   0.600 0.064  9.439      0
+    10                   de =~    didn_t_mean_to_10   0.596 0.064  9.333      0
+    11                   de =~    didn_t_mean_to_11   0.355 0.080  4.456      0
+    12                   wi =~ wasnt_really_rape_12   0.293 0.075  3.888      0
+    13                   wi =~ wasnt_really_rape_13   0.837 0.029 29.144      0
+    14                   wi =~ wasnt_really_rape_14   0.900 0.022 40.828      0
+    15                   wi =~ wasnt_really_rape_15   0.861 0.026 33.061      0
+    16                   wi =~ Wasnt_really_rape_16   0.630 0.051 12.309      0
+    17                   li =~          She_lied_17   0.624 0.051 12.178      0
+    18                   li =~          She_lied_18   0.879 0.023 38.528      0
+    19                   li =~          She_lied_19   0.886 0.022 40.422      0
+    20                   li =~          She_lied_20   0.693 0.044 15.668      0
+    21                   li =~          She_lied_21   0.832 0.028 29.441      0
+    22       Asked_for_it_1 ~~       Asked_for_it_1   0.426 0.058  7.292      0
+    23       Asked_for_it_2 ~~       Asked_for_it_2   0.360 0.054  6.663      0
+    24       Asked_for_it_3 ~~       Asked_for_it_3   0.549 0.064  8.559      0
+    25       Asked_for_it_4 ~~       Asked_for_it_4   0.419 0.058  7.225      0
+    26       Asked_for_it_5 ~~       Asked_for_it_5   0.675 0.065 10.310      0
+    27       Asked_for_it_6 ~~       Asked_for_it_6   0.554 0.064  8.619      0
+    28     didn_t_mean_to_7 ~~     didn_t_mean_to_7   0.655 0.076  8.632      0
+    29     didn_t_mean_to_8 ~~     didn_t_mean_to_8   0.425 0.080  5.310      0
+    30     didn_t_mean_to_9 ~~     didn_t_mean_to_9   0.640 0.076  8.380      0
+    31    didn_t_mean_to_10 ~~    didn_t_mean_to_10   0.644 0.076  8.459      0
+    32    didn_t_mean_to_11 ~~    didn_t_mean_to_11   0.874 0.057 15.453      0
+    33 wasnt_really_rape_12 ~~ wasnt_really_rape_12   0.914 0.044 20.687      0
+    34 wasnt_really_rape_13 ~~ wasnt_really_rape_13   0.300 0.048  6.247      0
+    35 wasnt_really_rape_14 ~~ wasnt_really_rape_14   0.189 0.040  4.766      0
+    36 wasnt_really_rape_15 ~~ wasnt_really_rape_15   0.259 0.045  5.772      0
+    37 Wasnt_really_rape_16 ~~ Wasnt_really_rape_16   0.603 0.065  9.333      0
+    38          She_lied_17 ~~          She_lied_17   0.610 0.064  9.525      0
+    39          She_lied_18 ~~          She_lied_18   0.228 0.040  5.692      0
+    40          She_lied_19 ~~          She_lied_19   0.214 0.039  5.519      0
+    41          She_lied_20 ~~          She_lied_20   0.519 0.061  8.458      0
+    42          She_lied_21 ~~          She_lied_21   0.307 0.047  6.525      0
+    43                   sa ~~                   sa   1.000 0.000     NA     NA
+    44                   de ~~                   de   1.000 0.000     NA     NA
+    45                   wi ~~                   wi   1.000 0.000     NA     NA
+    46                   li ~~                   li   1.000 0.000     NA     NA
+    47                   sa ~~                   de   0.534 0.075  7.090      0
+    48                   sa ~~                   wi   0.660 0.055 12.099      0
+    49                   sa ~~                   li   0.830 0.035 23.583      0
+    50                   de ~~                   wi   0.467 0.078  5.978      0
+    51                   de ~~                   li   0.457 0.078  5.817      0
+    52                   wi ~~                   li   0.498 0.067  7.464      0
+       ci.lower ci.upper
+    1     0.682    0.833
+    2     0.734    0.866
+    3     0.578    0.765
+    4     0.688    0.837
+    5     0.457    0.683
+    6     0.573    0.762
+    7     0.461    0.714
+    8     0.655    0.862
+    9     0.476    0.725
+    10    0.471    0.721
+    11    0.199    0.511
+    12    0.145    0.441
+    13    0.780    0.893
+    14    0.857    0.944
+    15    0.810    0.912
+    16    0.530    0.731
+    17    0.524    0.725
+    18    0.834    0.923
+    19    0.843    0.929
+    20    0.607    0.780
+    21    0.777    0.888
+    22    0.311    0.540
+    23    0.254    0.466
+    24    0.424    0.675
+    25    0.305    0.532
+    26    0.547    0.803
+    27    0.428    0.681
+    28    0.506    0.803
+    29    0.268    0.582
+    30    0.490    0.789
+    31    0.495    0.794
+    32    0.763    0.985
+    33    0.828    1.001
+    34    0.206    0.394
+    35    0.111    0.267
+    36    0.171    0.347
+    37    0.476    0.729
+    38    0.485    0.736
+    39    0.150    0.307
+    40    0.138    0.291
+    41    0.399    0.639
+    42    0.215    0.399
+    43    1.000    1.000
+    44    1.000    1.000
+    45    1.000    1.000
+    46    1.000    1.000
+    47    0.387    0.682
+    48    0.553    0.767
+    49    0.761    0.899
+    50    0.314    0.620
+    51    0.303    0.610
+    52    0.367    0.629
+
+## Test Data
+
+### Fit Indices
 
 ``` r
 four_factor_ind
@@ -2215,7 +2365,7 @@ four_factor_ind
                     mfi                ecvi 
                   0.504               3.094 
 
-## Parameter Estimates
+### Parameter Estimates
 
 ``` r
 four_factor_par

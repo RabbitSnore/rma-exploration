@@ -16,7 +16,19 @@ Dawtry et al (2019) - Network Re-analysis
       id="toc-parameter-estimates-1">Parameter Estimates</a>
     - <a href="#network-figures-1" id="toc-network-figures-1">Network
       Figures</a>
-- <a href="#factor-model" id="toc-factor-model">Factor Model</a>
+- <a href="#factor-models" id="toc-factor-models">Factor Models</a>
+  - <a href="#four-factor-mcmahon-farmer-2011-subscale-model"
+    id="toc-four-factor-mcmahon-farmer-2011-subscale-model">Four-Factor
+    McMahon &amp; Farmer (2011) Subscale Model</a>
+    - <a href="#fit-indices-2" id="toc-fit-indices-2">Fit Indices</a>
+    - <a href="#parameter-estimates-2"
+      id="toc-parameter-estimates-2">Parameter Estimates</a>
+  - <a href="#five-factor-second-order-mcmahon-farmer-2011-model"
+    id="toc-five-factor-second-order-mcmahon-farmer-2011-model">Five-Factor
+    Second-Order McMahon &amp; Farmer (2011) Model</a>
+    - <a href="#fit-indices-3" id="toc-fit-indices-3">Fit Indices</a>
+    - <a href="#parameter-estimates-3"
+      id="toc-parameter-estimates-3">Parameter Estimates</a>
   - <a href="#exploratory-factor-analysis-with-training-data"
     id="toc-exploratory-factor-analysis-with-training-data">Exploratory
     Factor Analysis with Training Data</a>
@@ -27,16 +39,16 @@ Dawtry et al (2019) - Network Re-analysis
   - <a href="#confirmatory-factor-analysis-with-test-data"
     id="toc-confirmatory-factor-analysis-with-test-data">Confirmatory Factor
     Analysis with Test Data</a>
-    - <a href="#fit-indices-2" id="toc-fit-indices-2">Fit Indices</a>
-    - <a href="#parameter-estimates-2"
-      id="toc-parameter-estimates-2">Parameter Estimates</a>
+    - <a href="#fit-indices-4" id="toc-fit-indices-4">Fit Indices</a>
+    - <a href="#parameter-estimates-4"
+      id="toc-parameter-estimates-4">Parameter Estimates</a>
 - <a href="#simulated-persuasion" id="toc-simulated-persuasion">Simulated
   Persuasion</a>
   - <a href="#fitting-model-to-full-data"
     id="toc-fitting-model-to-full-data">Fitting Model to Full Data</a>
-    - <a href="#fit-indices-3" id="toc-fit-indices-3">Fit Indices</a>
-    - <a href="#parameter-estimates-3"
-      id="toc-parameter-estimates-3">Parameter Estimates</a>
+    - <a href="#fit-indices-5" id="toc-fit-indices-5">Fit Indices</a>
+    - <a href="#parameter-estimates-5"
+      id="toc-parameter-estimates-5">Parameter Estimates</a>
     - <a href="#centrality-estimates" id="toc-centrality-estimates">Centrality
       Estimates</a>
     - <a href="#network-figures-2" id="toc-network-figures-2">Network
@@ -1850,7 +1862,371 @@ knitr::include_graphics("./figures/dawtry_irma-network_test_walktrap.png")
 
 ![](./figures/dawtry_irma-network_test_walktrap.png)
 
-# Factor Model
+# Factor Models
+
+## Four-Factor McMahon & Farmer (2011) Subscale Model
+
+### Fit Indices
+
+``` r
+four_factor_ind_train
+```
+
+                   npar                fmin               chisq                  df 
+                 50.000               1.110             997.224             203.000 
+                 pvalue      baseline.chisq         baseline.df     baseline.pvalue 
+                  0.000            6061.730             231.000               0.000 
+                    cfi                 tli                nnfi                 rfi 
+                  0.864               0.845               0.845               0.813 
+                    nfi                pnfi                 ifi                 rni 
+                  0.835               0.734               0.864               0.864 
+                   logl   unrestricted.logl                 aic                 bic 
+             -11074.968          -10576.356           22249.937           22455.288 
+                 ntotal                bic2               rmsea      rmsea.ci.lower 
+                449.000           22296.607               0.093               0.088 
+         rmsea.ci.upper        rmsea.pvalue                 rmr          rmr_nomean 
+                  0.099               0.000               0.073               0.073 
+                   srmr        srmr_bentler srmr_bentler_nomean                crmr 
+                  0.072               0.072               0.072               0.076 
+            crmr_nomean          srmr_mplus   srmr_mplus_nomean               cn_05 
+                  0.076               0.072               0.072             107.817 
+                  cn_01                 gfi                agfi                pgfi 
+                114.820               0.806               0.759               0.647 
+                    mfi                ecvi 
+                  0.413               2.444 
+
+``` r
+four_factor_ind_test
+```
+
+                   npar                fmin               chisq                  df 
+                 50.000               1.054             954.815             203.000 
+                 pvalue      baseline.chisq         baseline.df     baseline.pvalue 
+                  0.000            6375.419             231.000               0.000 
+                    cfi                 tli                nnfi                 rfi 
+                  0.878               0.861               0.861               0.830 
+                    nfi                pnfi                 ifi                 rni 
+                  0.850               0.747               0.878               0.878 
+                   logl   unrestricted.logl                 aic                 bic 
+             -11462.332          -10984.925           23024.665           23230.459 
+                 ntotal                bic2               rmsea      rmsea.ci.lower 
+                453.000           23071.777               0.090               0.085 
+         rmsea.ci.upper        rmsea.pvalue                 rmr          rmr_nomean 
+                  0.096               0.000               0.079               0.079 
+                   srmr        srmr_bentler srmr_bentler_nomean                crmr 
+                  0.078               0.078               0.078               0.081 
+            crmr_nomean          srmr_mplus   srmr_mplus_nomean               cn_05 
+                  0.081               0.078               0.078             113.556 
+                  cn_01                 gfi                agfi                pgfi 
+                120.934               0.818               0.773               0.657 
+                    mfi                ecvi 
+                  0.436               2.329 
+
+### Parameter Estimates
+
+``` r
+four_factor_par_train
+```
+
+           lhs op     rhs est.std    se      z pvalue ci.lower ci.upper
+    1       sa =~  RMAS_1   0.730 0.025 28.862      0    0.681    0.780
+    2       sa =~  RMAS_2   0.769 0.023 33.847      0    0.725    0.814
+    3       sa =~  RMAS_3   0.720 0.026 27.754      0    0.669    0.771
+    4       sa =~  RMAS_4   0.764 0.023 33.131      0    0.719    0.810
+    5       sa =~  RMAS_5   0.649 0.030 21.390      0    0.590    0.709
+    6       sa =~  RMAS_6   0.587 0.034 17.350      0    0.521    0.654
+    7       mt =~  RMAS_7   0.497 0.040 12.429      0    0.419    0.576
+    8       mt =~  RMAS_8   0.606 0.035 17.455      0    0.538    0.674
+    9       mt =~  RMAS_9   0.527 0.039 13.642      0    0.451    0.603
+    10      mt =~ RMAS_10   0.557 0.037 14.955      0    0.484    0.630
+    11      mt =~ RMAS_11   0.634 0.033 19.111      0    0.569    0.699
+    12      mt =~ RMAS_12   0.710 0.029 24.525      0    0.653    0.767
+    13      nr =~ RMAS_13   0.690 0.028 24.588      0    0.635    0.745
+    14      nr =~ RMAS_14   0.829 0.019 43.365      0    0.791    0.866
+    15      nr =~ RMAS_15   0.797 0.021 37.637      0    0.755    0.838
+    16      nr =~ RMAS_16   0.764 0.023 32.759      0    0.718    0.810
+    17      nr =~ RMAS_17   0.551 0.036 15.338      0    0.481    0.621
+    18      li =~ RMAS_18   0.894 0.012 76.668      0    0.871    0.917
+    19      li =~ RMAS_19   0.873 0.013 66.210      0    0.848    0.899
+    20      li =~ RMAS_20   0.892 0.012 75.680      0    0.869    0.915
+    21      li =~ RMAS_21   0.817 0.017 46.797      0    0.783    0.851
+    22      li =~ RMAS_22   0.801 0.019 42.996      0    0.765    0.838
+    23  RMAS_1 ~~  RMAS_1   0.467 0.037 12.620      0    0.394    0.539
+    24  RMAS_2 ~~  RMAS_2   0.408 0.035 11.658      0    0.339    0.476
+    25  RMAS_3 ~~  RMAS_3   0.481 0.037 12.866      0    0.408    0.554
+    26  RMAS_4 ~~  RMAS_4   0.416 0.035 11.785      0    0.347    0.485
+    27  RMAS_5 ~~  RMAS_5   0.578 0.039 14.677      0    0.501    0.656
+    28  RMAS_6 ~~  RMAS_6   0.655 0.040 16.465      0    0.577    0.733
+    29  RMAS_7 ~~  RMAS_7   0.753 0.040 18.907      0    0.675    0.831
+    30  RMAS_8 ~~  RMAS_8   0.633 0.042 15.049      0    0.551    0.715
+    31  RMAS_9 ~~  RMAS_9   0.722 0.041 17.719      0    0.642    0.802
+    32 RMAS_10 ~~ RMAS_10   0.690 0.041 16.651      0    0.609    0.771
+    33 RMAS_11 ~~ RMAS_11   0.598 0.042 14.199      0    0.515    0.680
+    34 RMAS_12 ~~ RMAS_12   0.496 0.041 12.051      0    0.415    0.576
+    35 RMAS_13 ~~ RMAS_13   0.524 0.039 13.534      0    0.448    0.600
+    36 RMAS_14 ~~ RMAS_14   0.313 0.032  9.887      0    0.251    0.375
+    37 RMAS_15 ~~ RMAS_15   0.365 0.034 10.820      0    0.299    0.431
+    38 RMAS_16 ~~ RMAS_16   0.416 0.036 11.683      0    0.346    0.486
+    39 RMAS_17 ~~ RMAS_17   0.696 0.040 17.599      0    0.619    0.774
+    40 RMAS_18 ~~ RMAS_18   0.201 0.021  9.643      0    0.160    0.242
+    41 RMAS_19 ~~ RMAS_19   0.237 0.023 10.288      0    0.192    0.282
+    42 RMAS_20 ~~ RMAS_20   0.204 0.021  9.704      0    0.163    0.245
+    43 RMAS_21 ~~ RMAS_21   0.333 0.029 11.658      0    0.277    0.388
+    44 RMAS_22 ~~ RMAS_22   0.358 0.030 12.000      0    0.300    0.417
+    45      sa ~~      sa   1.000 0.000     NA     NA    1.000    1.000
+    46      mt ~~      mt   1.000 0.000     NA     NA    1.000    1.000
+    47      nr ~~      nr   1.000 0.000     NA     NA    1.000    1.000
+    48      li ~~      li   1.000 0.000     NA     NA    1.000    1.000
+    49      sa ~~      mt   0.774 0.031 25.040      0    0.713    0.834
+    50      sa ~~      nr   0.756 0.028 26.870      0    0.701    0.812
+    51      sa ~~      li   0.720 0.028 25.457      0    0.665    0.776
+    52      mt ~~      nr   0.774 0.031 25.243      0    0.714    0.834
+    53      mt ~~      li   0.681 0.034 19.903      0    0.614    0.748
+    54      nr ~~      li   0.550 0.038 14.415      0    0.475    0.625
+
+``` r
+four_factor_par_test
+```
+
+           lhs op     rhs est.std    se      z pvalue ci.lower ci.upper
+    1       sa =~  RMAS_1   0.751 0.023 32.438      0    0.706    0.797
+    2       sa =~  RMAS_2   0.840 0.017 49.340      0    0.807    0.874
+    3       sa =~  RMAS_3   0.798 0.020 40.044      0    0.759    0.838
+    4       sa =~  RMAS_4   0.748 0.023 31.967      0    0.702    0.794
+    5       sa =~  RMAS_5   0.666 0.029 23.272      0    0.610    0.723
+    6       sa =~  RMAS_6   0.613 0.032 19.293      0    0.551    0.675
+    7       mt =~  RMAS_7   0.560 0.037 15.175      0    0.488    0.632
+    8       mt =~  RMAS_8   0.732 0.028 26.614      0    0.678    0.786
+    9       mt =~  RMAS_9   0.660 0.032 20.920      0    0.599    0.722
+    10      mt =~ RMAS_10   0.654 0.032 20.501      0    0.592    0.717
+    11      mt =~ RMAS_11   0.544 0.038 14.443      0    0.470    0.618
+    12      mt =~ RMAS_12   0.549 0.037 14.671      0    0.476    0.623
+    13      nr =~ RMAS_13   0.833 0.018 47.278      0    0.799    0.868
+    14      nr =~ RMAS_14   0.897 0.014 66.045      0    0.870    0.924
+    15      nr =~ RMAS_15   0.769 0.022 35.005      0    0.726    0.812
+    16      nr =~ RMAS_16   0.704 0.026 26.840      0    0.653    0.756
+    17      nr =~ RMAS_17   0.576 0.034 17.041      0    0.510    0.642
+    18      li =~ RMAS_18   0.821 0.017 47.596      0    0.787    0.855
+    19      li =~ RMAS_19   0.872 0.013 64.574      0    0.845    0.898
+    20      li =~ RMAS_20   0.918 0.010 89.902      0    0.898    0.938
+    21      li =~ RMAS_21   0.754 0.022 34.179      0    0.711    0.797
+    22      li =~ RMAS_22   0.803 0.019 43.203      0    0.766    0.839
+    23  RMAS_1 ~~  RMAS_1   0.435 0.035 12.506      0    0.367    0.504
+    24  RMAS_2 ~~  RMAS_2   0.294 0.029 10.264      0    0.238    0.350
+    25  RMAS_3 ~~  RMAS_3   0.362 0.032 11.381      0    0.300    0.425
+    26  RMAS_4 ~~  RMAS_4   0.441 0.035 12.587      0    0.372    0.509
+    27  RMAS_5 ~~  RMAS_5   0.556 0.038 14.566      0    0.481    0.631
+    28  RMAS_6 ~~  RMAS_6   0.624 0.039 16.023      0    0.548    0.701
+    29  RMAS_7 ~~  RMAS_7   0.686 0.041 16.611      0    0.605    0.767
+    30  RMAS_8 ~~  RMAS_8   0.464 0.040 11.530      0    0.385    0.543
+    31  RMAS_9 ~~  RMAS_9   0.564 0.042 13.520      0    0.482    0.646
+    32 RMAS_10 ~~ RMAS_10   0.572 0.042 13.695      0    0.490    0.654
+    33 RMAS_11 ~~ RMAS_11   0.704 0.041 17.168      0    0.624    0.784
+    34 RMAS_12 ~~ RMAS_12   0.698 0.041 16.989      0    0.618    0.779
+    35 RMAS_13 ~~ RMAS_13   0.306 0.029 10.412      0    0.248    0.363
+    36 RMAS_14 ~~ RMAS_14   0.196 0.024  8.027      0    0.148    0.243
+    37 RMAS_15 ~~ RMAS_15   0.408 0.034 12.081      0    0.342    0.475
+    38 RMAS_16 ~~ RMAS_16   0.504 0.037 13.625      0    0.431    0.576
+    39 RMAS_17 ~~ RMAS_17   0.668 0.039 17.178      0    0.592    0.745
+    40 RMAS_18 ~~ RMAS_18   0.326 0.028 11.506      0    0.270    0.381
+    41 RMAS_19 ~~ RMAS_19   0.240 0.024 10.201      0    0.194    0.286
+    42 RMAS_20 ~~ RMAS_20   0.157 0.019  8.352      0    0.120    0.193
+    43 RMAS_21 ~~ RMAS_21   0.432 0.033 12.977      0    0.366    0.497
+    44 RMAS_22 ~~ RMAS_22   0.355 0.030 11.914      0    0.297    0.414
+    45      sa ~~      sa   1.000 0.000     NA     NA    1.000    1.000
+    46      mt ~~      mt   1.000 0.000     NA     NA    1.000    1.000
+    47      nr ~~      nr   1.000 0.000     NA     NA    1.000    1.000
+    48      li ~~      li   1.000 0.000     NA     NA    1.000    1.000
+    49      sa ~~      mt   0.760 0.030 25.737      0    0.702    0.818
+    50      sa ~~      nr   0.728 0.028 26.091      0    0.673    0.783
+    51      sa ~~      li   0.715 0.028 25.732      0    0.661    0.770
+    52      mt ~~      nr   0.620 0.038 16.432      0    0.546    0.694
+    53      mt ~~      li   0.689 0.033 21.028      0    0.624    0.753
+    54      nr ~~      li   0.595 0.035 17.157      0    0.527    0.663
+
+## Five-Factor Second-Order McMahon & Farmer (2011) Model
+
+### Fit Indices
+
+``` r
+second_order_factor_ind_train
+```
+
+                   npar                fmin               chisq                  df 
+                 50.000               0.947             850.585             203.000 
+                 pvalue      baseline.chisq         baseline.df     baseline.pvalue 
+                  0.000            6061.730             231.000               0.000 
+                    cfi                 tli                nnfi                 rfi 
+                  0.889               0.874               0.874               0.840 
+                    nfi                pnfi                 ifi                 rni 
+                  0.860               0.755               0.889               0.889 
+                   logl   unrestricted.logl                 aic                 bic 
+             -11001.649          -10576.356           22103.298           22308.649 
+                 ntotal                bic2               rmsea      rmsea.ci.lower 
+                449.000           22149.968               0.084               0.078 
+         rmsea.ci.upper        rmsea.pvalue                 rmr          rmr_nomean 
+                  0.090               0.000               0.068               0.068 
+                   srmr        srmr_bentler srmr_bentler_nomean                crmr 
+                  0.069               0.069               0.069               0.072 
+            crmr_nomean          srmr_mplus   srmr_mplus_nomean               cn_05 
+                  0.072               0.069               0.069             126.233 
+                  cn_01                 gfi                agfi                pgfi 
+                134.442               0.833               0.792               0.668 
+                    mfi                ecvi 
+                  0.486               2.117 
+
+``` r
+second_order_factor_ind_test
+```
+
+                   npar                fmin               chisq                  df 
+                 50.000               0.842             762.898             203.000 
+                 pvalue      baseline.chisq         baseline.df     baseline.pvalue 
+                  0.000            6375.419             231.000               0.000 
+                    cfi                 tli                nnfi                 rfi 
+                  0.909               0.896               0.896               0.864 
+                    nfi                pnfi                 ifi                 rni 
+                  0.880               0.774               0.909               0.909 
+                   logl   unrestricted.logl                 aic                 bic 
+             -11366.374          -10984.925           22832.748           23038.542 
+                 ntotal                bic2               rmsea      rmsea.ci.lower 
+                453.000           22879.860               0.078               0.072 
+         rmsea.ci.upper        rmsea.pvalue                 rmr          rmr_nomean 
+                  0.084               0.000               0.071               0.071 
+                   srmr        srmr_bentler srmr_bentler_nomean                crmr 
+                  0.065               0.065               0.065               0.068 
+            crmr_nomean          srmr_mplus   srmr_mplus_nomean               cn_05 
+                  0.068               0.065               0.065             141.871 
+                  cn_01                 gfi                agfi                pgfi 
+                151.106               0.858               0.823               0.688 
+                    mfi                ecvi 
+                  0.539               1.905 
+
+### Parameter Estimates
+
+``` r
+second_order_factor_par_train
+```
+
+           lhs op     rhs est.std    se      z pvalue ci.lower ci.upper
+    1       sa =~  RMAS_1   0.734 0.025 29.229      0    0.685    0.783
+    2       sa =~  RMAS_2   0.770 0.023 33.780      0    0.725    0.814
+    3       sa =~  RMAS_3   0.724 0.026 28.050      0    0.673    0.774
+    4       sa =~  RMAS_4   0.759 0.023 32.317      0    0.713    0.805
+    5       sa =~  RMAS_5   0.650 0.030 21.406      0    0.590    0.709
+    6       sa =~  RMAS_6   0.584 0.034 17.104      0    0.517    0.650
+    7       mt =~  RMAS_7   0.692 0.034 20.432      0    0.625    0.758
+    8       mt =~  RMAS_8   0.706 0.033 21.219      0    0.641    0.771
+    9       mt =~  RMAS_9   0.695 0.034 20.595      0    0.629    0.761
+    10      mt =~ RMAS_10   0.350 0.058  6.007      0    0.236    0.464
+    11      dr =~ RMAS_10   0.299 0.058  5.188      0    0.186    0.412
+    12      dr =~ RMAS_11   0.730 0.030 23.978      0    0.670    0.790
+    13      dr =~ RMAS_12   0.815 0.028 29.019      0    0.760    0.870
+    14      nr =~ RMAS_13   0.702 0.027 25.652      0    0.648    0.756
+    15      nr =~ RMAS_14   0.835 0.019 44.476      0    0.798    0.872
+    16      nr =~ RMAS_15   0.785 0.022 35.679      0    0.742    0.828
+    17      nr =~ RMAS_16   0.751 0.024 30.968      0    0.703    0.798
+    18      nr =~ RMAS_17   0.565 0.035 16.012      0    0.495    0.634
+    19      li =~ RMAS_18   0.896 0.012 77.655      0    0.873    0.918
+    20      li =~ RMAS_19   0.873 0.013 66.015      0    0.847    0.899
+    21      li =~ RMAS_20   0.892 0.012 75.452      0    0.869    0.915
+    22      li =~ RMAS_21   0.816 0.018 46.503      0    0.782    0.850
+    23      li =~ RMAS_22   0.800 0.019 42.729      0    0.763    0.837
+    24     rma =~      sa   0.913 0.020 45.286      0    0.874    0.953
+    25     rma =~      mt   0.651 0.040 16.178      0    0.573    0.730
+    26     rma =~      dr   0.798 0.032 24.952      0    0.735    0.861
+    27     rma =~      nr   0.830 0.024 34.080      0    0.783    0.878
+    28     rma =~      li   0.750 0.027 27.651      0    0.696    0.803
+    29  RMAS_1 ~~  RMAS_1   0.461 0.037 12.498      0    0.389    0.533
+    30  RMAS_2 ~~  RMAS_2   0.408 0.035 11.621      0    0.339    0.476
+    31  RMAS_3 ~~  RMAS_3   0.476 0.037 12.757      0    0.403    0.550
+    32  RMAS_4 ~~  RMAS_4   0.424 0.036 11.886      0    0.354    0.494
+    33  RMAS_5 ~~  RMAS_5   0.578 0.039 14.634      0    0.500    0.655
+    34  RMAS_6 ~~  RMAS_6   0.660 0.040 16.565      0    0.581    0.738
+    35  RMAS_7 ~~  RMAS_7   0.521 0.047 11.127      0    0.430    0.613
+    36  RMAS_8 ~~  RMAS_8   0.501 0.047 10.667      0    0.409    0.593
+    37  RMAS_9 ~~  RMAS_9   0.517 0.047 11.031      0    0.425    0.609
+    38 RMAS_10 ~~ RMAS_10   0.679 0.041 16.611      0    0.599    0.759
+    39 RMAS_11 ~~ RMAS_11   0.467 0.044 10.506      0    0.380    0.554
+    40 RMAS_12 ~~ RMAS_12   0.336 0.046  7.353      0    0.247    0.426
+    41 RMAS_13 ~~ RMAS_13   0.507 0.038 13.209      0    0.432    0.583
+    42 RMAS_14 ~~ RMAS_14   0.302 0.031  9.636      0    0.241    0.364
+    43 RMAS_15 ~~ RMAS_15   0.384 0.035 11.104      0    0.316    0.451
+    44 RMAS_16 ~~ RMAS_16   0.436 0.036 11.989      0    0.365    0.508
+    45 RMAS_17 ~~ RMAS_17   0.681 0.040 17.114      0    0.603    0.759
+    46 RMAS_18 ~~ RMAS_18   0.198 0.021  9.564      0    0.157    0.238
+    47 RMAS_19 ~~ RMAS_19   0.238 0.023 10.288      0    0.192    0.283
+    48 RMAS_20 ~~ RMAS_20   0.205 0.021  9.701      0    0.163    0.246
+    49 RMAS_21 ~~ RMAS_21   0.334 0.029 11.676      0    0.278    0.390
+    50 RMAS_22 ~~ RMAS_22   0.360 0.030 12.019      0    0.301    0.419
+    51      sa ~~      sa   0.166 0.037  4.504      0    0.094    0.238
+    52      mt ~~      mt   0.576 0.052 10.971      0    0.473    0.678
+    53      dr ~~      dr   0.363 0.051  7.123      0    0.263    0.463
+    54      nr ~~      nr   0.311 0.040  7.675      0    0.231    0.390
+    55      li ~~      li   0.438 0.041 10.782      0    0.359    0.518
+    56     rma ~~     rma   1.000 0.000     NA     NA    1.000    1.000
+
+``` r
+second_order_factor_par_test
+```
+
+           lhs op     rhs est.std    se      z pvalue ci.lower ci.upper
+    1       sa =~  RMAS_1   0.754 0.023 32.730  0.000    0.709    0.799
+    2       sa =~  RMAS_2   0.838 0.017 48.560  0.000    0.804    0.872
+    3       sa =~  RMAS_3   0.801 0.020 40.473  0.000    0.762    0.840
+    4       sa =~  RMAS_4   0.745 0.024 31.457  0.000    0.698    0.791
+    5       sa =~  RMAS_5   0.667 0.029 23.286  0.000    0.611    0.723
+    6       sa =~  RMAS_6   0.613 0.032 19.269  0.000    0.551    0.675
+    7       mt =~  RMAS_7   0.657 0.033 19.877  0.000    0.593    0.722
+    8       mt =~  RMAS_8   0.761 0.028 27.258  0.000    0.706    0.816
+    9       mt =~  RMAS_9   0.733 0.029 25.106  0.000    0.676    0.791
+    10      mt =~ RMAS_10   0.548 0.049 11.093  0.000    0.452    0.645
+    11      dr =~ RMAS_10   0.176 0.055  3.221  0.001    0.069    0.283
+    12      dr =~ RMAS_11   0.747 0.032 23.530  0.000    0.685    0.810
+    13      dr =~ RMAS_12   0.805 0.031 26.204  0.000    0.744    0.865
+    14      nr =~ RMAS_13   0.832 0.018 47.114  0.000    0.797    0.867
+    15      nr =~ RMAS_14   0.894 0.014 65.270  0.000    0.867    0.921
+    16      nr =~ RMAS_15   0.771 0.022 35.301  0.000    0.728    0.814
+    17      nr =~ RMAS_16   0.708 0.026 27.200  0.000    0.657    0.759
+    18      nr =~ RMAS_17   0.579 0.034 17.201  0.000    0.513    0.644
+    19      li =~ RMAS_18   0.822 0.017 47.877  0.000    0.789    0.856
+    20      li =~ RMAS_19   0.871 0.014 64.398  0.000    0.845    0.898
+    21      li =~ RMAS_20   0.918 0.010 89.769  0.000    0.898    0.938
+    22      li =~ RMAS_21   0.753 0.022 34.066  0.000    0.710    0.797
+    23      li =~ RMAS_22   0.802 0.019 43.099  0.000    0.766    0.839
+    24     rma =~      sa   0.906 0.019 46.505  0.000    0.868    0.945
+    25     rma =~      mt   0.690 0.036 19.055  0.000    0.619    0.761
+    26     rma =~      dr   0.733 0.035 20.718  0.000    0.664    0.803
+    27     rma =~      nr   0.803 0.025 32.512  0.000    0.755    0.852
+    28     rma =~      li   0.782 0.025 31.207  0.000    0.733    0.831
+    29  RMAS_1 ~~  RMAS_1   0.432 0.035 12.423  0.000    0.363    0.500
+    30  RMAS_2 ~~  RMAS_2   0.298 0.029 10.301  0.000    0.241    0.355
+    31  RMAS_3 ~~  RMAS_3   0.358 0.032 11.285  0.000    0.296    0.420
+    32  RMAS_4 ~~  RMAS_4   0.446 0.035 12.645  0.000    0.377    0.515
+    33  RMAS_5 ~~  RMAS_5   0.555 0.038 14.534  0.000    0.480    0.630
+    34  RMAS_6 ~~  RMAS_6   0.624 0.039 16.007  0.000    0.548    0.701
+    35  RMAS_7 ~~  RMAS_7   0.568 0.043 13.063  0.000    0.483    0.653
+    36  RMAS_8 ~~  RMAS_8   0.421 0.043  9.899  0.000    0.337    0.504
+    37  RMAS_9 ~~  RMAS_9   0.462 0.043 10.782  0.000    0.378    0.546
+    38 RMAS_10 ~~ RMAS_10   0.571 0.041 13.818  0.000    0.490    0.652
+    39 RMAS_11 ~~ RMAS_11   0.441 0.047  9.292  0.000    0.348    0.534
+    40 RMAS_12 ~~ RMAS_12   0.353 0.049  7.140  0.000    0.256    0.450
+    41 RMAS_13 ~~ RMAS_13   0.308 0.029 10.469  0.000    0.250    0.365
+    42 RMAS_14 ~~ RMAS_14   0.201 0.024  8.225  0.000    0.153    0.249
+    43 RMAS_15 ~~ RMAS_15   0.406 0.034 12.051  0.000    0.340    0.472
+    44 RMAS_16 ~~ RMAS_16   0.499 0.037 13.552  0.000    0.427    0.571
+    45 RMAS_17 ~~ RMAS_17   0.665 0.039 17.094  0.000    0.589    0.742
+    46 RMAS_18 ~~ RMAS_18   0.324 0.028 11.474  0.000    0.269    0.379
+    47 RMAS_19 ~~ RMAS_19   0.241 0.024 10.201  0.000    0.194    0.287
+    48 RMAS_20 ~~ RMAS_20   0.157 0.019  8.337  0.000    0.120    0.193
+    49 RMAS_21 ~~ RMAS_21   0.433 0.033 12.988  0.000    0.367    0.498
+    50 RMAS_22 ~~ RMAS_22   0.356 0.030 11.918  0.000    0.298    0.415
+    51      sa ~~      sa   0.178 0.035  5.051  0.000    0.109    0.248
+    52      mt ~~      mt   0.524 0.050 10.477  0.000    0.426    0.622
+    53      dr ~~      dr   0.462 0.052  8.899  0.000    0.360    0.564
+    54      nr ~~      nr   0.355 0.040  8.933  0.000    0.277    0.432
+    55      li ~~      li   0.388 0.039  9.906  0.000    0.311    0.465
+    56     rma ~~     rma   1.000 0.000     NA     NA    1.000    1.000
 
 ## Exploratory Factor Analysis with Training Data
 

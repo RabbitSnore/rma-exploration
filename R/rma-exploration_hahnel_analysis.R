@@ -235,6 +235,12 @@ li =~ She_lied_17 + She_lied_18 + She_lied_19 + She_lied_20 + She_lied_21
 
 '
 
+four_factor_fit_train <- cfa(model = four_factor,
+                             data = hahnel_train)
+
+four_factor_ind_train <- fitmeasures(four_factor_fit_train)
+four_factor_par_train <- standardizedsolution(four_factor_fit_train)
+
 four_factor_fit <- cfa(model = four_factor,
                        data = hahnel_test)
 
