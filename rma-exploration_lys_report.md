@@ -52,6 +52,9 @@
     - <a href="#item-level-mean-by-mean-absolute-change-in-item-agreement"
       id="toc-item-level-mean-by-mean-absolute-change-in-item-agreement">Item-Level
       Mean by Mean Absolute Change in Item Agreement</a>
+    - <a href="#response-level-item-agreement-and-change-in-item-agreement"
+      id="toc-response-level-item-agreement-and-change-in-item-agreement">Response-level
+      Item Agreement and Change in Item Agreement</a>
     - <a href="#visualization" id="toc-visualization">Visualization</a>
 - <a href="#simulated-persuasion-with-study-1-network"
   id="toc-simulated-persuasion-with-study-1-network">Simulated Persuasion
@@ -2476,6 +2479,24 @@ lys_2_change_by_item_cor
     sample estimates:
         cor 
     0.81836 
+
+### Response-level Item Agreement and Change in Item Agreement
+
+``` r
+lys_2_response_change_cor
+```
+
+
+        Pearson's product-moment correlation
+
+    data:  lys_2_response_change$change_abs and lys_2_response_change$rma
+    t = 21.8, df = 5394, p-value <0.0000000000000002
+    alternative hypothesis: true correlation is not equal to 0
+    95 percent confidence interval:
+     0.26001 0.30906
+    sample estimates:
+        cor 
+    0.28472 
 
 ### Visualization
 

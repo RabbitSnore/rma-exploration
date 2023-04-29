@@ -170,6 +170,12 @@ lys_score_change_abs_post
 lys_2_change_by_item_cor
 ```
 
+### Response-level Item Agreement and Change in Item Agreement
+
+```{r}
+lys_2_response_change_cor
+```
+
 ### Visualization
 
 ```{r}

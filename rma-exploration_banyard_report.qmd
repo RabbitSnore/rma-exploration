@@ -146,6 +146,12 @@ banyard_score_change_abs_cor
 banyard_change_by_item_cor
 ```
 
+### Response-level Item Agreement and Change in Item Agreement
+
+```{r}
+banyard_response_change_cor
+```
+
 ### Visualization
 
 ```{r}

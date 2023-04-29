@@ -488,6 +488,8 @@ banyard_score_change_abs_cor <- cor.test(banyard_wide$irma_sum, banyard_wide$cha
 
 banyard_change_by_item_cor <- cor.test(banyard_item_long$rma, banyard_item_long$mean_change)
 
+banyard_response_change_cor <- cor.test(banyard_response_change$change_abs, banyard_response_change$rma)
+
 # Visualizations
 
 ## Sum Score Level

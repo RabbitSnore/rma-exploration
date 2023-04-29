@@ -50,6 +50,9 @@ Banyard et al (2008) - Re-analysis
     - <a href="#item-level-mean-by-mean-absolute-change-in-item-agreement"
       id="toc-item-level-mean-by-mean-absolute-change-in-item-agreement">Item-Level
       Mean by Mean Absolute Change in Item Agreement</a>
+    - <a href="#response-level-item-agreement-and-change-in-item-agreement"
+      id="toc-response-level-item-agreement-and-change-in-item-agreement">Response-level
+      Item Agreement and Change in Item Agreement</a>
     - <a href="#visualization" id="toc-visualization">Visualization</a>
 
 # Network Analysis
@@ -62,18 +65,6 @@ Banyard et al (2008) - Re-analysis
 network_fit_ind_1 %>% 
   mutate(across(where(is.numeric), round, 6))
 ```
-
-    Warning: There was 1 warning in `mutate()`.
-    ℹ In argument: `across(where(is.numeric), round, 6)`.
-    Caused by warning:
-    ! The `...` argument of `across()` is deprecated as of dplyr 1.1.0.
-    Supply arguments directly to `.fns` through an anonymous function instead.
-
-      # Previously
-      across(a:b, mean, na.rm = TRUE)
-
-      # Now
-      across(a:b, \(x) mean(x, na.rm = TRUE))
 
                                 Measure        Value
     logl                           logl -4318.514906
@@ -1243,38 +1234,28 @@ here for completeness.
 seven_factor_ind
 ```
 
-                     npar                  fmin                 chisq 
-                   55.000                 0.389               141.455 
-                       df                pvalue        baseline.chisq 
-                   98.000                 0.003              1053.917 
-              baseline.df       baseline.pvalue                   cfi 
-                  136.000                 0.000                 0.953 
-                      tli                  nnfi                   rfi 
-                    0.934                 0.934                 0.814 
-                      nfi                  pnfi                   ifi 
-                    0.866                 0.624                 0.955 
-                      rni                  logl     unrestricted.logl 
-                    0.953             -4138.556             -4067.828 
-                      aic                   bic                ntotal 
-                 8387.112              8563.332               182.000 
-                     bic2                 rmsea        rmsea.ci.lower 
-                 8389.140                 0.049                 0.030 
-           rmsea.ci.upper        rmsea.ci.level          rmsea.pvalue 
-                    0.067                 0.900                 0.506 
-           rmsea.close.h0 rmsea.notclose.pvalue     rmsea.notclose.h0 
-                    0.050                 0.001                 0.080 
-                      rmr            rmr_nomean                  srmr 
-                    0.059                 0.059                 0.047 
-             srmr_bentler   srmr_bentler_nomean                  crmr 
-                    0.047                 0.047                 0.050 
-              crmr_nomean            srmr_mplus     srmr_mplus_nomean 
-                    0.050                 0.047                 0.047 
-                    cn_05                 cn_01                   gfi 
-                  158.108               172.734                 0.919 
-                     agfi                  pgfi                   mfi 
-                    0.874                 0.589                 0.887 
-                     ecvi 
-                    1.382 
+                   npar                fmin               chisq                  df 
+                 55.000               0.389             141.455              98.000 
+                 pvalue      baseline.chisq         baseline.df     baseline.pvalue 
+                  0.003            1053.917             136.000               0.000 
+                    cfi                 tli                nnfi                 rfi 
+                  0.953               0.934               0.934               0.814 
+                    nfi                pnfi                 ifi                 rni 
+                  0.866               0.624               0.955               0.953 
+                   logl   unrestricted.logl                 aic                 bic 
+              -4138.556           -4067.828            8387.112            8563.332 
+                 ntotal                bic2               rmsea      rmsea.ci.lower 
+                182.000            8389.140               0.049               0.030 
+         rmsea.ci.upper        rmsea.pvalue                 rmr          rmr_nomean 
+                  0.067               0.506               0.059               0.059 
+                   srmr        srmr_bentler srmr_bentler_nomean                crmr 
+                  0.047               0.047               0.047               0.050 
+            crmr_nomean          srmr_mplus   srmr_mplus_nomean               cn_05 
+                  0.050               0.047               0.047             158.108 
+                  cn_01                 gfi                agfi                pgfi 
+                172.734               0.919               0.874               0.589 
+                    mfi                ecvi 
+                  0.887               1.382 
 
 ### Parameter Estimates
 
@@ -1416,14 +1397,14 @@ print.psych(banyard_train_efa, cut = .40)
     Mean item complexity =  1.7
     Test of the hypothesis that 6 factors are sufficient.
 
-    df null model =  136  with the objective function =  5.88 with Chi Square =  1025.9
-    df of  the model are 49  and the objective function was  0.33 
+    The degrees of freedom for the null model are  136  and the objective function was  5.88 with Chi Square of  1025.9
+    The degrees of freedom for the model are 49  and the objective function was  0.33 
 
     The root mean square of the residuals (RMSR) is  0.03 
     The df corrected root mean square of the residuals is  0.04 
 
-    The harmonic n.obs is  182 with the empirical chi square  34.78  with prob <  0.94 
-    The total n.obs was  182  with Likelihood Chi Square =  56.84  with prob <  0.21 
+    The harmonic number of observations is  182 with the empirical chi square  34.78  with prob <  0.94 
+    The total number of observations was  182  with Likelihood Chi Square =  56.84  with prob <  0.21 
 
     Tucker Lewis Index of factoring reliability =  0.975
     RMSEA index =  0.029  and the 90 % confidence intervals are  0 0.059
@@ -1445,38 +1426,28 @@ statistics.
 six_factor_ind
 ```
 
-                     npar                  fmin                 chisq 
-                   46.000                 0.284               103.371 
-                       df                pvalue        baseline.chisq 
-                   59.000                 0.000               760.884 
-              baseline.df       baseline.pvalue                   cfi 
-                   91.000                 0.000                 0.934 
-                      tli                  nnfi                   rfi 
-                    0.898                 0.898                 0.790 
-                      nfi                  pnfi                   ifi 
-                    0.864                 0.560                 0.937 
-                      rni                  logl     unrestricted.logl 
-                    0.934             -3397.521             -3345.836 
-                      aic                   bic                ntotal 
-                 6887.042              7034.426               182.000 
-                     bic2                 rmsea        rmsea.ci.lower 
-                 6888.739                 0.064                 0.043 
-           rmsea.ci.upper        rmsea.ci.level          rmsea.pvalue 
-                    0.084                 0.900                 0.124 
-           rmsea.close.h0 rmsea.notclose.pvalue     rmsea.notclose.h0 
-                    0.050                 0.104                 0.080 
-                      rmr            rmr_nomean                  srmr 
-                    0.094                 0.094                 0.053 
-             srmr_bentler   srmr_bentler_nomean                  crmr 
-                    0.053                 0.053                 0.056 
-              crmr_nomean            srmr_mplus     srmr_mplus_nomean 
-                    0.056                 0.053                 0.053 
-                    cn_05                 cn_01                   gfi 
-                  138.209               154.469                 0.926 
-                     agfi                  pgfi                   mfi 
-                    0.869                 0.521                 0.885 
-                     ecvi 
-                    1.073 
+                   npar                fmin               chisq                  df 
+                 46.000               0.284             103.371              59.000 
+                 pvalue      baseline.chisq         baseline.df     baseline.pvalue 
+                  0.000             760.884              91.000               0.000 
+                    cfi                 tli                nnfi                 rfi 
+                  0.934               0.898               0.898               0.790 
+                    nfi                pnfi                 ifi                 rni 
+                  0.864               0.560               0.937               0.934 
+                   logl   unrestricted.logl                 aic                 bic 
+              -3397.521           -3345.836            6887.042            7034.426 
+                 ntotal                bic2               rmsea      rmsea.ci.lower 
+                182.000            6888.739               0.064               0.043 
+         rmsea.ci.upper        rmsea.pvalue                 rmr          rmr_nomean 
+                  0.084               0.124               0.094               0.094 
+                   srmr        srmr_bentler srmr_bentler_nomean                crmr 
+                  0.053               0.053               0.053               0.056 
+            crmr_nomean          srmr_mplus   srmr_mplus_nomean               cn_05 
+                  0.056               0.053               0.053             138.209 
+                  cn_01                 gfi                agfi                pgfi 
+                154.469               0.926               0.869               0.521 
+                    mfi                ecvi 
+                  0.885               1.073 
 
 # Change Over Time
 
@@ -1567,6 +1538,24 @@ banyard_change_by_item_cor
     sample estimates:
         cor 
     0.92402 
+
+### Response-level Item Agreement and Change in Item Agreement
+
+``` r
+banyard_response_change_cor
+```
+
+
+        Pearson's product-moment correlation
+
+    data:  banyard_response_change$change_abs and banyard_response_change$rma
+    t = 68.2, df = 14359, p-value <0.0000000000000002
+    alternative hypothesis: true correlation is not equal to 0
+    95 percent confidence interval:
+     0.48213 0.50684
+    sample estimates:
+        cor 
+    0.49459 
 
 ### Visualization
 
