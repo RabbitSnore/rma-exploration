@@ -1,4 +1,4 @@
-# Rape Myth Acceptance as Networks of Discursive Evaluations
+# Rape Myth Acceptance as Networks of Discursive Expressions
 
 This repository contains the supplemental material and analysis scripts for a
 project re-examining data from rape myth acceptance scales.
