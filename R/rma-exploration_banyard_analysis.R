@@ -162,8 +162,8 @@ network_graph_1_train <-
          negDashed = TRUE,
          curveAll = TRUE,
          nodeNames = banyard_text$text,
-         legend.cex = 0.30,
-         GLratio = 1.25)
+         legend.cex = 0.38,
+         GLratio = 0.80)
 
 walktrap_1 <- 
   walktrap.community(as.igraph(network_graph_1_train),
@@ -181,9 +181,9 @@ network_graph_1_train_walk <-
          groups = as.factor(walktrap_1$membership),
          palette = "colorblind",
          nodeNames = banyard_text$text,
-         legend.cex = 0.30,
+         legend.cex = 0.38,
          legend.mode = "style2",
-         GLratio = 1.25,
+         GLratio = 0.80,
          title = "Banyard et al (2008) - Training")
 
 ## Extract model skeleton
@@ -217,8 +217,8 @@ network_graph_1_test <-
          negDashed = TRUE,
          curveAll = TRUE,
          nodeNames = banyard_text$text,
-         legend.cex = 0.30,
-         GLratio = 1.25)
+         legend.cex = 0.38,
+         GLratio = 0.80)
 
 walktrap_2 <- 
   walktrap.community(as.igraph(network_graph_1_test),
@@ -236,9 +236,9 @@ network_graph_1_test_walk <-
          groups = as.factor(walktrap_2$membership),
          palette = "colorblind",
          nodeNames = banyard_text$text,
-         legend.cex = 0.30,
+         legend.cex = 0.38,
          legend.mode = "style2",
-         GLratio = 1.25,
+         GLratio = 0.80,
          title = "Banyard et al (2008) - Test")
 
 # Factor modeling --------------------------------------------------------------

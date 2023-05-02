@@ -130,8 +130,8 @@ network_graph_full_1 <-
          negDashed = TRUE,
          curveAll = TRUE,
          nodeNames = nyul_text$text,
-         legend.cex = 0.30,
-         GLratio = 1.25)
+         legend.cex = 0.38,
+         GLratio = 0.90)
 
 walktrap_1 <- walktrap.community(as.igraph(network_graph_full_1),
                                  weights = abs(E(as.igraph(network_graph_full_1))$weight))
@@ -148,9 +148,9 @@ network_graph_full_1_walk <-
          groups = as.factor(walktrap_1$membership),
          palette = "colorblind",
          nodeNames = nyul_text$text,
-         legend.cex = 0.30,
+         legend.cex = 0.38,
          legend.mode = "style2",
-         GLratio = 1.25,
+         GLratio = 0.90,
          title = "Nyúl & Kende (2021, Study 1) - Training")
 
 ## Extract model skeleton
@@ -192,8 +192,8 @@ network_graph_2 <-
          negDashed = TRUE,
          curveAll = TRUE,
          nodeNames = nyul_text$text,
-         legend.cex = 0.30,
-         GLratio = 1.25)
+         legend.cex = 0.38,
+         GLratio = 0.90)
 
 walktrap_2 <- walktrap.community(as.igraph(network_graph_2),
                                  weights = abs(E(as.igraph(network_graph_2))$weight))
@@ -210,9 +210,9 @@ network_graph_2_walk <-
          groups = as.factor(walktrap_2$membership),
          palette = "colorblind",
          nodeNames = nyul_text$text,
-         legend.cex = 0.30,
+         legend.cex = 0.38,
          legend.mode = "style2",
-         GLratio = 1.25,
+         GLratio = 0.90,
          title = "Nyúl & Kende (2021, Study 2) - Test")
 
 # Connectivity hypothesis ------------------------------------------------------

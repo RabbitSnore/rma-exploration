@@ -266,8 +266,8 @@ network_graph_reduced_1 <-
          negDashed = TRUE,
          curveAll = TRUE,
          nodeNames = balezina_text$text,
-         legend.cex = 0.30,
-         GLratio = 1.25)
+         legend.cex = 0.38,
+         GLratio = 0.72)
 
 walktrap_1 <- walktrap.community(as.igraph(network_graph_reduced_1),
                                  weights = abs(E(as.igraph(network_graph_reduced_1))$weight))
@@ -284,9 +284,9 @@ network_graph_reduced_1_walk <-
          groups = as.factor(walktrap_1$membership),
          palette = "colorblind",
          nodeNames = balezina_text$text,
-         legend.cex = 0.30,
+         legend.cex = 0.38,
          legend.mode = "style2",
-         GLratio = 1.25,
+         GLratio = 0.72,
          title = "Balezina (2023, Study 1) - Training")
 
 ### Extract model skeleton
@@ -321,8 +321,8 @@ network_graph_reduced_1_test <-
          negDashed = TRUE,
          curveAll = TRUE,
          nodeNames = balezina_text$text,
-         legend.cex = 0.30,
-         GLratio = 1.25)
+         legend.cex = 0.38,
+         GLratio = 0.72)
 
 walktrap_1_test <- walktrap.community(as.igraph(network_graph_reduced_1_test),
                                       weights = abs(E(as.igraph(network_graph_reduced_1_test))$weight))
@@ -339,9 +339,9 @@ network_graph_reduced_1_test_walk <-
          groups = as.factor(walktrap_1_test$membership),
          palette = "colorblind",
          nodeNames = balezina_text$text,
-         legend.cex = 0.30,
+         legend.cex = 0.38,
          legend.mode = "style2",
-         GLratio = 1.25,
+         GLratio = 0.72,
          title = "Balezina (2023, Study 1) - Test")
 
 # Testing network model in Study 2
@@ -386,8 +386,8 @@ network_graph_2 <-
          negDashed = TRUE,
          curveAll = TRUE,
          nodeNames = balezina_text$text,
-         legend.cex = 0.30,
-         GLratio = 1.25)
+         legend.cex = 0.38,
+         GLratio = 0.72)
 
 walktrap_2 <- walktrap.community(as.igraph(network_graph_2),
                                  weights = abs(E(as.igraph(network_graph_2))$weight))
@@ -404,9 +404,9 @@ network_graph_2_walk <-
          groups = as.factor(walktrap_2$membership),
          palette = "colorblind",
          nodeNames = balezina_text$text,
-         legend.cex = 0.30,
+         legend.cex = 0.38,
          legend.mode = "style2",
-         GLratio = 1.25,
+         GLratio = 0.72,
          title = "Balezina (2023, Study 2) - Test")
 
 # Reproducing factor models from original paper --------------------------------
@@ -485,8 +485,8 @@ network_graph_full <-
          negDashed = TRUE,
          curveAll = TRUE,
          nodeNames = balezina_text$text,
-         legend.cex = 0.30,
-         GLratio = 1.25)
+         legend.cex = 0.38,
+         GLratio = 0.72)
 
 walktrap_full <- 
   walktrap.community(as.igraph(network_graph_full),
@@ -504,9 +504,9 @@ network_graph_full_walk <-
          groups = as.factor(walktrap_full$membership),
          palette = "colorblind",
          nodeNames = balezina_text$text,
-         legend.cex = 0.30,
+         legend.cex = 0.38,
          legend.mode = "style2",
-         GLratio = 1.25)
+         GLratio = 0.72)
 
 centrality_plot_full <- 
 centralityPlot(network_graph_full_walk,

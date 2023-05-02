@@ -157,8 +157,8 @@ network_graph_full_1 <-
          negDashed = TRUE,
          curveAll = TRUE,
          nodeNames = lys_text$text,
-         legend.cex = 0.30,
-         GLratio = 1.25)
+         legend.cex = 0.38,
+         GLratio = 0.90)
 
 walktrap_1 <- walktrap.community(as.igraph(network_graph_full_1),
                                  weights = abs(E(as.igraph(network_graph_full_1))$weight))
@@ -175,9 +175,9 @@ network_graph_full_1_walk <-
          groups = as.factor(walktrap_1$membership),
          palette = "colorblind",
          nodeNames = lys_text$text,
-         legend.cex = 0.30,
+         legend.cex = 0.38,
          legend.mode = "style2",
-         GLratio = 1.25,
+         GLratio = 0.90,
          title = "Łyś et al (2023, Study 1) - Training")
 
 ## Extract model skeleton
@@ -252,8 +252,8 @@ network_graph_2_post <-
          negDashed = TRUE,
          curveAll = TRUE,
          nodeNames = lys_text$text,
-         legend.cex = 0.30,
-         GLratio = 1.25)
+         legend.cex = 0.38,
+         GLratio = 0.90)
 
 walktrap_2 <- walktrap.community(as.igraph(network_graph_2_post),
                                  weights = abs(E(as.igraph(network_graph_2_post))$weight))
@@ -270,9 +270,9 @@ network_graph_2_post_walk <-
          groups = as.factor(walktrap_2$membership),
          palette = "colorblind",
          nodeNames = lys_text$text,
-         legend.cex = 0.30,
+         legend.cex = 0.38,
          legend.mode = "style2",
-         GLratio = 1.25,
+         GLratio = 0.90,
          title = "Łyś et al (2023, Study 2, Two Weeks) - Test")
 
 # Study 3 ----------------------------------------------------------------------
@@ -312,8 +312,8 @@ network_graph_3 <-
          negDashed = TRUE,
          curveAll = TRUE,
          nodeNames = lys_text$text,
-         legend.cex = 0.30,
-         GLratio = 1.25)
+         legend.cex = 0.38,
+         GLratio = 0.90)
 
 walktrap_3 <- walktrap.community(as.igraph(network_graph_3),
                                  weights = abs(E(as.igraph(network_graph_3))$weight))
@@ -330,9 +330,9 @@ network_graph_3_walk <-
          groups = as.factor(walktrap_3$membership),
          palette = "colorblind",
          nodeNames = lys_text$text,
-         legend.cex = 0.30,
+         legend.cex = 0.38,
          legend.mode = "style2",
-         GLratio = 1.25,
+         GLratio = 0.90,
          title = "Łyś et al (2023, Study 3) - Test")
 
 # Factor modeling --------------------------------------------------------------
