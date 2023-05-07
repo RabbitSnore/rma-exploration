@@ -1,5 +1,5 @@
 ---
-title: "Balezina (2023) - Network Re-analysis"
+title: "Balezina & Zakharova (2023) - Network Re-analysis"
 format: gfm
 editor: source
 toc: true

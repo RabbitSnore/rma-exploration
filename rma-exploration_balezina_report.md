@@ -1,4 +1,4 @@
-Balezina (2023) - Network Re-analysis
+Balezina & Zakharova (2023) - Network Re-analysis
 ================
 
 - <a href="#network-analysis-of-study-1"

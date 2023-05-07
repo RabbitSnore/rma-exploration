@@ -7,9 +7,9 @@ project re-examining data from rape myth acceptance scales.
 
 Data from the following papers and data sets have been used:
 
-Balezina, M. (2023). Measuring Attitudes Towards Rape in Russia: Translation and
-Validation of the Illinois Rape Myths Acceptance Scale. Retrieved from
-https://osf.io/9uws8/
+Balezina, M., & Zakharova, S. (2023). Measuring attitudes towards rape in
+Russia: Translation and validation of the illinois rape myths acceptance scale.
+Current Psychology. https://doi.org/10.1007/s12144-023-04666-2
 
 Banyard, V. L., Plante, E. G., & Moynihan, M. M. (2008). Rape Prevention Through
 Bystander Education at a Northeastern State University, 2002-2004.

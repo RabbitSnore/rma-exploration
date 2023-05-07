@@ -1,6 +1,6 @@
 ################################################################################
 
-# RMA Exploration - Balezina (2023)
+# RMA Exploration - Balezina & Zakharova (2023)
 
 ################################################################################
 
@@ -20,7 +20,7 @@ lapply(packages, library, character.only = TRUE)
 
 # Load data --------------------------------------------------------------------
 
-# Balezina (2023)
+# Balezina & Zakharova (2023)
 
 ## Retrieve from OSF
 
