@@ -722,12 +722,14 @@ plot(network_graph_1_test)
 dev.off()
 
 png("./figures/dawtry_irma-network_train_walktrap.png", 
-    height = 6, width = 12, units = "in", res = 1500)
+    height = 6.5, width = 13, units = "in", res = 1500,
+    pointsize = 13.75)
 plot(network_graph_1_train_walk)
 dev.off()
 
 png("./figures/dawtry_irma-network_test_walktrap.png", 
-    height = 6, width = 12, units = "in", res = 1500)
+    height = 6.5, width = 13, units = "in", res = 1500,
+    pointsize = 13.75)
 plot(network_graph_1_test_walk)
 dev.off()
 

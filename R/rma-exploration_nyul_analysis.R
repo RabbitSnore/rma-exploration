@@ -668,11 +668,13 @@ plot(network_graph_2)
 dev.off()
 
 png("./figures/nyul_irma-network_study-1_walktrap.png", 
-    height = 6, width = 12, units = "in", res = 1500)
+    height = 6.5, width = 13, units = "in", res = 1500,
+    pointsize = 13.75)
 plot(network_graph_full_1_walk)
 dev.off()
 
 png("./figures/nyul_irma-network_study-2_walktrap.png", 
-    height = 6, width = 12, units = "in", res = 1500)
+    height = 6.5, width = 13, units = "in", res = 1500,
+    pointsize = 13.75)
 plot(network_graph_2_walk)
 dev.off()

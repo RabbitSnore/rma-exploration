@@ -815,7 +815,8 @@ banyard_item_change <-
            color = time,
            group = item
          )) +
-  facet_wrap(~ ID) +
+  facet_wrap(~ ID,
+             nrow = 18) +
   geom_hline(
     yintercept = 4,
     linetype   = "dashed"
@@ -840,6 +841,7 @@ banyard_item_change <-
   theme(
     axis.text.x  = element_blank(),
     axis.ticks.x = element_blank(),
+    strip.text.x = element_text(size = 5.3),
     legend.position = "bottom"
   )
 
@@ -869,4 +871,4 @@ save_plot("./figures/banyard_time-change.png", banyard_time_change,
           base_height = 8, base_width = 14)
 
 save_plot("./figures/banyard_item-change.png", banyard_item_change,
-          base_height = 16, base_width = 16)
+          base_height = 12.5, base_width = 9)

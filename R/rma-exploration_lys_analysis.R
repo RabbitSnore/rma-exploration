@@ -492,7 +492,8 @@ ggplot(lys_2_long_plot,
          color = time,
          group = item
        )) +
-  facet_wrap(~ id) +
+  facet_wrap(~ id,
+             nrow = 16)+
   geom_hline(
     yintercept = 3,
     linetype   = "dashed"
@@ -1156,7 +1157,7 @@ plot(network_graph_3_walk)
 dev.off()
 
 save_plot("./figures/lys_item-change_study-2.png", lys_2_item_change,
-          base_height = 16, base_width = 16)
+          base_height = 12.5, base_width = 9)
 
 save_plot("./figures/lys_sum-change_study-2.png", lys_2_sum_by_change,
           base_height = 6, base_width = 6.5)
