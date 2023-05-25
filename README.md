@@ -3,6 +3,8 @@
 This repository contains the supplemental material and analysis scripts for a
 project re-examining data from rape myth acceptance scales.
 
+A preprint for the present project is available here: https://psyarxiv.com/x5jr3
+
 ## Data
 
 Data from the following papers and data sets have been used:
