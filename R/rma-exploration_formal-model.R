@@ -10,10 +10,6 @@ packages <- c(
   "osfr",
   "qgraph",
   "psychonetrics",
-  "lavaan",
-  "lme4",
-  "performance",
-  "semPlot",
   "cowplot",
   "psych",
   "igraph",
@@ -77,9 +73,13 @@ activation <- function(adjacency, x, b, index, m) {
 
 # Łyś et al (2023)
 
+# This code assumes you have already run the analyses for Łyś et al (2023)
+
 ## Raw data 
 
 lys_1 <- read_sav("./data/lys/study1 reliability and factor analysis.sav")
+
+## Clean data
 
 lys_1 <- lys_1 %>% 
   zap_label() %>% 
@@ -91,6 +91,8 @@ lys_1_model_df <- lys_1 %>%
     -rma_sum
   ) %>% 
   filter(complete.cases(.))
+
+## Extract values
 
 lys_rma_means   <- map_dbl(lys_1_model_df, mean)
 
@@ -290,23 +292,6 @@ ggplot(sim_1_sum,
   ) +
   theme_classic()
 
-sim_1_sum_cor_plot <- 
-ggplot(sim_1_sum_cor,
-       aes(
-         x = m,
-         y = cor
-       )) +
-  facet_wrap(~ connectivity) +
-  geom_hline(
-    yintercept = 0,
-    linetype = "dashed"
-  ) +
-  geom_point() +
-  geom_line(
-    group = 1
-  ) +
-  theme_classic()
-
 ## Items
 
 sim_1_item_long <- sim_data %>% 
@@ -330,7 +315,7 @@ sim_1_item_cor <- sim_1_item %>%
     item_cor      = cor(item_mean, item_variance)
   )
 
-sim_1_item_cor_plot <- 
+sim_1_item_change_plot <- 
   ggplot(sim_1_item,
          aes(
            x = item_mean,
@@ -491,3 +476,26 @@ rma_trajectories_2 <-
     x = "Time"
   ) +
   theme_classic()
+
+# Export images ----------------------------------------------------------------
+
+# Primary simulation figures
+
+save_plot("figures/rma-model_simulation-01.png",
+          rma_trajectories,
+          base_height = 10, base_width = 7)
+
+save_plot("figures/rma-model_simulation-02.png",
+          rma_trajectories_2,
+          base_height = 7, base_width = 7)
+
+# Change over time
+
+save_plot("figures/rma-model_sum-change.png",
+          sim_1_sum_change_plot,
+          base_height = 10, base_width = 7)
+
+save_plot("figures/rma-model_item-change.png",
+          sim_1_item_change_plot,
+          base_height = 10, base_width = 7)
+
