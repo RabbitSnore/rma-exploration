@@ -37,13 +37,14 @@ $$
 p^t_i = \frac{1}{1 + e^{b_i - A^t_i}}
 $$
 
-Here, $b$ represents the general tendency for the myth $i$ to be
+Here, $b_i$ represents the general tendency for the myth $i$ to be
 expressed, and $A$ is the level of activation currently directed toward
 this myth. Let us assume that a myth receives activation (or
 deactivation) from two sources: (1) the values at the previous time
 point $t - 1$ of adjacent myths (i.e., myths connected by an edge in the
-network model) weighted by the strength of the connection $W_{ij}$. The
-activation function is defined as follows:
+network model) weighted by the strength of the connection $W_{ij}$ and
+(2) their current motivation to express rape myths. The activation
+function is defined as follows:
 
 $$
 A^t_i = \sum_{j = 1}^J{W_{ij}x^{t-1}_j + m^t}
@@ -58,12 +59,12 @@ b_i = -log(\frac{\frac{\bar{X}}{k}}{1 - \frac{\bar{X}}{k}})
 $$
 
 Values for $W$ can be estimated from the empirical edge weights
-$r_{ij}$, converted from $r$ to log odds and scaled by $k - c$, such
+$r_{ij}$, converted from $r$ to log odds and scaled by $k - c - 1$, such
 that the maximum amount of activation and deactivation is conferred by
 maximum and minimum values respectively:
 
 $$
-W_{ij} = \frac{2r_{ij}}{\sqrt{1 - 2r_{ij}}} \times \frac{\sqrt{3}}{\pi} \times \frac{1}{k - c}
+W_{ij} = \frac{2r_{ij}}{\sqrt{1 - 2r_{ij}}} \times \frac{\sqrt{3}}{\pi} \times \frac{1}{k - c - 1}
 $$
 
 # Simulation 1: Variations of Connectivity and Motivation
@@ -112,33 +113,33 @@ knitr::kable(sim_1_sum_cor)
 
 | connectivity |     m |        cor |
 |-------------:|------:|-----------:|
-|         0.75 | -0.45 |  0.0977400 |
-|         0.75 | -0.30 |  0.0915327 |
-|         0.75 | -0.15 |  0.1010827 |
-|         0.75 |  0.00 |  0.1274855 |
-|         0.75 |  0.15 |  0.2298788 |
-|         0.75 |  0.30 |  0.1221592 |
-|         0.75 |  0.45 | -0.1385075 |
-|         1.00 | -0.45 |  0.1172346 |
-|         1.00 | -0.30 |  0.1495494 |
-|         1.00 | -0.15 |  0.1621761 |
-|         1.00 |  0.00 |  0.2187431 |
-|         1.00 |  0.15 |  0.2993528 |
-|         1.00 |  0.30 |  0.1382100 |
-|         1.00 |  0.45 |  0.4237657 |
-|         1.25 | -0.45 |  0.1353407 |
-|         1.25 | -0.30 |  0.1909122 |
-|         1.25 | -0.15 |  0.1790672 |
-|         1.25 |  0.00 |  0.4156769 |
-|         1.25 |  0.15 |  0.0028060 |
-|         1.25 |  0.30 | -0.2207371 |
-|         1.25 |  0.45 |  0.3933971 |
+|         0.75 | -0.45 |  0.0634872 |
+|         0.75 | -0.30 |  0.1121944 |
+|         0.75 | -0.15 |  0.0803413 |
+|         0.75 |  0.00 |  0.1019593 |
+|         0.75 |  0.15 |  0.2299470 |
+|         0.75 |  0.30 |  0.1712739 |
+|         0.75 |  0.45 | -0.1819774 |
+|         1.00 | -0.45 |  0.1076654 |
+|         1.00 | -0.30 |  0.1202825 |
+|         1.00 | -0.15 |  0.1866624 |
+|         1.00 |  0.00 |  0.2234356 |
+|         1.00 |  0.15 |  0.3564586 |
+|         1.00 |  0.30 |  0.0865219 |
+|         1.00 |  0.45 |  0.5419489 |
+|         1.25 | -0.45 |  0.1572636 |
+|         1.25 | -0.30 |  0.1763637 |
+|         1.25 | -0.15 |  0.2021913 |
+|         1.25 |  0.00 |  0.3740312 |
+|         1.25 |  0.15 |  0.1730004 |
+|         1.25 |  0.30 | -0.1751639 |
+|         1.25 |  0.45 |  0.4427303 |
 
 ``` r
 mean(sim_1_sum_cor$cor)
 ```
 
-    [1] 0.1541365
+    [1] 0.169077
 
 ### Item Ratings
 
@@ -160,33 +161,33 @@ knitr::kable(sim_1_item_cor)
 
 | connectivity |     m |  item_cor |
 |-------------:|------:|----------:|
-|         0.75 | -0.45 | 0.9778905 |
-|         0.75 | -0.30 | 0.9730656 |
-|         0.75 | -0.15 | 0.9653979 |
-|         0.75 |  0.00 | 0.9321665 |
-|         0.75 |  0.15 | 0.8298389 |
-|         0.75 |  0.30 | 0.5860577 |
-|         0.75 |  0.45 | 0.0984921 |
-|         1.00 | -0.45 | 0.9755646 |
-|         1.00 | -0.30 | 0.9763141 |
-|         1.00 | -0.15 | 0.9764934 |
-|         1.00 |  0.00 | 0.9650684 |
-|         1.00 |  0.15 | 0.8928713 |
-|         1.00 |  0.30 | 0.5791999 |
-|         1.00 |  0.45 | 0.3634767 |
-|         1.25 | -0.45 | 0.9753184 |
-|         1.25 | -0.30 | 0.9702227 |
-|         1.25 | -0.15 | 0.9711002 |
-|         1.25 |  0.00 | 0.9482656 |
-|         1.25 |  0.15 | 0.9073004 |
-|         1.25 |  0.30 | 0.7940421 |
-|         1.25 |  0.45 | 0.5117766 |
+|         0.75 | -0.45 | 0.9771212 |
+|         0.75 | -0.30 | 0.9767830 |
+|         0.75 | -0.15 | 0.9694283 |
+|         0.75 |  0.00 | 0.9332458 |
+|         0.75 |  0.15 | 0.8045000 |
+|         0.75 |  0.30 | 0.5659445 |
+|         0.75 |  0.45 | 0.1322689 |
+|         1.00 | -0.45 | 0.9766573 |
+|         1.00 | -0.30 | 0.9764550 |
+|         1.00 | -0.15 | 0.9728989 |
+|         1.00 |  0.00 | 0.9656886 |
+|         1.00 |  0.15 | 0.9004078 |
+|         1.00 |  0.30 | 0.6137172 |
+|         1.00 |  0.45 | 0.2973561 |
+|         1.25 | -0.45 | 0.9728134 |
+|         1.25 | -0.30 | 0.9744838 |
+|         1.25 | -0.15 | 0.9654144 |
+|         1.25 |  0.00 | 0.9356859 |
+|         1.25 |  0.15 | 0.9071565 |
+|         1.25 |  0.30 | 0.8311354 |
+|         1.25 |  0.45 | 0.4970448 |
 
 ``` r
 mean(sim_1_item_cor$item_cor)
 ```
 
-    [1] 0.8176154
+    [1] 0.816486
 
 # Simulation 2: Changes of Motivation Over Time
 

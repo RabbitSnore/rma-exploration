@@ -39,12 +39,13 @@ $$
 p^t_i = \frac{1}{1 + e^{b_i - A^t_i}}
 $$
 
-Here, $b$ represents the general tendency for the myth $i$ to be expressed, and
-$A$ is the level of activation currently directed toward this myth. Let us
+Here, $b_i$ represents the general tendency for the myth $i$ to be expressed,
+and $A$ is the level of activation currently directed toward this myth. Let us
 assume that a myth receives activation (or deactivation) from two sources: (1)
 the values at the previous time point $t - 1$ of adjacent myths (i.e., myths
 connected by an edge in the network model) weighted by the strength of the
-connection $W_{ij}$. The activation function is defined as follows:
+connection $W_{ij}$ and (2) their current motivation to express rape myths. The
+activation function is defined as follows:
 
 $$
 A^t_i = \sum_{j = 1}^J{W_{ij}x^{t-1}_j + m^t}
@@ -59,12 +60,12 @@ b_i = -log(\frac{\frac{\bar{X}}{k}}{1 - \frac{\bar{X}}{k}})
 $$
 
 Values for $W$ can be estimated from the empirical edge weights $r_{ij}$,
-converted from $r$ to log odds and scaled by $k - c$, such that the maximum
+converted from $r$ to log odds and scaled by $k - c - 1$, such that the maximum
 amount of activation and deactivation is conferred by maximum and minimum values
 respectively:
 
 $$
-W_{ij} = \frac{2r_{ij}}{\sqrt{1 - 2r_{ij}}} \times \frac{\sqrt{3}}{\pi} \times \frac{1}{k - c}
+W_{ij} = \frac{2r_{ij}}{\sqrt{1 - 2r_{ij}}} \times \frac{\sqrt{3}}{\pi} \times \frac{1}{k - c - 1}
 $$
 
 # Simulation 1: Variations of Connectivity and Motivation
