@@ -20,12 +20,13 @@ This model draws considerable inspiration from Cramer et al (2016,
 Let us assume that a person's expression of a given myth statement can take some
 number of values $k$, where lower values correspond to disagreement with the
 myth, higher values correspond to acceptance of the myth, and the central value
-(i.e., the median $c$ of the values 1 through $k$) corresponds to a neutral
+(i.e., the median $c$ of the values 0 through $k - 1$) corresponds to a neutral
 position toward the myth (e.g., "neither agree nor disagree"). We model
 acceptance of myth $i$ at time $t$ as a value $x$ sampled from a binomial
 distribution, with $k - 1$ trials with probability $p$ of each trial taking the
-value 1, centered such that the median value of 1 through $k$ is 0. The
-following equation describes this assumption:
+value 1, centered such that the median value of 1 through $k$ is 0. For example,
+for a 5-point scale, this model creates values from -2 to 2. The following
+equation describes these assumptions:
 
 $$
 x^t_i = B(k - 1, p^t_i) - c

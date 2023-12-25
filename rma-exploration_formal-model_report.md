@@ -17,13 +17,14 @@ This model draws considerable inspiration from Cramer et al (2016,
 Let us assume that a person’s expression of a given myth statement can
 take some number of values $k$, where lower values correspond to
 disagreement with the myth, higher values correspond to acceptance of
-the myth, and the central value (i.e., the median $c$ of the values 1
-through $k$) corresponds to a neutral position toward the myth (e.g.,
-“neither agree nor disagree”). We model acceptance of myth $i$ at time
-$t$ as a value $x$ sampled from a binomial distribution, with $k - 1$
-trials with probability $p$ of each trial taking the value 1, centered
-such that the median value of 1 through $k$ is 0. The following equation
-describes this assumption:
+the myth, and the central value (i.e., the median $c$ of the values 0
+through $k - 1$) corresponds to a neutral position toward the myth
+(e.g., “neither agree nor disagree”). We model acceptance of myth $i$ at
+time $t$ as a value $x$ sampled from a binomial distribution, with
+$k - 1$ trials with probability $p$ of each trial taking the value 1,
+centered such that the median value of 1 through $k$ is 0. For example,
+for a 5-point scale, this model creates values from -2 to 2. The
+following equation describes these assumptions:
 
 $$
 x^t_i = B(k - 1, p^t_i) - c
@@ -111,33 +112,33 @@ knitr::kable(sim_1_sum_cor)
 
 | connectivity |     m |        cor |
 |-------------:|------:|-----------:|
-|         0.75 | -0.45 |  0.0784121 |
-|         0.75 | -0.30 |  0.0927942 |
-|         0.75 | -0.15 |  0.0571189 |
-|         0.75 |  0.00 |  0.1230648 |
-|         0.75 |  0.15 |  0.1908613 |
-|         0.75 |  0.30 |  0.1987708 |
-|         0.75 |  0.45 | -0.1103456 |
-|         1.00 | -0.45 |  0.1275827 |
-|         1.00 | -0.30 |  0.1658570 |
-|         1.00 | -0.15 |  0.1622492 |
-|         1.00 |  0.00 |  0.2254914 |
-|         1.00 |  0.15 |  0.3286546 |
-|         1.00 |  0.30 |  0.0853203 |
-|         1.00 |  0.45 |  0.3991959 |
-|         1.25 | -0.45 |  0.1192379 |
-|         1.25 | -0.30 |  0.1548560 |
-|         1.25 | -0.15 |  0.2372724 |
-|         1.25 |  0.00 |  0.3866163 |
-|         1.25 |  0.15 |  0.1880997 |
-|         1.25 |  0.30 | -0.1250111 |
-|         1.25 |  0.45 |  0.3564732 |
+|         0.75 | -0.45 |  0.0977400 |
+|         0.75 | -0.30 |  0.0915327 |
+|         0.75 | -0.15 |  0.1010827 |
+|         0.75 |  0.00 |  0.1274855 |
+|         0.75 |  0.15 |  0.2298788 |
+|         0.75 |  0.30 |  0.1221592 |
+|         0.75 |  0.45 | -0.1385075 |
+|         1.00 | -0.45 |  0.1172346 |
+|         1.00 | -0.30 |  0.1495494 |
+|         1.00 | -0.15 |  0.1621761 |
+|         1.00 |  0.00 |  0.2187431 |
+|         1.00 |  0.15 |  0.2993528 |
+|         1.00 |  0.30 |  0.1382100 |
+|         1.00 |  0.45 |  0.4237657 |
+|         1.25 | -0.45 |  0.1353407 |
+|         1.25 | -0.30 |  0.1909122 |
+|         1.25 | -0.15 |  0.1790672 |
+|         1.25 |  0.00 |  0.4156769 |
+|         1.25 |  0.15 |  0.0028060 |
+|         1.25 |  0.30 | -0.2207371 |
+|         1.25 |  0.45 |  0.3933971 |
 
 ``` r
 mean(sim_1_sum_cor$cor)
 ```
 
-    [1] 0.163932
+    [1] 0.1541365
 
 ### Item Ratings
 
@@ -159,33 +160,33 @@ knitr::kable(sim_1_item_cor)
 
 | connectivity |     m |  item_cor |
 |-------------:|------:|----------:|
-|         0.75 | -0.45 | 0.9799403 |
-|         0.75 | -0.30 | 0.9762207 |
-|         0.75 | -0.15 | 0.9652233 |
-|         0.75 |  0.00 | 0.9326858 |
-|         0.75 |  0.15 | 0.8288791 |
-|         0.75 |  0.30 | 0.5835570 |
-|         0.75 |  0.45 | 0.1099353 |
-|         1.00 | -0.45 | 0.9774721 |
-|         1.00 | -0.30 | 0.9758757 |
-|         1.00 | -0.15 | 0.9778440 |
-|         1.00 |  0.00 | 0.9649483 |
-|         1.00 |  0.15 | 0.8890770 |
-|         1.00 |  0.30 | 0.6190190 |
-|         1.00 |  0.45 | 0.3860054 |
-|         1.25 | -0.45 | 0.9728828 |
-|         1.25 | -0.30 | 0.9710721 |
-|         1.25 | -0.15 | 0.9687363 |
-|         1.25 |  0.00 | 0.9400081 |
-|         1.25 |  0.15 | 0.9077352 |
-|         1.25 |  0.30 | 0.8362952 |
-|         1.25 |  0.45 | 0.5760122 |
+|         0.75 | -0.45 | 0.9778905 |
+|         0.75 | -0.30 | 0.9730656 |
+|         0.75 | -0.15 | 0.9653979 |
+|         0.75 |  0.00 | 0.9321665 |
+|         0.75 |  0.15 | 0.8298389 |
+|         0.75 |  0.30 | 0.5860577 |
+|         0.75 |  0.45 | 0.0984921 |
+|         1.00 | -0.45 | 0.9755646 |
+|         1.00 | -0.30 | 0.9763141 |
+|         1.00 | -0.15 | 0.9764934 |
+|         1.00 |  0.00 | 0.9650684 |
+|         1.00 |  0.15 | 0.8928713 |
+|         1.00 |  0.30 | 0.5791999 |
+|         1.00 |  0.45 | 0.3634767 |
+|         1.25 | -0.45 | 0.9753184 |
+|         1.25 | -0.30 | 0.9702227 |
+|         1.25 | -0.15 | 0.9711002 |
+|         1.25 |  0.00 | 0.9482656 |
+|         1.25 |  0.15 | 0.9073004 |
+|         1.25 |  0.30 | 0.7940421 |
+|         1.25 |  0.45 | 0.5117766 |
 
 ``` r
 mean(sim_1_item_cor$item_cor)
 ```
 
-    [1] 0.8256869
+    [1] 0.8176154
 
 # Simulation 2: Changes of Motivation Over Time
 
